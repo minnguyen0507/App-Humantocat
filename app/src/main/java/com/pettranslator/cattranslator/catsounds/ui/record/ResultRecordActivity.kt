@@ -1,8 +1,6 @@
 package com.pettranslator.cattranslator.catsounds.ui.record
 
 import android.os.CountDownTimer
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -14,7 +12,6 @@ import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityResultRecordBinding
 import com.pettranslator.cattranslator.catsounds.model.EAnimal
 import com.pettranslator.cattranslator.catsounds.model.EPlayMediaState
-import com.pettranslator.cattranslator.catsounds.ui.music.MusicFragment
 import com.pettranslator.cattranslator.catsounds.utils.ALog
 import com.pettranslator.cattranslator.catsounds.utils.MediaSoundPlayer
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
@@ -25,11 +22,12 @@ import javax.inject.Inject
 class ResultRecordActivity : BaseActivity<ActivityResultRecordBinding>() {
     @Inject
     lateinit var adManager: AdManager
-    var countDownTimer: CountDownTimer? = null
-    var seconds = 0
+    private var countDownTimer: CountDownTimer? = null
+    private var seconds = 0
     var currentSeconds = 0
     private var playPauseState = EPlayMediaState.STOPPED
-    var typeAnimal = EAnimal.CAT
+    private var typeAnimal = EAnimal.CAT
+
 
     @Inject
     lateinit var soundPlayer: MediaSoundPlayer
@@ -41,6 +39,7 @@ class ResultRecordActivity : BaseActivity<ActivityResultRecordBinding>() {
         enableEdgeToEdge()
         seconds = intent.getIntExtra(RecordActivity.SECONDS, 0)
         ALog.d("ResultRecordActivitySSS", "seconds: $seconds")
+
         adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {}, onAdFailed = {})
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -69,13 +68,15 @@ class ResultRecordActivity : BaseActivity<ActivityResultRecordBinding>() {
         viewBinding.imvCat.setOnClickListener {
             typeAnimal = EAnimal.CAT
             it.background = ContextCompat.getDrawable(this, R.drawable.circle_button_border)
-            viewBinding.imvDog.background = ContextCompat.getDrawable(this, R.drawable.bg_circle_unselected)
+            viewBinding.imvDog.background =
+                ContextCompat.getDrawable(this, R.drawable.bg_circle_unselected)
         }
 
         viewBinding.imvDog.setOnClickListener {
             typeAnimal = EAnimal.DOG
             it.background = ContextCompat.getDrawable(this, R.drawable.circle_button_border)
-            viewBinding.imvCat.background = ContextCompat.getDrawable(this, R.drawable.bg_circle_unselected)
+            viewBinding.imvCat.background =
+                ContextCompat.getDrawable(this, R.drawable.bg_circle_unselected)
         }
     }
 
@@ -102,7 +103,7 @@ class ResultRecordActivity : BaseActivity<ActivityResultRecordBinding>() {
 
         }
         toggleClock(viewBinding.textView7, seconds)
-        if (currentSeconds == seconds){
+        if (currentSeconds == seconds) {
             soundPlayer.stop()
         }
     }
@@ -130,6 +131,7 @@ class ResultRecordActivity : BaseActivity<ActivityResultRecordBinding>() {
         }
 
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
