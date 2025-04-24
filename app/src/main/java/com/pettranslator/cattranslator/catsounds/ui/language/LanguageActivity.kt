@@ -1,0 +1,89 @@
+package com.pettranslator.cattranslator.catsounds.ui.language
+
+import android.app.Activity
+import android.view.LayoutInflater
+import android.view.View
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.pettranslator.cattranslator.catsounds.R
+import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
+import com.pettranslator.cattranslator.catsounds.databinding.ActivityLanguageBinding
+import com.pettranslator.cattranslator.catsounds.model.LanguageItem
+import com.pettranslator.cattranslator.catsounds.ui.intro.IntroActivity
+import com.pettranslator.cattranslator.catsounds.utils.DataProvider
+import com.pettranslator.cattranslator.catsounds.utils.SharedPref
+import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
+import com.pettranslator.cattranslator.catsounds.utils.openActivityAndClearApp
+import com.pettranslator.cattranslator.catsounds.utils.setSafeOnClickListener
+import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
+import javax.inject.Inject
+
+@AndroidEntryPoint
+class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
+    private var langCode = "en"
+    @Inject
+    lateinit var adManager: AdManager
+    @Inject
+    lateinit var dataProvider: DataProvider
+    @Inject
+    lateinit var sharedPref: SharedPref
+
+    private var listLanguage = mutableListOf<LanguageItem>()
+
+    private lateinit var languageAdapter: LanguageAdapter
+
+    override fun inflateViewBinding(inflater: LayoutInflater): ActivityLanguageBinding =
+        ActivityLanguageBinding.inflate(inflater)
+
+    override fun initialize() {
+        enableEdgeToEdge()
+
+        listLanguage = getLanguages()
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {}, onAdFailed = {})
+        languageAdapter = LanguageAdapter()
+        viewBinding.apply {
+            rcvLanguage.adapter = languageAdapter
+            btnBack.setSafeOnClickListener {
+                setResult(Activity.RESULT_CANCELED)
+                finish()
+            }
+            btnApply.setSafeOnClickListener {
+                val locales = LocaleListCompat.forLanguageTags(langCode)
+                AppCompatDelegate.setApplicationLocales(locales)
+                sharedPref.saveLanguage(langCode)
+                if (sharedPref.getFirstLanguage()){
+                    openActivityAndClearApp(IntroActivity::class.java)
+                    sharedPref.setFirstLanguage(false)
+                    return@setSafeOnClickListener
+                }
+                setResult(RESULT_OK)
+                finish()
+            }
+        }
+
+        languageAdapter.registerItemClickListener { view,language, postion ->
+            listLanguage.forEach { it.isSelected = false }
+            viewBinding.btnApply.visibility = View.VISIBLE
+            language.isSelected = true
+
+            langCode = language.localeCode
+
+        }
+
+        languageAdapter.addData(listLanguage)
+    }
+
+
+    private fun getLanguages(): MutableList<LanguageItem> {
+        return dataProvider.getLanguageList().toMutableList()
+    }
+}

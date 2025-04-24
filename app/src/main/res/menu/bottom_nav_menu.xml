@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/amthanh_1"
+        android:title="@string/sound" />
+
+    <item
+        android:id="@+id/navigation_translate"
+        android:icon="@drawable/dich_1"
+        android:title="@string/translate" />
+
+    <item
+        android:id="@+id/navigation_game"
+        android:icon="@drawable/trochoi_1"
+        android:title="@string/game" />
+
+    <item
+        android:id="@+id/navigation_music"
+        android:icon="@drawable/baihat_1"
+        android:title="@string/song" />
+
+    <item
+        android:id="@+id/navigation_setting"
+        android:icon="@drawable/ciaidat_1"
+        android:title="@string/setting" />
+
+</menu>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="song"
+            type="com.pettranslator.cattranslator.catsounds.model.Song" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/layoutSong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16dp">
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:padding="4dp"
+            app:srcCompat="@drawable/icon_cat" />
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/text_normal_black"
+            android:layout_width="0dp"
+            android:textSize="13sp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/margin_4dp"
+            android:layout_weight="1"
+            android:text="@{song.title}" />
+
+        <ImageView
+            android:id="@+id/imvStar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:padding="6dp"
+            android:src="@{song.favorite ? @drawable/ic_star_full : @drawable/ic_star}" />
+    </LinearLayout>
+</layout>
