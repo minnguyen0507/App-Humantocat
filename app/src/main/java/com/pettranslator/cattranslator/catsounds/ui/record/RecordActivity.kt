@@ -1,5 +1,6 @@
 package com.pettranslator.cattranslator.catsounds.ui.record
 
+import android.Manifest
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -8,7 +9,6 @@ import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.FragmentTransaction
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityRecordBinding
@@ -26,11 +26,11 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
     @Inject
     lateinit var adManager: AdManager
     private var seconds = 0
+
     @Inject
     lateinit var dataProvider: DataProvider
-
     private var isRunning = false
-
+    private val RECORD_AUDIO_REQUEST_CODE = 1002
     private val timerRunnable = object : Runnable {
         override fun run() {
             val minutes = seconds / 60
@@ -59,32 +59,35 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
         }
 
         viewBinding.buttonRecord.setSafeOnClickListener {
-            if (!isRunning) {
-                seconds = 0
-                isRunning = true
-                handler.post(timerRunnable)
-                zoomInOutObject(viewBinding.imageView9)
-                return@setSafeOnClickListener
-            }
-            isRunning = false
-            zoomInOutObject(viewBinding.imageView9)
-            handler.removeCallbacks(timerRunnable)
-            if (TranslateFragment.typeTrans == ETypeTranslator.HUMANTOANIMAL) {
-                openActivity(ResultRecordActivity::class.java){
-                    putInt(SECONDS, seconds - 1)
-                }
-            } else {
-                val listCatResult = dataProvider.getCatSounds()
-                val catResult = listCatResult.random()
-                val dialog = TranslateResultDialog(this, catResult) {
-
-                }
-                dialog.show()
-            }
-
-
+            requestPermission(Manifest.permission.RECORD_AUDIO, RECORD_AUDIO_REQUEST_CODE)
         }
     }
+
+    private fun startRecord() {
+        if (!isRunning) {
+            seconds = 0
+            isRunning = true
+            handler.post(timerRunnable)
+            zoomInOutObject(viewBinding.imageView9)
+            return
+        }
+        isRunning = false
+        zoomInOutObject(viewBinding.imageView9)
+        handler.removeCallbacks(timerRunnable)
+        if (TranslateFragment.typeTrans == ETypeTranslator.HUMANTOANIMAL) {
+            openActivity(ResultRecordActivity::class.java) {
+                putInt(SECONDS, seconds - 1)
+            }
+        } else {
+            val listCatResult = dataProvider.getCatSounds()
+            val catResult = listCatResult.random()
+            val dialog = TranslateResultDialog(this, catResult) {
+
+            }
+            dialog.show()
+        }
+    }
+
     private fun zoomInOutObject(view: View) {
         val scaleUpX = ObjectAnimator.ofFloat(view, "scaleX", 1f, 1.2f)
         val scaleUpY = ObjectAnimator.ofFloat(view, "scaleY", 1f, 1.2f)
@@ -94,7 +97,7 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
         val animatorSet = AnimatorSet()
         animatorSet.play(scaleUpX).with(scaleUpY)
         animatorSet.play(scaleDownX).with(scaleDownY).after(scaleUpX)
-        animatorSet.addListener(object : AnimatorListenerAdapter(){
+        animatorSet.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: android.animation.Animator) {
                 super.onAnimationEnd(animation)
                 if (isRunning) {
@@ -104,10 +107,16 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
         })
         animatorSet.duration = 350
 
-        if(isRunning) animatorSet.start() else animatorSet.cancel()
+        if (isRunning) animatorSet.start() else animatorSet.cancel()
     }
 
-    companion object{
+
+    override fun performPermissionTask() {
+        super.performPermissionTask()
+        startRecord()
+    }
+
+    companion object {
         const val SECONDS = "seconds"
     }
 }
