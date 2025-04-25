@@ -32,5 +32,10 @@ object AppModule {
     fun provideMediaSoundPlayer(@ApplicationContext context: Context): MediaSoundPlayer {
         return MediaSoundPlayer(context)
     }
+//    @Provides
+//    @Singleton
+//    fun provideNotificationWork(@ApplicationContext context: Context): MediaSoundPlayer {
+//        return MediaSoundPlayer(context)
+//    }
 
 }

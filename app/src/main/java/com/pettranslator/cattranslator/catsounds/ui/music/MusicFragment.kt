@@ -53,48 +53,58 @@ class MusicFragment : BaseFragment<FragmentMusicBinding>() {
         songAdapter.registerItemClickListener { view, song, position ->
             when (view.id) {
                 R.id.layoutSong -> {
-                    val remainingUses = sharedPref.loadRemainingUses()
-
-                    if (remainingUses > 0) {
-                        requireContext().openActivity(PlaySongActivity::class.java) {
-                            putSerializable(
-                                SONGS,
-                                ArrayList(getSongs())
-                            )  // nếu songs là List<Song>
-                            putInt(CURRENT_INDEX, position)
-                        }
-                        sharedPref.saveRemainingUses(remainingUses - 1)
-                    } else {
-                        if (!requireActivity().isInternetConnected()) {
-                            requireActivity().showToast(getString(R.string.connect_internet))
-                            return@registerItemClickListener
-                        }
-                        adManager.showInterstitialAd(requireActivity(), onAdClosed = {
-                            requireContext().openActivity(PlaySongActivity::class.java) {
-                                putSerializable(
-                                    SONGS,
-                                    ArrayList(getSongs())
-                                )  // nếu songs là List<Song>
-                                putInt(CURRENT_INDEX, position)
-                            }
-                        }, onAdFailed = { errorMessage ->
-                            {
-                                requireActivity().showToast(getString(R.string.connect_internet))
-                            }
-                        })
-                    }
-
+                    playSong(position)
                 }
 
                 R.id.imvStar -> {
-                    song.isFavorite = !song.isFavorite
-                    sharedPref.toggleFavorite(song.filename)
-                    songAdapter.notifyItemChanged(position)
+                    saveFavoriteSong(song, position)
                 }
             }
 
         }
 
+    }
+
+    private fun saveFavoriteSong(
+        song: Song,
+        position: Int
+    ) {
+        song.isFavorite = !song.isFavorite
+        sharedPref.toggleFavorite(song.filename)
+        songAdapter.notifyItemChanged(position)
+    }
+
+    private fun playSong(position: Int) {
+        val remainingUses = sharedPref.loadRemainingUses()
+
+        if (remainingUses > 0) {
+            requireContext().openActivity(PlaySongActivity::class.java) {
+                putSerializable(
+                    SONGS,
+                    ArrayList(getSongs())
+                )  // nếu songs là List<Song>
+                putInt(CURRENT_INDEX, position)
+            }
+            sharedPref.saveRemainingUses(remainingUses - 1)
+        } else {
+            if (!requireActivity().isInternetConnected()) {
+                requireActivity().showToast(getString(R.string.connect_internet))
+                return
+            }
+            adManager.showInterstitialAd(requireActivity(), onAdClosed = {
+                requireContext().openActivity(PlaySongActivity::class.java) {
+                    putSerializable(
+                        SONGS,
+                        ArrayList(getSongs())
+                    )  // nếu songs là List<Song>
+                    putInt(CURRENT_INDEX, position)
+                }
+            }, onAdFailed = { errorMessage ->
+                {
+                    requireActivity().showToast(getString(R.string.connect_internet))
+                }
+            })
+        }
     }
 
     override fun onResume() {

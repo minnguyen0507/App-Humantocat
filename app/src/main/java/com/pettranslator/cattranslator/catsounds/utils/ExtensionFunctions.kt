@@ -666,6 +666,16 @@ fun View.rotateLeft(): Float {
 
 private const val TAG = "ExtensionFunctions"
 
+fun Context.getLocalizedContext(languageCode: String): Context {
+    val locale = Locale.forLanguageTag(languageCode)
+    val localeList = LocaleList(locale)
+    LocaleList.setDefault(localeList)
+
+    val config = resources.configuration
+    config.setLocales(localeList)
+
+    return createConfigurationContext(config)
+}
 
 fun ImageView.getBitmapFromImageView(): Bitmap {
     invalidate()
@@ -729,6 +739,8 @@ fun Context.share(text: String, subject: String = ""): Boolean {
         return false
     }
 }
+
+
 
 fun Activity.changeStatusBarColor(color: Int) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

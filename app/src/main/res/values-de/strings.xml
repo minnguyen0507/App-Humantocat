@@ -32,9 +32,6 @@
     <string name="apply">Anwenden</string>
     <string name="tap_mic">Tippen Sie zum Sprechen auf das Mikrofon</string>
     <string name="record">Aufzeichnen</string>
-    <string name="stop">Stoppen</string>
-    <string name="play">Spielen</string>
-    <string name="pause">Pause</string>
     <string name="close">Schließen</string>
     <string name="translator_result">Übersetzerergebnis</string>
     <string name="intro_3">Alle Werbe- und Abonnementgelder kommen Katzen zugute</string>
@@ -222,12 +219,6 @@
     <string name="challenge_11">Dieses Geräusch wird Ihre Katze verwirren</string>
     <string name="challenge_12">Dieses Geräusch wird Ihre Katze verrückt machen</string>
     <string name="r_1">Ich habe keinen Hunger, ich kontrolliere nur die Frische des Essens</string>
-    <string name="r_2">Berühre meinen Bauch noch einmal, ich wage dich</string>
-    <string name="r_3">Du bist zwei Minuten zu spät. Ich habe gezählt</string>
-    <string name="r_4">Das ist meins. Das Bett, der Stuhl, das ganze Haus</string>
-    <string name="r_5">Ich habe gerade 16 Stunden geschlafen. Zeit für ein Nickerchen</string>
-    <string name="r_6">Ich habe eine Fliege gesehen. Eliminiert</string>
-    <string name="r_7">Ich möchte nicht spielen. Aber gib mir das Spielzeug trotzdem</string>
     <string name="r_8">Ich starre, weil du meine Meditation unterbrichst</string>
     <string name="r_9">Diese Kiste ist jetzt mein Königreich</string>
     <string name="r_10">Ich miaue, weil ich Lust dazu habe. Keine weitere Erklärung</string>
@@ -291,4 +282,10 @@
     <string name="r_68">Ich bin eine Katze. Das erklärt alles</string>
     <string name="song_playing">Lied wird abgespielt</string>
     <string name="connect_internet">Bitte stellen Sie eine Verbindung zum Internet her, um diese Funktion nutzen zu können.</string>
+    <string name="content_record">Bitte erteilen Sie die Aufnahmeberechtigung, um diese Funktion nutzen zu können.</string>
+    <string name="rights_denied">Rechte verweigert</string>
+    <string name="n_1">Deine Katze hat gerade etwas miaut! Öffnen Sie die App, um zu sehen, ob es ein Rätsel gibt!</string>
+    <string name="n_2">Hast du heute einen neuen Katzenklang gelernt? Entdecken wir es jetzt! </string>
+    <string name="n_3">Die heutige Katzenherausforderung: Können Sie es richtig erraten? Öffnen Sie jetzt die App!</string>
+    <string name="n_4">Ihre Katze wartet auf Sie! Öffnen Sie die App, um ein neues Miauen zu hören!</string>
 </resources>

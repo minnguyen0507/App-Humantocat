@@ -38,11 +38,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun initialize() {
         adManager.loadNativeClickAd(viewBinding.adContainer,onAdLoaded = {}, onAdFailed = {})
+
         viewPage = ViewPagerAdapter(childFragmentManager, lifecycle)
-        viewPage.add(0) { AnimalListFragment.newInstance(EAnimal.CAT.id) }
-        viewPage.add(1) { AnimalListFragment.newInstance(EAnimal.DOG.id) }
-        viewBinding.vpAnimal.adapter = viewPage
-        viewBinding.vpAnimal.offscreenPageLimit = 1
+        viewPage.add(AnimalListFragment.newInstance(EAnimal.CAT.id))
+        viewPage.add(AnimalListFragment.newInstance(EAnimal.DOG.id))
+
+        viewBinding.vpAnimal.apply {
+            adapter = viewPage
+            offscreenPageLimit = 1
+        }
+
         viewBinding.apply {
             btnCat.setOnClickListener{ it ->
                 val assetManager = requireContext().assets

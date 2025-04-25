@@ -36,6 +36,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     override fun initialize() {
         settingAdapter = SettingAdapter()
         viewBinding.rcvSetting.adapter = settingAdapter
+        viewBinding.rcvSetting.setHasFixedSize(true)
 
         settingAdapter.registerItemClickListener { view,animal, postion  ->
             when (animal.imageResId) {
@@ -56,7 +57,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
                 }
 
                 R.drawable.nhanxet_2 -> {
-                    requireContext().sendFeedbackEmail("")
+                    requireContext().sendFeedbackEmail("hotro@boomstudio.vn")
                 }
 
                 R.drawable.baomat_2 -> {

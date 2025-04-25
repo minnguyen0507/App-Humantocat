@@ -2,55 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
-    <color name="app_color_primary">#F0DB1C</color>
     <color name="app_gray">#575757</color>
-    <color name="app_greenish">#F0DB1C</color>
-    <color name="app_purple">#6C5CE7</color>
     <color name="primaryColor">#0074C6</color>
-    <color name="app_pink">#CE00C6</color>
-
-    <color name="transparent">#00000000</color>
-
-    <color name="colorListenRingtone">#A8A8A8</color>
-
-    <color name="radioButtonLanguage">#F0DB1C</color>
-
     <color name="colorPremium">#B5A40E</color>
-    <color name="colorUnselect">#D9D9D9</color>
-
-    <color name="cardViewDone">#C4F319</color>
     <color name="cardViewProcess">#C7C5BA</color>
-
-    <color name="backgroundLoading">#7E000000</color>
-
-    <color name="colorAlert">#F44336</color>
-    <color name="colorShimmerSelect">#CC32E8C7</color>
-
-    <color name="black30">#4D000000</color>
-    <color name="white30">#4DFFFFFF</color>
-    <color name="startColor">#4B5DFC</color>
-    <color name="endColor">#F7277E</color>
-    <color name="red">#D50000</color>
-    <color name="background_app">#0D0B29</color>
-
-    <color name="skin">#ffcc99</color>
     <color name="green">#36B336</color>
-    <color name="blue">#0000ff</color>
-    <color name="yellow">#ffff00</color>
-    <color name="lollipop">#35a79c</color>
-    <color name="random">#a359b1</color>
-    <color name="maroon">#800000</color>
-
-    <color name="colorOverlay">#78FFFFFF</color>
-
-
-    <color name="colorBackgroundApp">#121111</color>
-    <color name="timNhat">#E3E1EE</color>
-
-    <color name="color_aspect_passive">#646464</color>
-    <color name="color_aspect_active">#3A98FA</color>
-
-    <color name="color_aspect_social_passive">#2B2B2B</color>
-
 </resources>

@@ -291,4 +291,10 @@
     <string name="r_68">Sono un gatto. Questo spiega tutto</string>
     <string name="song_playing">Canzone in riproduzione</string>
     <string name="connect_internet">Connettiti a Internet per utilizzare questa funzione.</string>
+    <string name="content_record">Concedere l \'autorizzazione alla registrazione per utilizzare questa funzione.</string>
+    <string name="rights_denied">Diritti negati</string>
+    <string name="n_1">Il tuo gatto ha appena miagolato qualcosa! Apri l\'app per vedere se c\'è un mistero!</string>
+    <string name="n_2">Hai imparato un nuovo suono del gatto oggi? Scopriamolo adesso! </string>
+    <string name="n_3">La sfida del gatto di oggi: riesci a indovinare? Apri l\'app adesso!</string>
+    <string name="n_4">Il tuo gatto ti sta aspettando! Apri l\'app per ascoltare un nuovo miagolio!</string>
 </resources>

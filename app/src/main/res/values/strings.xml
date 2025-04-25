@@ -31,9 +31,6 @@
     <string name="apply">Apply</string>
     <string name="tap_mic">Tap mic to talk</string>
     <string name="record">Record</string>
-    <string name="stop">Stop</string>
-    <string name="play">Play</string>
-    <string name="pause">Pause</string>
     <string name="close">Close</string>
     <string name="translator_result">Translator result</string>
     <string name="intro_3">All advertising and subscription funds go to help cats</string>
@@ -221,12 +218,6 @@
     <string name="challenge_11">This sound will make your cat confuse</string>
     <string name="challenge_12">This sound will make your cat go crazy</string>
     <string name="r_1">I\'m not hungry, just checking the freshness of the food</string>
-    <string name="r_2">Touch my belly one more time, I dare you</string>
-    <string name="r_3">You\'re two minutes late. I counted</string>
-    <string name="r_4">This is mine. The bed, the chair, the whole house</string>
-    <string name="r_5">I just slept 16 hours. Time for a nap</string>
-    <string name="r_6">I saw a fly. Eliminated</string>
-    <string name="r_7">I don’t want to play. But give me the toy anyway</string>
     <string name="r_8">I’m staring because you’re interrupting my meditation</string>
     <string name="r_9">This box is now my kingdom</string>
     <string name="r_10">I’m meowing because I feel like it. No further explanation</string>
@@ -290,4 +281,10 @@
     <string name="r_68">I’m a cat. That explains everything</string>
     <string name="song_playing">Song playing</string>
     <string name="connect_internet">Please connect to the internet to use this feature.</string>
+    <string name="content_record">Please grant recording permission to use this feature.</string>
+    <string name="rights_denied">Rights denied</string>
+    <string name="n_1">Your cat just meowed something! Open the app to see if there\'s a mystery!</string>
+    <string name="n_2">Have you learned a new cat sound today? Let’s discover it now! </string>
+    <string name="n_3">Today’s cat challenge: Can you guess it right? Open the app now!</string>
+    <string name="n_4">Your cat is waiting for you! Open the app to hear a new meow!</string>
 </resources>

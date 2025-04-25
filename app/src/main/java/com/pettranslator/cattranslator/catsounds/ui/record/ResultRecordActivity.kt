@@ -48,35 +48,34 @@ class ResultRecordActivity : BaseActivity<ActivityResultRecordBinding>() {
         }
 
 
-        viewBinding.btnPlay.setOnClickListener {
-            val assetManager = this.assets
-            var folder = ""
-            folder = if (typeAnimal == EAnimal.CAT) {
-                "cat_sound_translator"
-            } else {
-                "dog_sound"
+        viewBinding.apply {
+            btnBack.setOnClickListener {
+                finish()
             }
-            val fileList = assetManager.list(folder) ?: emptyArray()
-            val randomFile = fileList.random()
-            togglePlayPause("$folder/$randomFile")
-        }
-
-        viewBinding.btnBack.setOnClickListener {
-            finish()
-        }
-
-        viewBinding.imvCat.setOnClickListener {
-            typeAnimal = EAnimal.CAT
-            it.background = ContextCompat.getDrawable(this, R.drawable.circle_button_border)
-            viewBinding.imvDog.background =
-                ContextCompat.getDrawable(this, R.drawable.bg_circle_unselected)
-        }
-
-        viewBinding.imvDog.setOnClickListener {
-            typeAnimal = EAnimal.DOG
-            it.background = ContextCompat.getDrawable(this, R.drawable.circle_button_border)
-            viewBinding.imvCat.background =
-                ContextCompat.getDrawable(this, R.drawable.bg_circle_unselected)
+            btnPlay.setOnClickListener {
+                val assetManager = this@ResultRecordActivity.assets
+                var folder = ""
+                folder = if (typeAnimal == EAnimal.CAT) {
+                    "cat_sound_translator"
+                } else {
+                    "dog_sound"
+                }
+                val fileList = assetManager.list(folder) ?: emptyArray()
+                val randomFile = fileList.random()
+                togglePlayPause("$folder/$randomFile")
+            }
+            imvCat.setOnClickListener {
+                typeAnimal = EAnimal.CAT
+                it.background = ContextCompat.getDrawable(this@ResultRecordActivity, R.drawable.circle_button_border)
+                viewBinding.imvDog.background =
+                    ContextCompat.getDrawable(this@ResultRecordActivity, R.drawable.bg_circle_unselected)
+            }
+            imvDog.setOnClickListener {
+                typeAnimal = EAnimal.DOG
+                it.background = ContextCompat.getDrawable(this@ResultRecordActivity, R.drawable.circle_button_border)
+                viewBinding.imvCat.background =
+                    ContextCompat.getDrawable(this@ResultRecordActivity, R.drawable.bg_circle_unselected)
+            }
         }
     }
 

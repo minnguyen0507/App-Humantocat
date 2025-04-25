@@ -1,7 +1,10 @@
 package com.pettranslator.cattranslator.catsounds.ui.policy
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.webkit.WebSettings
+import android.webkit.WebViewClient
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -18,15 +21,26 @@ class PolicyActivity : BaseActivity<ActivityPolicyBinding>() {
     override fun inflateViewBinding(inflater: LayoutInflater): ActivityPolicyBinding =
         ActivityPolicyBinding.inflate(inflater)
 
+
+    @SuppressLint("SetJavaScriptEnabled")
     override fun initialize() {
         enableEdgeToEdge()
-        viewBinding.btnBack.setSafeOnClickListener {
-            finish()
-        }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        viewBinding.apply {
+            btnBack.setSafeOnClickListener {
+                finish()
+            }
+            val settings = webViewPolicy.settings
+            settings.javaScriptEnabled = true
+            settings.domStorageEnabled = true
+            settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+            webViewPolicy.webViewClient = WebViewClient()
+            webViewPolicy.loadUrl("https://sites.google.com/boomstudio.vn/privacypolicyforboomgamesjsc")
         }
     }
 

@@ -37,30 +37,32 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {}, onAdFailed = {})
-        viewBinding.introViewPager.adapter = IntroAdapter(dataProvider.getSlideList())
 
+        viewBinding.apply {
+            introViewPager.adapter = IntroAdapter(dataProvider.getSlideList())
+            tabIndicator.attachTo(viewBinding.introViewPager)
 
-        viewBinding.tabIndicator.attachTo(viewBinding.introViewPager)
-
-        // Next button
-        viewBinding.btnNext.setOnClickListener {
-            val next = viewBinding.introViewPager.currentItem + 1
-            if (next < dataProvider.getSlideList().size) {
-                viewBinding.introViewPager.currentItem = next
-            } else {
-                sharedPref.setFirstRun(false)
-                adManager.showInterstitialAd(
-                    this,
-                    onAdClosed = {
-                        openActivityAndClearApp(MainActivity::class.java)
-                    },
-                    onAdFailed = { _ ->
-                        openActivityAndClearApp(MainActivity::class.java)
-                    }
-                )
+            btnNext.setOnClickListener {
+                val next = viewBinding.introViewPager.currentItem + 1
+                if (next < dataProvider.getSlideList().size) {
+                    viewBinding.introViewPager.currentItem = next
+                } else {
+                    sharedPref.setFirstRun(false)
+                    adManager.showInterstitialAd(
+                        this@IntroActivity,
+                        onAdClosed = {
+                            openActivityAndClearApp(MainActivity::class.java)
+                        },
+                        onAdFailed = { _ ->
+                            openActivityAndClearApp(MainActivity::class.java)
+                        }
+                    )
+                }
             }
         }
+
     }
 
 }

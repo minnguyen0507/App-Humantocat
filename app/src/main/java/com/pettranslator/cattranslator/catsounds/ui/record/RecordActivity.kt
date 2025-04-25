@@ -29,6 +29,7 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
 
     @Inject
     lateinit var dataProvider: DataProvider
+
     private var isRunning = false
     private val RECORD_AUDIO_REQUEST_CODE = 1002
     private val timerRunnable = object : Runnable {

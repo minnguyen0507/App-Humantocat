@@ -291,4 +291,10 @@
     <string name="r_68">Soy un gato. eso lo explica todo</string>
     <string name="song_playing">Reproducción de canción</string>
     <string name="connect_internet">Conéctese a Internet para utilizar esta función.</string>
+    <string name="content_record">Conceda permiso de grabación para utilizar esta función.</string>
+    <string name="rights_denied">Derechos negados</string>
+    <string name="n_1">¡Tu gato acaba de maullar algo! ¡Abre la aplicación para ver si hay un misterio!</string>
+    <string name="n_2">¿Has aprendido un nuevo sonido de gato hoy? ¡Descubrámoslo ahora! </string>
+    <string name="n_3">El desafío del gato de hoy: ¿puedes adivinarlo bien? ¡Abre la aplicación ahora!</string>
+    <string name="n_4">¡Tu gato te está esperando! ¡Abre la aplicación para escuchar un nuevo maullido!</string>
 </resources>

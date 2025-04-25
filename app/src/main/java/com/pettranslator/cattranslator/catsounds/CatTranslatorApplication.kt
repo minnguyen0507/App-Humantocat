@@ -5,6 +5,8 @@ import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.ad.AppOpenAdManager
 import com.google.android.gms.ads.MobileAds
@@ -16,13 +18,22 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class CatTranslatorApplication : Application(),
-    Application.ActivityLifecycleCallbacks {
+    Application.ActivityLifecycleCallbacks , Configuration.Provider{
 
     private var activityReferences = 0
     private var isActivityChangingConfigurations = false
     private var isReturningFromBackground = false
     private var hasAppStartedOnce = false
     @Inject lateinit var sharedPref: SharedPref
+
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
+
 
     override fun onCreate() {
         super.onCreate()

@@ -291,4 +291,10 @@
     <string name="r_68">Tôi là một con mèo. Điều đó giải thích mọi thứ</string>
     <string name="song_playing">Bài hát đang phát</string>
     <string name="connect_internet">Vui lòng kết nối internet để sử dụng tính năng này.</string>
+    <string name="content_record">Vui lòng cấp quyền ghi âm để sử dụng tính năng này.</string>
+    <string name="rights_denied">Quyền bị từ chối</string>
+    <string name="n_1">Con mèo của bạn vừa kêu meo meo gì đó! Mở ứng dụng để xem có điều bí ẩn nào không!</string>
+    <string name="n_2">Hôm nay bạn đã học được âm thanh mới của mèo chưa? Hãy cùng khám phá nó ngay bây giờ! </string>
+    <string name="n_3">Thử thách mèo hôm nay: Bạn có đoán đúng không? Hãy mở ứng dụng ngay bây giờ!</string>
+    <string name="n_4">Con mèo của bạn đang đợi bạn! Mở ứng dụng để nghe tiếng meo meo mới!</string>
 </resources>

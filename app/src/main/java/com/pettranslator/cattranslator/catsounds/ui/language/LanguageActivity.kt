@@ -53,7 +53,7 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
         viewBinding.apply {
             rcvLanguage.adapter = languageAdapter
             btnBack.setSafeOnClickListener {
-                setResult(Activity.RESULT_CANCELED)
+                setResult(RESULT_CANCELED)
                 finish()
             }
             btnApply.setSafeOnClickListener {

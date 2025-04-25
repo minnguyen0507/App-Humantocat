@@ -26,34 +26,37 @@ class ClickMouseFragment :
     ): FragmentClickMounseBinding = FragmentClickMounseBinding.inflate(inflater)
 
     override fun initialize() {
+        setUpSpinner()
+    }
 
-
+    private fun setUpSpinner() {
         val items = listOf(
             getString(R.string.sound) + " 1",
             getString(R.string.sound) + " 2",
             getString(R.string.sound) + " 3"
         )
 
-        val adapter = ArrayAdapter(
+        val adapterSpinner = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
             items
         )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        viewBinding.mySpinner.adapter = adapter
-
-        viewBinding.mySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>, view: View?, position: Int, id: Long
-            ) {
-                when(position){
-                    0 -> resSound = R.raw.click1_1
-                    1 -> resSound = R.raw.click2_2
-                    2 -> resSound = R.raw.click3_3
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        viewBinding.mySpinner.apply {
+            adapter = adapterSpinner
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View?, position: Int, id: Long
+                ) {
+                    when (position) {
+                        0 -> resSound = R.raw.click1_1
+                        1 -> resSound = R.raw.click2_2
+                        2 -> resSound = R.raw.click3_3
+                    }
                 }
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {}
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
         }
         viewBinding.imageView9.setOnClickListener {
             soundPlayer.playRaw(resSound)
@@ -65,6 +68,7 @@ class ClickMouseFragment :
         super.onResume()
         viewBinding.mySpinner.visibility = View.VISIBLE
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         soundPlayer.release()

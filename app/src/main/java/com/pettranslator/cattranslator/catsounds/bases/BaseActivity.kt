@@ -12,20 +12,18 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.view.LayoutInflater
-import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.viewbinding.ViewBinding
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import com.pettranslator.cattranslator.catsounds.R
 
 abstract class BaseActivity<viewBinding : ViewBinding> :
     AppCompatActivity() {
     protected lateinit var viewBinding: viewBinding
     abstract fun inflateViewBinding(inflater: LayoutInflater): viewBinding
     lateinit var gson: Gson
-    lateinit var languageLauncher: ActivityResultLauncher<Intent>
     val handler = Handler(Looper.myLooper() ?: Looper.getMainLooper())
 
     fun requestPermission(permission: String, requestCode: Int) {
@@ -51,8 +49,8 @@ abstract class BaseActivity<viewBinding : ViewBinding> :
         val shouldShowRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, permission)
         if (!shouldShowRationale) {
             showPermissionDeniedMessage(
-                "Vui lòng cấp quyền để sử dụng tính năng này.",
-                "Cài đặt"
+                getString(R.string.content_record),
+                getString(R.string.setting)
             ) {
                 openAppSettings()
             }
@@ -62,12 +60,12 @@ abstract class BaseActivity<viewBinding : ViewBinding> :
 
     private fun showPermissionDeniedMessage(message: String, actionLabel: String, action: () -> Unit) {
         val builder = AlertDialog.Builder(this)
-            .setTitle("Quyền bị từ chối")
+            .setTitle(getString(R.string.rights_denied))
             .setMessage(message)
             .setPositiveButton(actionLabel) { _, _ ->
                 action()
             }
-            .setNegativeButton("Hủy", null)
+            .setNegativeButton(getString(R.string.close), null)
             .setCancelable(false)
 
         builder.show()
