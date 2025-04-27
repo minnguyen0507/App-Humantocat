@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "742133742623",
+    "project_id": "cat-translator-811d7",
+    "storage_bucket": "cat-translator-811d7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:742133742623:android:82124d1d8a15118d2fe92a",
+        "android_client_info": {
+          "package_name": "com.pettranslator.cattranslator.catsounds"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBY9ptRVBtxoPS2VJfCc7w8Medjtz1LgOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

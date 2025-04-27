@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.pettranslator.cattranslator.catsounds" />
+                  <option name="mobileSdkAppId" value="1:742133742623:android:82124d1d8a15118d2fe92a" />
+                  <option name="projectId" value="cat-translator-811d7" />
+                  <option name="projectNumber" value="742133742623" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

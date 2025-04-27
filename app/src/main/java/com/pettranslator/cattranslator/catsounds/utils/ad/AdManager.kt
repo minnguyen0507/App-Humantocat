@@ -44,7 +44,7 @@ class AdManager @Inject constructor(
             interstitialAd?.show(context as Activity)
         } else {
             // Nếu chưa có quảng cáo, tải lại quảng cáo
-            loadInterstitialAd(activity, onAdClosed, onAdLoaded ,onAdFailed)
+            loadInterstitialAd(activity, onAdClosed, onAdLoaded, onAdFailed)
         }
     }
 
@@ -176,7 +176,11 @@ class AdManager @Inject constructor(
         nativeAdView.setNativeAd(nativeAd)
     }
 
-    fun loadBannerAd(container: ViewGroup) {
+    fun loadBannerAd(
+        container: ViewGroup,
+        onAdLoaded: (() -> Unit)? = null,
+        onAdFailed: (String) -> Unit = { errorMessage -> }
+    ) {
         container.removeAllViews()
         val adView = AdView(context).apply {
             adUnitId = AdUnitIds.BANNER
@@ -185,10 +189,12 @@ class AdManager @Inject constructor(
         adView.adListener = object : AdListener() {
             override fun onAdFailedToLoad(error: LoadAdError) {
                 ALog.d("AdManager", "Banner failed to load: ${error.message}")
+                onAdFailed.invoke(error.message)
             }
 
             override fun onAdLoaded() {
                 ALog.d("AdManager", "Banner loaded")
+                onAdLoaded?.invoke()
             }
         }
 

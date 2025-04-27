@@ -1,6 +1,8 @@
 package com.pettranslator.cattranslator.catsounds.module
 
 import android.content.Context
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.MediaSoundPlayer
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
@@ -32,10 +34,13 @@ object AppModule {
     fun provideMediaSoundPlayer(@ApplicationContext context: Context): MediaSoundPlayer {
         return MediaSoundPlayer(context)
     }
-//    @Provides
-//    @Singleton
-//    fun provideNotificationWork(@ApplicationContext context: Context): MediaSoundPlayer {
-//        return MediaSoundPlayer(context)
-//    }
+    @Provides
+    fun provideFirebaseAnalytics(@ApplicationContext context: Context): FirebaseAnalytics {
+        return FirebaseAnalytics.getInstance(context)
+    }
 
+    @Provides
+    fun provideAnalyticsHelper(firebaseAnalytics: FirebaseAnalytics): AnalyticsHelper {
+        return AnalyticsHelper(firebaseAnalytics)
+    }
 }
