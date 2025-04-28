@@ -88,31 +88,6 @@ class AdManager @Inject constructor(
             })
     }
 
-    fun loadNativeAd(
-        container: ViewGroup, // Container để chứa NativeAdView
-        onAdLoaded: (NativeAd) -> Unit,
-        onAdFailed: (String) -> Unit
-    ) {
-        val adLoader = AdLoader.Builder(context, AdUnitIds.NATIVE)
-            .forNativeAd { nativeAd ->
-                val adView = LayoutInflater.from(context)
-                    .inflate(R.layout.native_ad_media_layout, container, false) as NativeAdView
-                populateNativeMediaOnly(nativeAd, adView)
-                container.removeAllViews()
-                container.addView(adView)
-                onAdLoaded(nativeAd)
-            }
-            .withAdListener(object : AdListener() {
-                override fun onAdFailedToLoad(error: LoadAdError) {
-                    ALog.d("AdManager", "Native ad failed to load: ${error.message}")
-                    onAdFailed(error.message)
-                }
-            })
-            .build()
-
-        adLoader.loadAd(AdRequest.Builder().build())
-    }
-
     fun loadNativeClickAd(
         container: ViewGroup, // Container để chứa NativeAdView
         onAdLoaded: (NativeAd) -> Unit,
@@ -147,11 +122,6 @@ class AdManager @Inject constructor(
         adLoader.loadAd(AdRequest.Builder().build())
     }
 
-    private fun populateNativeMediaOnly(nativeAd: NativeAd, adView: NativeAdView) {
-        val mediaView = adView.findViewById<MediaView>(R.id.ad_media)
-        adView.mediaView = mediaView
-        adView.setNativeAd(nativeAd)
-    }
 
     private fun displayNativeAd(nativeAdView: NativeAdView, nativeAd: NativeAd, view: View) {
         // Gán các thành phần quảng cáo vào NativeAdView
