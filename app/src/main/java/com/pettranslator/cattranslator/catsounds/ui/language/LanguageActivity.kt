@@ -13,6 +13,7 @@ import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityLanguageBinding
 import com.pettranslator.cattranslator.catsounds.model.LanguageItem
 import com.pettranslator.cattranslator.catsounds.ui.intro.IntroActivity
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.DataProvider
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
@@ -31,7 +32,8 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
     lateinit var dataProvider: DataProvider
     @Inject
     lateinit var sharedPref: SharedPref
-
+    @jakarta.inject.Inject
+    lateinit var analyticsHelper: AnalyticsHelper
     private var listLanguage = mutableListOf<LanguageItem>()
 
     private lateinit var languageAdapter: LanguageAdapter
@@ -41,7 +43,7 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
 
     override fun initialize() {
         enableEdgeToEdge()
-
+        analyticsHelper.logScreenView("Language")
         listLanguage = getLanguages()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

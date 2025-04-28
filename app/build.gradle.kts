@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.google.services)
     kotlin("kapt")
 }
 android {
@@ -115,5 +116,7 @@ dependencies {
     implementation (libs.androidx.hilt.work)
     kapt (libs.androidx.hilt.compiler)
     implementation(libs.androidx.work.runtime.ktx)
+
+    implementation(libs.firebase.analytics)
 
 }

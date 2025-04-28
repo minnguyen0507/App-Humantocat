@@ -1,5 +1,6 @@
 [versions]
 agp = "8.9.1"
+firebaseAnalytics = "22.4.0"
 hilt = "2.51.1"
 converterGson = "2.11.0"
 glide = "4.16.0"
@@ -23,6 +24,7 @@ playServicesAds = "23.2.0"
 shimmer = "0.5.0"
 viewpagerdotsindicator = "5.1.0"
 workRuntimeKtx = "2.10.1"
+googleServices  = "4.4.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +34,7 @@ androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", 
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebaseAnalytics" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
@@ -55,4 +58,5 @@ viewpagerdotsindicator = { module = "com.tbuonomo:dotsindicator", version.ref = 
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 
