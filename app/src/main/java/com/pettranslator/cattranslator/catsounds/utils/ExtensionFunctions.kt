@@ -146,7 +146,6 @@ fun Activity.hideStatusBar() {
 }
 
 
-
 fun Activity.isDarkModeEnabled(context: Context): Boolean {
     val uiModeManager = this.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
     return uiModeManager.nightMode == UiModeManager.MODE_NIGHT_YES
@@ -327,16 +326,8 @@ fun Context.openUrl(url: String) {
         e.printStackTrace();
     }
 }
- fun Context.sendFeedbackEmail(email: String) {
-    val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-        data = "mailto:".toUri()
-        putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-    }
 
-    if (emailIntent.resolveActivity(applicationContext.packageManager) != null) {
-        startActivity(emailIntent)
-    }
-}
+
 
 var ROTATION_FROM_ANGEL = 0f
 var ROTATION_TO_ANGEL = 0f
@@ -739,7 +730,6 @@ fun Context.share(text: String, subject: String = ""): Boolean {
         return false
     }
 }
-
 
 
 fun Activity.changeStatusBarColor(color: Int) {

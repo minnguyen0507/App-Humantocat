@@ -1,15 +1,8 @@
 package com.pettranslator.cattranslator.catsounds.ui.home
 
-import android.media.SoundPool
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatButton
-import androidx.core.content.ContextCompat
-import androidx.core.view.WindowInsetsControllerCompat
-import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.ViewPagerAdapter
@@ -17,14 +10,16 @@ import com.pettranslator.cattranslator.catsounds.bases.fragment.BaseFragment
 import com.pettranslator.cattranslator.catsounds.databinding.FragmentHomeBinding
 import com.pettranslator.cattranslator.catsounds.model.EAnimal
 import com.pettranslator.cattranslator.catsounds.utils.ALog
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.DataProvider
+import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
-import com.pettranslator.cattranslator.catsounds.utils.setSafeOnClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+
     private lateinit var viewPage: ViewPagerAdapter
 
     @Inject
@@ -32,12 +27,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     @Inject lateinit var dataProvider: DataProvider
 
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
+
     override fun inflateViewBinding(
         inflater: LayoutInflater, container: ViewGroup?
     ): FragmentHomeBinding = FragmentHomeBinding.inflate(inflater)
 
     override fun initialize() {
-        adManager.loadNativeClickAd(viewBinding.adContainer,onAdLoaded = {}, onAdFailed = {})
+
+        analyticsHelper.logScreenView(ScreenName.HOME)
+        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {
+            analyticsHelper.logShowNative(ScreenName.HOME)
+        }, onAdFailed = {
+            analyticsHelper.logShowNativeFailed(ScreenName.HOME)
+        })
 
         viewPage = ViewPagerAdapter(childFragmentManager, lifecycle)
         viewPage.add(AnimalListFragment.newInstance(EAnimal.CAT.id))

@@ -7,6 +7,8 @@ import com.pettranslator.cattranslator.catsounds.bases.fragment.BaseFragment
 import com.pettranslator.cattranslator.catsounds.databinding.FragmentTranslateBinding
 import com.pettranslator.cattranslator.catsounds.model.ETypeTranslator
 import com.pettranslator.cattranslator.catsounds.ui.record.RecordActivity
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
+import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import com.pettranslator.cattranslator.catsounds.utils.isInternetConnected
 import com.pettranslator.cattranslator.catsounds.utils.openActivity
@@ -22,40 +24,49 @@ class TranslateFragment : BaseFragment<FragmentTranslateBinding>() {
     @Inject
     lateinit var adManager: AdManager
 
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
+
     override fun inflateViewBinding(
         inflater: LayoutInflater, container: ViewGroup?
     ): FragmentTranslateBinding = FragmentTranslateBinding.inflate(inflater)
 
     override fun initialize() {
-        adManager.loadNativeClickAd(viewBinding.adContainer,onAdLoaded = {}, onAdFailed = {})
+
+        analyticsHelper.logScreenView(ScreenName.TRANSLATE)
+
+        adManager.loadNativeClickAd(viewBinding.adContainer,onAdLoaded = {
+            analyticsHelper.logShowNative(ScreenName.TRANSLATE)
+        }, onAdFailed = {
+            analyticsHelper.logShowNativeFailed(ScreenName.TRANSLATE)
+        })
+
         viewBinding.apply {
             constraintHuman.setSafeOnClickListener {
-                if (!requireActivity().isInternetConnected()) {
-                    requireActivity().showToast(getString(R.string.connect_internet))
-                    return@setSafeOnClickListener
-                }
-                adManager.showInterstitialAd(requireActivity(), onAdClosed = {
-                    typeTrans = ETypeTranslator.HUMANTOANIMAL
-                    requireContext().openActivity(RecordActivity::class.java)
-                }, onAdFailed = { errorMessage ->{
-                    requireActivity().showToast(getString(R.string.connect_internet))
-                } })
-
+                goToRecordActivity(ETypeTranslator.HUMANTOANIMAL)
             }
             constraintAnimal.setSafeOnClickListener {
-                if (!requireActivity().isInternetConnected()) {
-                    requireActivity().showToast(getString(R.string.connect_internet))
-                    return@setSafeOnClickListener
-                }
-                adManager.showInterstitialAd(requireActivity(), onAdClosed = {
-                    typeTrans = ETypeTranslator.CATTOHUMAN
-                    requireContext().openActivity(RecordActivity::class.java)
-                }, onAdFailed = { errorMessage ->{
-                    requireActivity().showToast(getString(R.string.connect_internet))
-                } })
+                goToRecordActivity(ETypeTranslator.CATTOHUMAN)
 
             }
         }
+    }
+
+    private fun goToRecordActivity(type: ETypeTranslator) {
+        if (!requireActivity().isInternetConnected()) {
+            requireActivity().showToast(getString(R.string.connect_internet))
+            return
+        }
+        adManager.showInterstitialAd(requireActivity(), onAdClosed = {
+            typeTrans = type
+            requireContext().openActivity(RecordActivity::class.java)
+            analyticsHelper.logShowInterstitial(ScreenName.TRANSLATE)
+        }, onAdFailed = { errorMessage ->
+            {
+                analyticsHelper.logShowInterstitialFailed(ScreenName.TRANSLATE)
+                requireActivity().showToast(getString(R.string.connect_internet))
+            }
+        })
     }
 
     companion object{

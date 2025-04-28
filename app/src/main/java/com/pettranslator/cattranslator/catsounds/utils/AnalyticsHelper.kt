@@ -20,22 +20,6 @@ class AnalyticsHelper(private val firebaseAnalytics: FirebaseAnalytics) {
         logEvent(AnalyticsEvent("screen_view", params))
     }
 
-    // 1. Screen View
-    fun logScreenView2(screenName: String) {
-        val params = Bundle().apply {
-            putString("screen_name", screenName)
-        }
-        logEvent(AnalyticsEvent("ahihi", params))
-    }
-
-    // 1. Screen View
-    fun logScreenView3(screenName: String) {
-        val params = Bundle().apply {
-            putString("screen_name", screenName)
-        }
-        logEvent(AnalyticsEvent("ahihiahihi", params))
-    }
-
     // 2. Tutorial Begin
     fun logTutorialBegin(time: String, clicked: Boolean) {
         val params = Bundle().apply {
@@ -62,11 +46,6 @@ class AnalyticsHelper(private val firebaseAnalytics: FirebaseAnalytics) {
         logEvent(AnalyticsEvent("app_update", params))
     }
 
-    // 5. App Remove (Track via Google Play Console)
-    fun logAppRemove() {
-        logEvent(AnalyticsEvent("app_remove", Bundle()))
-    }
-
     // 6. Notification Receive
     fun logNotificationReceive(notificationType: String) {
         val params = Bundle().apply {
@@ -86,7 +65,7 @@ class AnalyticsHelper(private val firebaseAnalytics: FirebaseAnalytics) {
     // 8. Language Select
     fun logLanguageSelect(language: String) {
         val params = Bundle().apply {
-            putString("language", language)
+            putString("language_code", language)
         }
         logEvent(AnalyticsEvent("language_select", params))
     }

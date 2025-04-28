@@ -12,11 +12,17 @@ import androidx.core.view.WindowInsetsCompat
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityPolicyBinding
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
+import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import com.pettranslator.cattranslator.catsounds.utils.setSafeOnClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PolicyActivity : BaseActivity<ActivityPolicyBinding>() {
+
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
 
     override fun inflateViewBinding(inflater: LayoutInflater): ActivityPolicyBinding =
         ActivityPolicyBinding.inflate(inflater)
@@ -25,6 +31,8 @@ class PolicyActivity : BaseActivity<ActivityPolicyBinding>() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun initialize() {
         enableEdgeToEdge()
+
+        analyticsHelper.logScreenView(ScreenName.POLICY)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)

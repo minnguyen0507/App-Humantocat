@@ -20,6 +20,15 @@ class SharedPref @Inject constructor(private val context: Context) {
         private const val KEY_SEND_RATE = "send_rate"
         private const val KEY_REMAINING_USES = "remaining_uses"
         private const val KEY_FAVORITE_SONGS = "favorite_songs"
+        private const val KEY_APP_VERSION = "favorite_songs"
+    }
+
+    fun saveVersion(version: String) {
+        sharedPreferences.edit { putString(KEY_APP_VERSION, version) }
+    }
+
+    fun getVersion(): String {
+        return sharedPreferences.getString(KEY_APP_VERSION, "").toString()
     }
 
     fun saveLanguage(languageCode: String) {

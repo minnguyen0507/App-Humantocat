@@ -11,21 +11,31 @@ import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityPlaySongBinding
 import com.pettranslator.cattranslator.catsounds.model.Song
-import com.pettranslator.cattranslator.catsounds.ui.music.MusicFragment
+import com.pettranslator.cattranslator.catsounds.ui.music.SongFragment
 import com.pettranslator.cattranslator.catsounds.utils.ALog
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.MediaSoundPlayer
+import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
+
     @Inject
     lateinit var adManager: AdManager
+
     @Inject
     lateinit var soundPlayer: MediaSoundPlayer
+
     private var currentIndex = 0
+
     private lateinit var songs: List<Song>
+
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
+
     private val updateSeekBarRunnable = object : Runnable {
         override fun run() {
             val currentPosition = soundPlayer.getCurrentPosition()
@@ -40,20 +50,25 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
 
     override fun initialize() {
         enableEdgeToEdge()
+        analyticsHelper.logScreenView(ScreenName.SONG_PLAYING)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {}, onAdFailed = {})
+        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {
+            analyticsHelper.logShowNative(ScreenName.SONG_PLAYING)
+        }, onAdFailed = {
+            analyticsHelper.logShowNativeFailed(ScreenName.SONG_PLAYING)
+        })
         setupUI()
         playCurrentSong()
     }
 
     private fun setupUI() {
 
-        songs = intent.getSerializableExtra(MusicFragment.SONGS) as List<Song>
-        currentIndex = intent.getIntExtra(MusicFragment.CURRENT_INDEX, 0)
+        songs = intent.getSerializableExtra(SongFragment.SONGS) as List<Song>
+        currentIndex = intent.getIntExtra(SongFragment.CURRENT_INDEX, 0)
         ALog.d("PlaySongActivityS", "currentIndex: $currentIndex")
         ALog.d("PlaySongActivityS", "Songs: $songs")
         checkButtonNext()

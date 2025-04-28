@@ -10,9 +10,12 @@ import androidx.core.os.bundleOf
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.fragment.BaseFragment
 import com.pettranslator.cattranslator.catsounds.databinding.FragmentListAnimalBinding
+import com.pettranslator.cattranslator.catsounds.model.Animal
 import com.pettranslator.cattranslator.catsounds.model.EAnimal
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.DataProvider
 import com.pettranslator.cattranslator.catsounds.utils.MediaSoundPlayer
+import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import com.pettranslator.cattranslator.catsounds.utils.isInternetConnected
@@ -39,6 +42,9 @@ class AnimalListFragment :
     @Inject
     lateinit var sharedPref: SharedPref
 
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         filterType = arguments?.getInt(ARG_FILTER) ?: 0
@@ -55,8 +61,7 @@ class AnimalListFragment :
         adapter.registerItemClickListener { view, animal, postion ->
             val remainingUses = sharedPref.loadRemainingUses()
             if (remainingUses > 0) {
-                soundPlayer.playFromAsset(animal.soundResId)
-                zoomInOutObject(view)
+                playSound(animal, view)
                 sharedPref.saveRemainingUses(remainingUses - 1)
             } else {
                 if (!requireActivity().isInternetConnected()) {
@@ -64,10 +69,11 @@ class AnimalListFragment :
                     return@registerItemClickListener
                 }
                 adManager.showInterstitialAd(requireActivity(), onAdClosed = {
+                    analyticsHelper.logShowInterstitial(ScreenName.HOME)
                     sharedPref.saveRemainingUses(2)
-                    soundPlayer.playFromAsset(animal.soundResId)
-                    zoomInOutObject(view)
+                    playSound(animal, view)
                 }, onAdFailed = { _ ->
+                    analyticsHelper.logShowInterstitialFailed(ScreenName.HOME)
                     requireActivity().showToast(getString(R.string.connect_internet))
                  })
             }
@@ -77,6 +83,16 @@ class AnimalListFragment :
             return
         }
         adapter.addData(dataProvider.getDogSounds().toMutableList())
+    }
+
+    private fun playSound(
+        animal: Animal,
+        view: View
+    ) {
+        soundPlayer.playFromAsset(animal.soundResId)
+        val fileName = getFileName(animal.soundResId)
+        analyticsHelper.logPlaySounds(fileName)
+        zoomInOutObject(view)
     }
 
     private fun zoomInOutObject(view: View) {
@@ -98,6 +114,14 @@ class AnimalListFragment :
         soundPlayer.release()
     }
 
+
+    fun getFileName(path: String): String {
+        if (path.isBlank() || path == "/") {
+            return path
+        }
+
+        return path.substringAfterLast("/", path)
+    }
     companion object {
         private const val ARG_FILTER = "filter"
 

@@ -15,6 +15,7 @@ import com.pettranslator.cattranslator.catsounds.model.LanguageItem
 import com.pettranslator.cattranslator.catsounds.ui.intro.IntroActivity
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.DataProvider
+import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import com.pettranslator.cattranslator.catsounds.utils.openActivityAndClearApp
@@ -25,15 +26,21 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
+
     private var langCode = "en"
+
     @Inject
     lateinit var adManager: AdManager
+
     @Inject
     lateinit var dataProvider: DataProvider
+
     @Inject
     lateinit var sharedPref: SharedPref
-    @jakarta.inject.Inject
+
+    @Inject
     lateinit var analyticsHelper: AnalyticsHelper
+
     private var listLanguage = mutableListOf<LanguageItem>()
 
     private lateinit var languageAdapter: LanguageAdapter
@@ -43,14 +50,18 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
 
     override fun initialize() {
         enableEdgeToEdge()
-        analyticsHelper.logScreenView("Language")
+        analyticsHelper.logScreenView(ScreenName.LANGUAGE)
         listLanguage = getLanguages()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {}, onAdFailed = {})
+        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {
+            analyticsHelper.logShowNative(ScreenName.LANGUAGE)
+        }, onAdFailed = {
+            analyticsHelper.logShowNativeFailed(ScreenName.LANGUAGE)
+        })
         languageAdapter = LanguageAdapter()
         viewBinding.apply {
             rcvLanguage.adapter = languageAdapter
@@ -62,6 +73,7 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
                 val locales = LocaleListCompat.forLanguageTags(langCode)
                 AppCompatDelegate.setApplicationLocales(locales)
                 sharedPref.saveLanguage(langCode)
+                analyticsHelper.logLanguageSelect(langCode)
                 if (sharedPref.getFirstLanguage()){
                     openActivityAndClearApp(IntroActivity::class.java)
                     sharedPref.setFirstLanguage(false)

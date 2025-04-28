@@ -13,24 +13,34 @@ import com.pettranslator.cattranslator.catsounds.databinding.ActivityResultRecor
 import com.pettranslator.cattranslator.catsounds.model.EAnimal
 import com.pettranslator.cattranslator.catsounds.model.EPlayMediaState
 import com.pettranslator.cattranslator.catsounds.utils.ALog
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.MediaSoundPlayer
+import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ResultRecordActivity : BaseActivity<ActivityResultRecordBinding>() {
+
     @Inject
     lateinit var adManager: AdManager
-    private var countDownTimer: CountDownTimer? = null
-    private var seconds = 0
-    var currentSeconds = 0
-    private var playPauseState = EPlayMediaState.STOPPED
-    private var typeAnimal = EAnimal.CAT
 
+    private var countDownTimer: CountDownTimer? = null
+
+    private var seconds = 0
+
+    var currentSeconds = 0
+
+    private var playPauseState = EPlayMediaState.STOPPED
+
+    private var typeAnimal = EAnimal.CAT
 
     @Inject
     lateinit var soundPlayer: MediaSoundPlayer
+
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
 
     override fun inflateViewBinding(inflater: LayoutInflater): ActivityResultRecordBinding =
         ActivityResultRecordBinding.inflate(inflater)
@@ -40,7 +50,13 @@ class ResultRecordActivity : BaseActivity<ActivityResultRecordBinding>() {
         seconds = intent.getIntExtra(RecordActivity.SECONDS, 0)
         ALog.d("ResultRecordActivitySSS", "seconds: $seconds")
 
-        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {}, onAdFailed = {})
+        analyticsHelper.logScreenView(ScreenName.TRANSLATION_RESULT)
+
+        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {
+            analyticsHelper.logShowNative(ScreenName.TRANSLATION_RESULT)
+        }, onAdFailed = {
+            analyticsHelper.logShowNativeFailed(ScreenName.TRANSLATION_RESULT)
+        })
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -56,8 +72,10 @@ class ResultRecordActivity : BaseActivity<ActivityResultRecordBinding>() {
                 val assetManager = this@ResultRecordActivity.assets
                 var folder = ""
                 folder = if (typeAnimal == EAnimal.CAT) {
+                    analyticsHelper.logTranslateCats()
                     "cat_sound_translator"
                 } else {
+                    analyticsHelper.logTranslateDogs()
                     "dog_sound"
                 }
                 val fileList = assetManager.list(folder) ?: emptyArray()

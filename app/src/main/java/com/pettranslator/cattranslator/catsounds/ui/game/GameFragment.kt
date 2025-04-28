@@ -7,8 +7,11 @@ import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.ViewPagerAdapter
 import com.pettranslator.cattranslator.catsounds.bases.fragment.BaseFragment
 import com.pettranslator.cattranslator.catsounds.databinding.FragmentGameBinding
-import com.pettranslator.cattranslator.catsounds.ui.music.MusicFragment
+import com.pettranslator.cattranslator.catsounds.ui.music.SongFragment
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
+import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -16,14 +19,20 @@ class GameFragment : BaseFragment<FragmentGameBinding>() {
 
     private lateinit var viewPage: ViewPagerAdapter
 
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
+
     override fun inflateViewBinding(
         inflater: LayoutInflater, container: ViewGroup?
     ): FragmentGameBinding = FragmentGameBinding.inflate(inflater)
 
     override fun initialize() {
+
+        analyticsHelper.logScreenView(ScreenName.GAME)
+
         viewPage = ViewPagerAdapter(childFragmentManager, lifecycle)
         viewPage.add(ClickMouseFragment())
-        viewPage.add(MusicFragment.newInstance(false))
+        viewPage.add(SongFragment.newInstance(false))
 
         viewBinding.viewpageGame.apply {
             adapter = viewPage

@@ -21,6 +21,8 @@ import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import com.pettranslator.cattranslator.catsounds.utils.isInternetConnected
 import com.pettranslator.cattranslator.catsounds.utils.openActivityAndClearApp
 import com.google.android.gms.ads.MobileAds
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
+import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,11 +37,18 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     @Inject
     lateinit var adManager: AdManager
 
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
+
     override fun inflateViewBinding(inflater: LayoutInflater): ActivitySplashBinding =
         ActivitySplashBinding.inflate(inflater)
 
     override fun initialize() {
         enableEdgeToEdge()
+        analyticsHelper.logScreenView(ScreenName.SPLASH)
+        intent.getStringExtra("notification_type")?.let { type ->
+            analyticsHelper.logNotificationOpen(type)
+        }
         val backgroundScope = CoroutineScope(Dispatchers.IO)
         backgroundScope.launch {
             MobileAds.initialize(this@SplashActivity) {
@@ -51,6 +60,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             insets
         }
         animateProgressBar()
+
     }
 
     private fun animateProgressBar() {
@@ -85,7 +95,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 this,
                 onAdClosed = {
                     openFirstRunActivity()
+                    analyticsHelper.logShowInterstitial(ScreenName.SPLASH)
                 }, onAdFailed = { _ ->
+                    analyticsHelper.logShowInterstitialFailed(ScreenName.SPLASH)
                     setProgressBarSuccess()
                     openFirstRunActivity()
                 },
@@ -97,11 +109,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         adManager.showInterstitialAd(
             this,
             onAdClosed = {
+                analyticsHelper.logShowInterstitial(ScreenName.SPLASH)
                 Handler(Looper.getMainLooper()).postDelayed({
                     openActivityAndClearApp(MainActivity::class.java)
                 }, 1000)
             },
             onAdFailed = { _ ->
+                analyticsHelper.logShowInterstitialFailed(ScreenName.SPLASH)
                 setProgressBarSuccess()
                 Handler(Looper.getMainLooper()).postDelayed({
                     openActivityAndClearApp(MainActivity::class.java)

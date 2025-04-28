@@ -12,15 +12,16 @@ import com.pettranslator.cattranslator.catsounds.bases.ViewPagerAdapter
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityMainBinding
 import com.pettranslator.cattranslator.catsounds.ui.game.GameFragment
 import com.pettranslator.cattranslator.catsounds.ui.home.HomeFragment
-import com.pettranslator.cattranslator.catsounds.ui.music.MusicFragment
+import com.pettranslator.cattranslator.catsounds.ui.music.SongFragment
 import com.pettranslator.cattranslator.catsounds.ui.setting.SettingFragment
 import com.pettranslator.cattranslator.catsounds.ui.translate.TranslateFragment
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.NotificationScheduler
+import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import com.pettranslator.cattranslator.catsounds.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
-import jakarta.inject.Inject
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>() {
@@ -30,8 +31,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     @Inject
     lateinit var adManager: AdManager
 
-    @Inject lateinit var analyticsHelper: AnalyticsHelper
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
 
+    @Inject
+    lateinit var sharedPref: SharedPref
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -50,10 +54,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         setUpViewPage()
         loadBannerAd()
         checkPermissionNotification()
-        analyticsHelper.logScreenView("Home")
-        analyticsHelper.logScreenView2("Home")
-        analyticsHelper.logScreenView3("Home")
-
+        checkAndLogAppUpdate()
     }
 
     private fun checkPermissionNotification() {
@@ -77,7 +78,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         viewPage.add(HomeFragment())
         viewPage.add(TranslateFragment())
         viewPage.add(GameFragment())
-        viewPage.add(MusicFragment())
+        viewPage.add(SongFragment())
         viewPage.add(SettingFragment())
         viewBinding.viewPager.apply {
             adapter = viewPage
@@ -99,10 +100,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     fun loadBannerAd() {
         adManager.loadBannerAd(viewBinding.adView, onAdLoaded = {
-            analyticsHelper.logShowBanner("MainActivity1")
+            analyticsHelper.logShowBanner("Main")
         }, onAdFailed = {
-            analyticsHelper.logShowBannerFailed("MainActivity")
+            analyticsHelper.logShowBannerFailed("Main")
         })
     }
 
+    private fun checkAndLogAppUpdate() {
+        val savedVersion = sharedPref.getVersion()
+        val packageInfo = this.packageManager.getPackageInfo(this.packageName, 0)
+        val currentVersion = packageInfo.versionName ?: "0.0.1"
+        if (savedVersion != currentVersion) {
+            sharedPref.saveVersion(currentVersion)
+            analyticsHelper.logAppUpdate(currentVersion)
+        }
+    }
 }

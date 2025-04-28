@@ -12,17 +12,20 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.ui.splash.SplashActivity
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.getLocalizedContext
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import java.util.Calendar
 import kotlin.random.Random
 
 @HiltWorker
 class NotificationWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
-    private val sharedPref: SharedPref
+    private val sharedPref: SharedPref,
+    private val analyticsHelper: AnalyticsHelper
 ) : Worker(context, workerParams) {
 
     override fun doWork(): Result {
@@ -35,6 +38,10 @@ class NotificationWorker @AssistedInject constructor(
         val channelId = "daily_channel"
         val manager =
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        val notificationType = if (hour in 5..11) "morning" else "evening"
+        analyticsHelper.logNotificationReceive(notificationType)
 
         val messages = arrayOf(
             localizedContext.getString(R.string.n_1),
@@ -50,7 +57,9 @@ class NotificationWorker @AssistedInject constructor(
             )
             manager.createNotificationChannel(channel)
         }
-        val intent = Intent(applicationContext, SplashActivity::class.java)
+        val intent = Intent(applicationContext, SplashActivity::class.java).apply {
+            putExtra("notification_type", notificationType)
+        }
 
         val pendingIntent: PendingIntent = PendingIntent.getActivity(
             applicationContext,

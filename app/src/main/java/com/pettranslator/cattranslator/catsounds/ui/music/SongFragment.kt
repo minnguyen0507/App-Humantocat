@@ -12,7 +12,9 @@ import com.pettranslator.cattranslator.catsounds.model.ETypeSong
 import com.pettranslator.cattranslator.catsounds.model.Song
 import com.pettranslator.cattranslator.catsounds.ui.song.PlaySongActivity
 import com.pettranslator.cattranslator.catsounds.utils.ALog
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.DataProvider
+import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import com.pettranslator.cattranslator.catsounds.utils.isInternetConnected
@@ -23,11 +25,13 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MusicFragment : BaseFragment<FragmentMusicBinding>() {
+class SongFragment : BaseFragment<FragmentMusicBinding>() {
+
     private var isShowToolbar = true
 
     @Inject
     lateinit var dataProvider: DataProvider
+
     private lateinit var songAdapter: SongAdapter
 
     @Inject
@@ -35,6 +39,9 @@ class MusicFragment : BaseFragment<FragmentMusicBinding>() {
 
     @Inject
     lateinit var sharedPref: SharedPref
+
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +56,8 @@ class MusicFragment : BaseFragment<FragmentMusicBinding>() {
         songAdapter = SongAdapter()
         viewBinding.toolbar.root.visibility = if (isShowToolbar) View.VISIBLE else View.GONE
         viewBinding.rcvMusic.adapter = songAdapter
+
+        analyticsHelper.logScreenView(ScreenName.SONG)
 
         songAdapter.registerItemClickListener { view, song, position ->
             when (view.id) {
@@ -92,6 +101,7 @@ class MusicFragment : BaseFragment<FragmentMusicBinding>() {
                 return
             }
             adManager.showInterstitialAd(requireActivity(), onAdClosed = {
+                analyticsHelper.logShowInterstitial(ScreenName.SONG)
                 requireContext().openActivity(PlaySongActivity::class.java) {
                     putSerializable(
                         SONGS,
@@ -101,6 +111,7 @@ class MusicFragment : BaseFragment<FragmentMusicBinding>() {
                 }
             }, onAdFailed = { errorMessage ->
                 {
+                    analyticsHelper.logShowInterstitialFailed(ScreenName.SONG)
                     requireActivity().showToast(getString(R.string.connect_internet))
                 }
             })
@@ -110,10 +121,14 @@ class MusicFragment : BaseFragment<FragmentMusicBinding>() {
     override fun onResume() {
         super.onResume()
         var songs = getSongs()
-        val favorites = sharedPref.getFavorites()
-        ALog.d("MusicFragment", "favorites: $favorites")
-        songs = songs.map { it.copy(isFavorite = favorites.contains(it.filename.trim())) }
-        ALog.d("MusicFragment", "songs: $songs")
+        try {
+            val favorites = sharedPref.getFavorites()
+            ALog.d("MusicFragment", "favorites: $favorites")
+            songs = songs.map { it.copy(isFavorite = favorites.contains(it.filename.trim())) }
+            ALog.d("MusicFragment", "songs: $songs")
+        }catch (e: Exception) {
+            ALog.d("SongFragment", "onResume: ${e.message}")
+        }
 
         songAdapter.addData(songs.toMutableList())
     }
@@ -131,8 +146,8 @@ class MusicFragment : BaseFragment<FragmentMusicBinding>() {
         const val SONGS = "songs"
         const val CURRENT_INDEX = "currentIndex"
 
-        fun newInstance(toolbar: Boolean): MusicFragment {
-            val fragment = MusicFragment()
+        fun newInstance(toolbar: Boolean): SongFragment {
+            val fragment = SongFragment()
             fragment.arguments = bundleOf(ARG_TOOLBAR to toolbar)
             return fragment
         }

@@ -14,7 +14,9 @@ import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityRecordBinding
 import com.pettranslator.cattranslator.catsounds.model.ETypeTranslator
 import com.pettranslator.cattranslator.catsounds.ui.translate.TranslateFragment
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.DataProvider
+import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import com.pettranslator.cattranslator.catsounds.utils.openActivity
 import com.pettranslator.cattranslator.catsounds.utils.setSafeOnClickListener
@@ -23,12 +25,17 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class RecordActivity : BaseActivity<ActivityRecordBinding>() {
+
     @Inject
     lateinit var adManager: AdManager
+
     private var seconds = 0
 
     @Inject
     lateinit var dataProvider: DataProvider
+
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
 
     private var isRunning = false
     private val RECORD_AUDIO_REQUEST_CODE = 1002
@@ -48,7 +55,13 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
     override fun initialize() {
         enableEdgeToEdge()
 
-        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {}, onAdFailed = {})
+        analyticsHelper.logScreenView(ScreenName.RECORD)
+
+        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {
+            analyticsHelper.logShowNative(ScreenName.RECORD)
+        }, onAdFailed = {
+            analyticsHelper.logShowNativeFailed(ScreenName.RECORD)
+        })
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
