@@ -10,6 +10,7 @@ import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.ui.splash.SplashActivity
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
@@ -24,8 +25,7 @@ import kotlin.random.Random
 class NotificationWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
-    private val sharedPref: SharedPref,
-    private val analyticsHelper: AnalyticsHelper
+    private val sharedPref: SharedPref
 ) : Worker(context, workerParams) {
 
     override fun doWork(): Result {
@@ -41,6 +41,7 @@ class NotificationWorker @AssistedInject constructor(
 
         val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
         val notificationType = if (hour in 5..11) "morning" else "evening"
+        val analyticsHelper = AnalyticsHelper(FirebaseAnalytics.getInstance(applicationContext))
         analyticsHelper.logNotificationReceive(notificationType)
 
         val messages = arrayOf(

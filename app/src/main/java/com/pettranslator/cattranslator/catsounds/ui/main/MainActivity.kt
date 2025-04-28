@@ -15,6 +15,7 @@ import com.pettranslator.cattranslator.catsounds.ui.home.HomeFragment
 import com.pettranslator.cattranslator.catsounds.ui.music.SongFragment
 import com.pettranslator.cattranslator.catsounds.ui.setting.SettingFragment
 import com.pettranslator.cattranslator.catsounds.ui.translate.TranslateFragment
+import com.pettranslator.cattranslator.catsounds.utils.ALog
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.NotificationScheduler
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
@@ -110,6 +111,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val savedVersion = sharedPref.getVersion()
         val packageInfo = this.packageManager.getPackageInfo(this.packageName, 0)
         val currentVersion = packageInfo.versionName ?: "0.0.1"
+        ALog.d("themd", "savedVersion: $savedVersion, currentVersion: $currentVersion")
         if (savedVersion != currentVersion) {
             sharedPref.saveVersion(currentVersion)
             analyticsHelper.logAppUpdate(currentVersion)
