@@ -50,8 +50,6 @@ class ResultRecordActivity : BaseActivity<ActivityResultRecordBinding>() {
         seconds = intent.getIntExtra(RecordActivity.SECONDS, 0)
         ALog.d("ResultRecordActivitySSS", "seconds: $seconds")
 
-        analyticsHelper.logScreenView(ScreenName.TRANSLATION_RESULT)
-
         adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {
             analyticsHelper.logShowNative(ScreenName.TRANSLATION_RESULT)
         }, onAdFailed = {
@@ -149,6 +147,10 @@ class ResultRecordActivity : BaseActivity<ActivityResultRecordBinding>() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        analyticsHelper.logScreenView(ScreenName.TRANSLATION_RESULT)
+    }
 
     override fun onDestroy() {
         super.onDestroy()

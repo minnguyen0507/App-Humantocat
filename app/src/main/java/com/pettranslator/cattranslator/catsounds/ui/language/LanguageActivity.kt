@@ -50,7 +50,7 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
 
     override fun initialize() {
         enableEdgeToEdge()
-        analyticsHelper.logScreenView(ScreenName.LANGUAGE)
+
         listLanguage = getLanguages()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -96,6 +96,11 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
         languageAdapter.addData(listLanguage)
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        analyticsHelper.logScreenView(ScreenName.LANGUAGE)
+    }
 
     private fun getLanguages(): MutableList<LanguageItem> {
         return dataProvider.getLanguageList().toMutableList()

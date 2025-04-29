@@ -55,8 +55,6 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
     override fun initialize() {
         enableEdgeToEdge()
 
-        analyticsHelper.logScreenView(ScreenName.RECORD)
-
         adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {
             analyticsHelper.logShowNative(ScreenName.RECORD)
         }, onAdFailed = {
@@ -124,6 +122,10 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
         if (isRunning) animatorSet.start() else animatorSet.cancel()
     }
 
+    override fun onResume() {
+        super.onResume()
+        analyticsHelper.logScreenView(ScreenName.RECORD)
+    }
 
     override fun performPermissionTask() {
         super.performPermissionTask()

@@ -18,6 +18,7 @@ import com.pettranslator.cattranslator.catsounds.ui.translate.TranslateFragment
 import com.pettranslator.cattranslator.catsounds.utils.ALog
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.NotificationScheduler
+import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import com.pettranslator.cattranslator.catsounds.utils.showToast
@@ -101,10 +102,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     fun loadBannerAd() {
         adManager.loadBannerAd(viewBinding.adView, onAdLoaded = {
-            analyticsHelper.logShowBanner("Main")
+            analyticsHelper.logShowBanner(ScreenName.MAIN)
         }, onAdFailed = {
-            analyticsHelper.logShowBannerFailed("Main")
+            analyticsHelper.logShowBannerFailed(ScreenName.MAIN)
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        analyticsHelper.logScreenView(ScreenName.MAIN)
     }
 
     private fun checkAndLogAppUpdate() {

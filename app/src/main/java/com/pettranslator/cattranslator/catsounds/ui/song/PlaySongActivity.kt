@@ -50,7 +50,7 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
 
     override fun initialize() {
         enableEdgeToEdge()
-        analyticsHelper.logScreenView(ScreenName.SONG_PLAYING)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -69,8 +69,7 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
 
         songs = intent.getSerializableExtra(SongFragment.SONGS) as List<Song>
         currentIndex = intent.getIntExtra(SongFragment.CURRENT_INDEX, 0)
-        ALog.d("PlaySongActivityS", "currentIndex: $currentIndex")
-        ALog.d("PlaySongActivityS", "Songs: $songs")
+
         checkButtonNext()
         viewBinding.btnPlayPause.setOnClickListener {
             if (soundPlayer.isPlaying()) {
@@ -146,6 +145,11 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
         super.onDestroy()
         soundPlayer.release()
         handler.removeCallbacks(updateSeekBarRunnable)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        analyticsHelper.logScreenView(ScreenName.SONG_PLAYING)
     }
 
     private fun formatTime(ms: Int): String {

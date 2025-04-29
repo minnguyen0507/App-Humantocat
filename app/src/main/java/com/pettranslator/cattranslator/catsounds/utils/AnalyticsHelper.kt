@@ -15,9 +15,9 @@ class AnalyticsHelper(private val firebaseAnalytics: FirebaseAnalytics) {
     // 1. Screen View
     fun logScreenView(screenName: String) {
         val params = Bundle().apply {
-            putString("screen_name", screenName)
+            putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
         }
-        logEvent(AnalyticsEvent("screen_view", params))
+        logEvent(AnalyticsEvent(FirebaseAnalytics.Event.SCREEN_VIEW, params))
     }
 
     // 2. Tutorial Begin
@@ -26,7 +26,7 @@ class AnalyticsHelper(private val firebaseAnalytics: FirebaseAnalytics) {
             putString("time", time)
             putBoolean("clicked", clicked)
         }
-        logEvent(AnalyticsEvent("tutorial_begin", params))
+        logEvent(AnalyticsEvent(FirebaseAnalytics.Event.TUTORIAL_BEGIN, params))
     }
 
     // 3. Tutorial Complete
@@ -35,15 +35,15 @@ class AnalyticsHelper(private val firebaseAnalytics: FirebaseAnalytics) {
             putString("time", time)
             putBoolean("clicked", clicked)
         }
-        logEvent(AnalyticsEvent("tutorial_complete", params))
+        logEvent(AnalyticsEvent(FirebaseAnalytics.Event.TUTORIAL_COMPLETE, params))
     }
 
     // 4. App Update
     fun logAppUpdate(version: String) {
         val params = Bundle().apply {
-            putString("app_version", version)
+            putString("version_name", version)
         }
-        logEvent(AnalyticsEvent("app_update", params))
+        logEvent(AnalyticsEvent("update_app", params))
     }
 
     // 6. Notification Receive
@@ -51,7 +51,7 @@ class AnalyticsHelper(private val firebaseAnalytics: FirebaseAnalytics) {
         val params = Bundle().apply {
             putString("notification_type", notificationType)
         }
-        logEvent(AnalyticsEvent("notification_receive", params))
+        logEvent(AnalyticsEvent("receive_notification", params))
     }
 
     // 7. Notification Open
@@ -59,7 +59,7 @@ class AnalyticsHelper(private val firebaseAnalytics: FirebaseAnalytics) {
         val params = Bundle().apply {
             putString("notification_type", notificationType)
         }
-        logEvent(AnalyticsEvent("notification_open", params))
+        logEvent(AnalyticsEvent("open_notification", params))
     }
 
     // 8. Language Select

@@ -21,6 +21,7 @@ import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import com.pettranslator.cattranslator.catsounds.utils.isInternetConnected
 import com.pettranslator.cattranslator.catsounds.utils.openActivityAndClearApp
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,14 +46,16 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     override fun initialize() {
         enableEdgeToEdge()
-        analyticsHelper.logScreenView(ScreenName.SPLASH)
-        intent.getStringExtra("notification_type")?.let { type ->
-            analyticsHelper.logNotificationOpen(type)
-        }
+
+
         val backgroundScope = CoroutineScope(Dispatchers.IO)
         backgroundScope.launch {
             MobileAds.initialize(this@SplashActivity) {
             }
+//            val configuration = RequestConfiguration.Builder()
+//                .setTestDeviceIds(listOf("YOUR_DEVICE_ID"))
+//                .build()
+//            MobileAds.setRequestConfiguration(configuration)
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -138,6 +141,14 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             return
         }
         openActivityAndClearApp(IntroActivity::class.java)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        intent.getStringExtra("notification_type")?.let { type ->
+            analyticsHelper.logNotificationOpen(type)
+        }
+        analyticsHelper.logScreenView(ScreenName.SPLASH)
     }
 
 }

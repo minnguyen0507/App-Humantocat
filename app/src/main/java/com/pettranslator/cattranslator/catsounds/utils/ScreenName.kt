@@ -8,6 +8,7 @@ object ScreenName {
     const val ONBOARDING_1 = "Onboarding 1"
     const val ONBOARDING_2 = "Onboarding 2"
     const val ONBOARDING_3 = "Onboarding 3"
+    const val MAIN = "Main"
     const val HOME = "Home"
     const val TRANSLATE = "Translate"
     const val GAME = "Home"

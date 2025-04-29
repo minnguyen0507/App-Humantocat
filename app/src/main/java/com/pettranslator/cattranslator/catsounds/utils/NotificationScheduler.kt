@@ -34,7 +34,7 @@ object NotificationScheduler {
     }
 
     fun scheduleBoth(context: Context) {
-        scheduleDailyWork(context, 0, 44, "daily_8am")
+        scheduleDailyWork(context, 8, 0, "daily_8am")
         scheduleDailyWork(context, 20, 0, "daily_8pm")
     }
 }
