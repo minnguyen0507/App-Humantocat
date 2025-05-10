@@ -8,7 +8,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityIntroBinding
-import com.pettranslator.cattranslator.catsounds.model.IntroSlide
 import com.pettranslator.cattranslator.catsounds.ui.main.MainActivity
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.DataProvider

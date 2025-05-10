@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pettranslator.cattranslator.catsounds.bases.recyclerview.BaseRecyclerViewAdapter
 import com.pettranslator.cattranslator.catsounds.databinding.ItemAnimalSongBinding
-import com.pettranslator.cattranslator.catsounds.model.Animal
 import com.pettranslator.cattranslator.catsounds.model.Song
 
 class SongAdapter : BaseRecyclerViewAdapter<Song, SongViewHolder>() {

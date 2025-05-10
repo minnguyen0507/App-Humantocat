@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.google.services)
     kotlin("kapt")
 }
+
 android {
     namespace = "com.pettranslator.cattranslator.catsounds"
     compileSdk = 35
@@ -13,31 +14,37 @@ android {
         applicationId = "com.pettranslator.cattranslator.catsounds"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.0.1"
+        versionCode = 2
+        versionName = "0.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("keystore/hutoca.keystore")
+            storePassword = "ntstore"
+            keyAlias = "hutoca"
+            keyPassword = "ntstore"
+        }
+    }
+
 
     buildTypes {
-        release {
+        release  {
             isMinifyEnabled = false
             buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/9792653557\"")
             buildConfigField("String", "INTERSTITIAL_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/6284894630\"")
-            buildConfigField("String", "APP_OPEN_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/5854468032\"")
-            buildConfigField("String", "NATIVE_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/7166490211\"")
+            buildConfigField("String", "APP_OPEN_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/7166490211\"")
+            buildConfigField("String", "NATIVE_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/5854468032\"")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
         }
         debug {
-//            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/6300978111\"")
-//            buildConfigField("String", "INTERSTITIAL_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/1033173712\"")
-//            buildConfigField("String", "APP_OPEN_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/9257395921\"")
-//            buildConfigField("String", "NATIVE_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/2247696110\"")
-            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/9792653557\"")
-            buildConfigField("String", "INTERSTITIAL_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/6284894630\"")
-            buildConfigField("String", "APP_OPEN_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/5854468032\"")
-            buildConfigField("String", "NATIVE_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/7166490211\"")
+            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/6300978111\"")
+            buildConfigField("String", "INTERSTITIAL_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/1033173712\"")
+            buildConfigField("String", "APP_OPEN_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/9257395921\"")
+            buildConfigField("String", "NATIVE_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/2247696110\"")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -68,15 +75,25 @@ android {
             enableSplit = false
         }
     }
-    applicationVariants.all {
-        outputs.forEach { output ->
-            if (output is com.android.build.gradle.internal.api.BaseVariantOutputImpl) {
-                output.outputFileName =
-                    "Cat Translator-v${versionName}(${this.versionCode})-${name}.${output.outputFile.extension}"
+    // Tùy chỉnh tên file APK/AAB
+    applicationVariants.configureEach {
+        outputs.configureEach {
+            val appName = "cat-translator" // Tên ứng dụng
+            val versionName = versionName // Truy cập versionName từ variant
+            val buildType = buildType.name // Truy cập buildType từ variant
+
+            // Đặt tên file APK/AAB
+            val newOutputFileName = when {
+                this is com.android.build.gradle.internal.api.BaseVariantOutputImpl &&
+                        outputFileName.endsWith(".aab") -> "$appName-v$versionName-$buildType.aab"
+                else -> "$appName-v$versionName-$buildType.apk"
+            }
+
+            if (this is com.android.build.gradle.internal.api.BaseVariantOutputImpl) {
+                outputFileName = newOutputFileName
             }
         }
     }
-
 }
 
 

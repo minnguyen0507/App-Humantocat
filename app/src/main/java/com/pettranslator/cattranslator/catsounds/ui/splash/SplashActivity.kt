@@ -8,22 +8,19 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.animation.doOnEnd
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.pettranslator.cattranslator.catsounds.CatTranslatorApplication
+import com.google.android.gms.ads.MobileAds
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivitySplashBinding
 import com.pettranslator.cattranslator.catsounds.ui.intro.IntroActivity
 import com.pettranslator.cattranslator.catsounds.ui.language.LanguageActivity
 import com.pettranslator.cattranslator.catsounds.ui.main.MainActivity
-import com.pettranslator.cattranslator.catsounds.utils.ALog
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
+import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import com.pettranslator.cattranslator.catsounds.utils.isInternetConnected
 import com.pettranslator.cattranslator.catsounds.utils.openActivityAndClearApp
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
-import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
-import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -52,10 +49,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         backgroundScope.launch {
             MobileAds.initialize(this@SplashActivity) {
             }
-//            val configuration = RequestConfiguration.Builder()
-//                .setTestDeviceIds(listOf("YOUR_DEVICE_ID"))
-//                .build()
-//            MobileAds.setRequestConfiguration(configuration)
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

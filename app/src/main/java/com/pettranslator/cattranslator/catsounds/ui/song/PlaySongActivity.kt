@@ -12,7 +12,6 @@ import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityPlaySongBinding
 import com.pettranslator.cattranslator.catsounds.model.Song
 import com.pettranslator.cattranslator.catsounds.ui.music.SongFragment
-import com.pettranslator.cattranslator.catsounds.utils.ALog
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.MediaSoundPlayer
 import com.pettranslator.cattranslator.catsounds.utils.ScreenName

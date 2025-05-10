@@ -32,6 +32,9 @@
     <string name="apply">Anwenden</string>
     <string name="tap_mic">Tippen Sie zum Sprechen auf das Mikrofon</string>
     <string name="record">Aufzeichnen</string>
+    <string name="stop">Stoppen</string>
+    <string name="play">Spielen</string>
+    <string name="pause">Pause</string>
     <string name="close">Schließen</string>
     <string name="translator_result">Übersetzerergebnis</string>
     <string name="intro_3">Alle Werbe- und Abonnementgelder kommen Katzen zugute</string>
@@ -218,7 +221,6 @@
     <string name="challenge_10">Dieses Geräusch erinnert die Katze daran, dass sie in AE verehrt wurde</string>
     <string name="challenge_11">Dieses Geräusch wird Ihre Katze verwirren</string>
     <string name="challenge_12">Dieses Geräusch wird Ihre Katze verrückt machen</string>
-    <string name="r_1">Ich habe keinen Hunger, ich kontrolliere nur die Frische des Essens</string>
     <string name="r_8">Ich starre, weil du meine Meditation unterbrichst</string>
     <string name="r_9">Diese Kiste ist jetzt mein Königreich</string>
     <string name="r_10">Ich miaue, weil ich Lust dazu habe. Keine weitere Erklärung</string>

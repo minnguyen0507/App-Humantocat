@@ -31,6 +31,9 @@
     <string name="apply">Apply</string>
     <string name="tap_mic">Tap mic to talk</string>
     <string name="record">Record</string>
+    <string name="stop">Stop</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
     <string name="close">Close</string>
     <string name="translator_result">Translator result</string>
     <string name="intro_3">All advertising and subscription funds go to help cats</string>
@@ -217,7 +220,6 @@
     <string name="challenge_10">This sound remind cat they were worshiped in AE</string>
     <string name="challenge_11">This sound will make your cat confuse</string>
     <string name="challenge_12">This sound will make your cat go crazy</string>
-    <string name="r_1">I\'m not hungry, just checking the freshness of the food</string>
     <string name="r_8">I’m staring because you’re interrupting my meditation</string>
     <string name="r_9">This box is now my kingdom</string>
     <string name="r_10">I’m meowing because I feel like it. No further explanation</string>

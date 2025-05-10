@@ -20,7 +20,7 @@ class SharedPref @Inject constructor(private val context: Context) {
         private const val KEY_SEND_RATE = "send_rate"
         private const val KEY_REMAINING_USES = "remaining_uses"
         private const val KEY_FAVORITE_SONGS = "favorite_songs"
-        private const val KEY_APP_VERSION = "favorite_songs"
+        private const val KEY_APP_VERSION = "app_version"
     }
 
     fun saveVersion(version: String) {
@@ -59,20 +59,12 @@ class SharedPref @Inject constructor(private val context: Context) {
         sharedPreferences.edit() { putBoolean(KEY_SEND_RATE, isFirstRate) }
     }
 
-    fun getFirstSendRate(): Boolean {
-        return sharedPreferences.getBoolean(KEY_SEND_RATE, true)
-    }
-
     fun loadRemainingUses(): Int {
         return sharedPreferences.getInt(KEY_REMAINING_USES, 0)
     }
 
     fun saveRemainingUses(count: Int) {
         sharedPreferences.edit() { putInt(KEY_REMAINING_USES, count) }
-    }
-
-    fun isFavorite(songId: String): Boolean {
-        return sharedPreferences.getStringSet(KEY_FAVORITE_SONGS, emptySet())?.contains(songId) == true
     }
 
     fun toggleFavorite(songId: String) {

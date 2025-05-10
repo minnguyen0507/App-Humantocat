@@ -1,7 +1,5 @@
 package com.pettranslator.cattranslator.catsounds.utils
 
-import com.pettranslator.cattranslator.catsounds.ui.translate.TranslateFragment
-
 object ScreenName {
     const val SPLASH = "Slash"
     const val INTRO = "Intro"

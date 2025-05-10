@@ -1,6 +1,5 @@
 package com.pettranslator.cattranslator.catsounds.ui.language
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -21,7 +20,6 @@ import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import com.pettranslator.cattranslator.catsounds.utils.openActivityAndClearApp
 import com.pettranslator.cattranslator.catsounds.utils.setSafeOnClickListener
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint

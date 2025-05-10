@@ -1046,7 +1046,7 @@ class DataProvider @Inject constructor(
                 "cat_sound/cat_petulant_yowl.mp3",
                 R.drawable.toiyeuban,
                 localizedContext.getString(R.string.c_petulant_yowl),
-                resultTranslate = localizedContext.getString(R.string.r_1)
+                resultTranslate = localizedContext.getString(R.string.r_8)
             ),
             Animal(
                 EAnimal.CAT,
