@@ -45,7 +45,7 @@ class CatTranslatorApplication : Application(),
         activity: Activity,
         savedInstanceState: Bundle?
     ) {
-        //TODO("Not yet implemented")
+
     }
 
     override fun onActivityStarted(activity: Activity) {
@@ -53,13 +53,12 @@ class CatTranslatorApplication : Application(),
 
         activityReferences++
 
-        // Chỉ coi là từ background quay lại nếu KHÔNG PHẢI lần khởi động đầu tiên
         if (wasInBackground && !isActivityChangingConfigurations && hasAppStartedOnce) {
             isReturningFromBackground = true
         }
 
         if (!hasAppStartedOnce) {
-            hasAppStartedOnce = true // Mark lần đầu khởi động đã xong
+            hasAppStartedOnce = true
         }
 
         if (isReturningFromBackground) {
