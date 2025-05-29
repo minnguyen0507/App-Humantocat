@@ -44,12 +44,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun initialize() {
         enableEdgeToEdge()
 
-
-        val backgroundScope = CoroutineScope(Dispatchers.IO)
-        backgroundScope.launch {
-            MobileAds.initialize(this@SplashActivity) {
-            }
-        }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
+import com.google.android.gms.ads.MobileAds
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.ad.AppOpenAdManager
 import dagger.hilt.android.HiltAndroidApp
@@ -33,7 +34,7 @@ class CatTranslatorApplication : Application(),
 
     override fun onCreate() {
         super.onCreate()
-
+        MobileAds.initialize(this) {}
         val languageCode = sharedPref.getLanguage()
         val locales = LocaleListCompat.forLanguageTags(languageCode)
         AppCompatDelegate.setApplicationLocales(locales)

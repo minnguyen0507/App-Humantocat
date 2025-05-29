@@ -80,7 +80,9 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
                 val next = viewBinding.introViewPager.currentItem + 1
                 if (next < dataProvider.getSlideList().size) {
                     viewBinding.introViewPager.currentItem = next
+                    btnNext.isEnabled = true
                 } else {
+                    btnNext.isEnabled = false
                     sharedPref.setFirstRun(false)
                     analyticsHelper.logTutorialComplete(System.currentTimeMillis().toString(), true)
                     adManager.showInterstitialAd(

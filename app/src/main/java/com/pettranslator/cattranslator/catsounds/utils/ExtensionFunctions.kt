@@ -904,7 +904,7 @@ fun Context.getBitmapFromUrl(context: Context, imageUrl: String, callback: (Bitm
         })
 }
 
-fun View.setSafeOnClickListener(interval: Long = 2000, onSafeClick: (View) -> Unit) {
+fun View.setSafeOnClickListener(interval: Long = 1000, onSafeClick: (View) -> Unit) {
     var lastClickTime: Long = 0
 
     setOnClickListener { v ->
