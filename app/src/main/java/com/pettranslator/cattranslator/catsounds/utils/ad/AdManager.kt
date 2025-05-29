@@ -37,16 +37,42 @@ class AdManager @Inject constructor(
         activity: Activity,
         onAdClosed: () -> Unit,
         onAdLoaded: (() -> Unit)? = null,
-        onAdFailed: (String) -> Unit = { errorMessage -> }
+        onAdFailed: (String) -> Unit = { _ -> }
     ) {
-        // Nếu quảng cáo đã tải, hiển thị quảng cáo
-        if (interstitialAd != null) {
-            interstitialAd?.show(context as Activity)
+
+        if (interstitialAd != null && activityIsValid(activity)) {
+            activity.runOnUiThread {
+                try {
+                    interstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+                        override fun onAdDismissedFullScreenContent() {
+                            interstitialAd = null
+                            onAdClosed()
+                        }
+
+                        override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                            interstitialAd = null
+                            onAdFailed(adError.message)
+                        }
+
+                        override fun onAdShowedFullScreenContent() {
+                            interstitialAd = null
+                        }
+                    }
+
+                    interstitialAd?.show(activity)
+                } catch (e: Exception) {
+                    onAdFailed("Exception when showing interstitial: ${e.localizedMessage}")
+                }
+            }
         } else {
-            // Nếu chưa có quảng cáo, tải lại quảng cáo
             loadInterstitialAd(activity, onAdClosed, onAdLoaded, onAdFailed)
         }
     }
+
+    fun activityIsValid(activity: Activity): Boolean {
+        return !activity.isFinishing && !activity.isDestroyed
+    }
+
 
     private fun loadInterstitialAd(
         activity: Activity,
@@ -65,10 +91,11 @@ class AdManager @Inject constructor(
                 }
 
                 override fun onAdLoaded(ad: InterstitialAd) {
-                    ALog.d("AdManager", "Interstitial ad loaded: $context")
+                    ALog.d("AdManager", "Interstitial ad loaded: $activity")
                     interstitialAd = ad
                     onAdLoaded?.invoke()
-                    interstitialAd?.show(activity)
+
+                    // Thiết lập callback trước khi show
                     interstitialAd?.fullScreenContentCallback =
                         object : FullScreenContentCallback() {
                             override fun onAdDismissedFullScreenContent() {
@@ -84,9 +111,12 @@ class AdManager @Inject constructor(
                                 interstitialAd = null
                             }
                         }
+
+                    interstitialAd?.show(activity)
                 }
             })
     }
+
 
     fun loadNativeClickAd(
         container: ViewGroup, // Container để chứa NativeAdView

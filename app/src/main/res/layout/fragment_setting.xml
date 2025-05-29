@@ -30,7 +30,6 @@
         app:layout_constraintTop_toBottomOf="@id/tvSetting" />
 
     <TextView
-        android:id="@+id/textView5"
         style="@style/text_normal_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

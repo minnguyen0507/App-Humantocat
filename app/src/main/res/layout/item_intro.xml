@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/imgSlide"
         android:layout_width="@dimen/widget_size_300"
-        android:layout_height="350dp"
+        android:layout_height="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

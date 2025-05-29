@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pettranslator.cattranslator.catsounds.bases.recyclerview.BaseRecyclerViewAdapter
 import com.pettranslator.cattranslator.catsounds.databinding.ItemAnimalSoundBinding
 import com.pettranslator.cattranslator.catsounds.model.Animal
+import com.pettranslator.cattranslator.catsounds.utils.setSafeOnClickListener
 
 class AnimalAdapter : BaseRecyclerViewAdapter<Animal, AnimalViewHolder>() {
 
@@ -19,7 +20,7 @@ class AnimalAdapter : BaseRecyclerViewAdapter<Animal, AnimalViewHolder>() {
         val item = getItem(position) ?: return
         holder.binding.animal = item
 
-        holder.binding.root.setOnClickListener {
+        holder.binding.root.setSafeOnClickListener {
             itemClickListener?.invoke(it,item,position)
 
         }

@@ -37,11 +37,12 @@ abstract class BaseActivity<viewBinding : ViewBinding> :
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            performPermissionTask()
-        } else {
-            val permission = permissions[0]
-            handlePermissionDenied(permission)
+        if (permissions.isNotEmpty() && grantResults.isNotEmpty()) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                performPermissionTask()
+            } else {
+                handlePermissionDenied(permissions[0])
+            }
         }
     }
 

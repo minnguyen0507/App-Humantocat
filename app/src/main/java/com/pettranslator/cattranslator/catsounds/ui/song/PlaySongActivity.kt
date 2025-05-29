@@ -131,10 +131,10 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
         viewBinding.tvNameSong.text = song.title
         viewBinding.btnPlayPause.setImageResource(R.drawable.pause_2)
         soundPlayer.playFromAsset(song.filename)
+        val duration = soundPlayer.getDuration()
+        viewBinding.tvEndTime.text = formatTime(duration)
         handler.postDelayed({
-            val duration = soundPlayer.getDuration()
             viewBinding.seekBar.max = duration
-            viewBinding.tvEndTime.text = formatTime(duration)
             handler.post(updateSeekBarRunnable)
 
         }, 300)
