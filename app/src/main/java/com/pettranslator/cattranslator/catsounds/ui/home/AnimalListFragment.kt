@@ -68,14 +68,19 @@ class AnimalListFragment :
                     requireActivity().showToast(getString(R.string.connect_internet))
                     return@registerItemClickListener
                 }
+                showAdLoadingDialog()
                 adManager.showInterstitialAd(requireActivity(), onAdClosed = {
+                    dismissAdLoadingDialog()
                     analyticsHelper.logShowInterstitial(ScreenName.HOME)
                     sharedPref.saveRemainingUses(2)
                     playSound(animal, view)
                 }, onAdFailed = { _ ->
+                    dismissAdLoadingDialog()
                     analyticsHelper.logShowInterstitialFailed(ScreenName.HOME)
                     requireActivity().showToast(getString(R.string.connect_internet))
-                 })
+                 }, onAdLoaded = {
+                    dismissAdLoadingDialog()
+                })
             }
         }
         if (filterType == EAnimal.CAT.id) {

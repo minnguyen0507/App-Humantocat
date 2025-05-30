@@ -20,9 +20,8 @@ class AnimalAdapter : BaseRecyclerViewAdapter<Animal, AnimalViewHolder>() {
         val item = getItem(position) ?: return
         holder.binding.animal = item
 
-        holder.binding.root.setSafeOnClickListener {
+        holder.binding.root.setSafeOnClickListener(1500) {
             itemClickListener?.invoke(it,item,position)
-
         }
 
         holder.binding.executePendingBindings()

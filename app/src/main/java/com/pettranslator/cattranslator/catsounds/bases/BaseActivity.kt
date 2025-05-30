@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.viewbinding.ViewBinding
 import com.google.gson.Gson
 import com.pettranslator.cattranslator.catsounds.R
+import com.pettranslator.cattranslator.catsounds.ui.main.AdLoadingDialogFragment
 
 abstract class BaseActivity<viewBinding : ViewBinding> :
     AppCompatActivity() {
@@ -27,27 +28,48 @@ abstract class BaseActivity<viewBinding : ViewBinding> :
     val handler = Handler(Looper.myLooper() ?: Looper.getMainLooper())
 
     fun requestPermission(permission: String, requestCode: Int) {
-        if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                permission
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             performPermissionTask()
         } else {
             ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (permissions.isNotEmpty() && grantResults.isNotEmpty()) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                performPermissionTask()
-            } else {
-                handlePermissionDenied(permissions[0])
+        try {
+            if (permissions.isNotEmpty() && grantResults.isNotEmpty()) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    performPermissionTask()
+                } else {
+                    handlePermissionDenied(permissions[0])
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
+    }
+
+    fun showAdLoadingDialog(onTimeout: (() -> Unit)? = null) {
+        AdLoadingDialogFragment.show(supportFragmentManager, onTimeout)
+    }
+
+    fun dismissAdLoadingDialog() {
+        AdLoadingDialogFragment.dismiss(supportFragmentManager)
     }
 
     private fun handlePermissionDenied(permission: String) {
-        val shouldShowRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, permission)
+        val shouldShowRationale =
+            ActivityCompat.shouldShowRequestPermissionRationale(this, permission)
         if (!shouldShowRationale) {
             showPermissionDeniedMessage(
                 getString(R.string.content_record),
@@ -59,7 +81,11 @@ abstract class BaseActivity<viewBinding : ViewBinding> :
     }
 
 
-    private fun showPermissionDeniedMessage(message: String, actionLabel: String, action: () -> Unit) {
+    private fun showPermissionDeniedMessage(
+        message: String,
+        actionLabel: String,
+        action: () -> Unit
+    ) {
         val builder = AlertDialog.Builder(this)
             .setTitle(getString(R.string.rights_denied))
             .setMessage(message)
@@ -83,6 +109,7 @@ abstract class BaseActivity<viewBinding : ViewBinding> :
     open fun performPermissionTask() {
 
     }
+
     protected abstract fun initialize()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -144,7 +171,6 @@ abstract class BaseActivity<viewBinding : ViewBinding> :
 //            }
 //        }
     }
-
 
 
     fun isAppRunningInBackground(context: Context): Boolean {

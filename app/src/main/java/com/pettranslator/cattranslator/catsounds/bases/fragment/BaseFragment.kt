@@ -1,8 +1,6 @@
 package com.pettranslator.cattranslator.catsounds.bases.fragment
 
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -63,8 +61,16 @@ abstract class BaseFragment<viewBinding : ViewBinding> : Fragment() {
         _viewBinding = null
     }
 
-    private fun showLoading(isShow: Boolean) {
-        (activity as? BaseActivity<*>)?.showLoading(isShow)
+    fun showAdLoadingDialog(onTimeout: (() -> Unit)? = null) {
+        if (isAdded && activity is BaseActivity<*>) {
+            (activity as BaseActivity<*>).showAdLoadingDialog(onTimeout)
+        }
+    }
+
+    fun dismissAdLoadingDialog() {
+        if (isAdded && activity is BaseActivity<*>) {
+            (activity as BaseActivity<*>).dismissAdLoadingDialog()
+        }
     }
 
 
