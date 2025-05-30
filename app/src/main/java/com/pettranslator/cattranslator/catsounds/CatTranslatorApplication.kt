@@ -3,11 +3,13 @@ package com.pettranslator.cattranslator.catsounds
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.google.android.gms.ads.MobileAds
+import com.pettranslator.cattranslator.catsounds.ui.main.AdLoadingDialogFragment
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.ad.AppOpenAdManager
 import dagger.hilt.android.HiltAndroidApp
@@ -64,9 +66,15 @@ class CatTranslatorApplication : Application(),
 
         if (isReturningFromBackground) {
             isReturningFromBackground = false
+            AdLoadingDialogFragment.show(
+                (activity as AppCompatActivity).supportFragmentManager
+            )
             AppOpenAdManager.loadAd(
                 context = this,
                 onAdLoaded = {
+                    AdLoadingDialogFragment.dismiss(
+                        activity.supportFragmentManager
+                    )
                     AppOpenAdManager.showAdIfAvailable(activity) {
                         // Ad closed
                     }

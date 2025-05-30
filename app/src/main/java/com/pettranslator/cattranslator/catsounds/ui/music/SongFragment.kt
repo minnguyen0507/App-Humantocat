@@ -100,8 +100,10 @@ class SongFragment : BaseFragment<FragmentMusicBinding>() {
                 requireActivity().showToast(getString(R.string.connect_internet))
                 return
             }
+            showAdLoadingDialog()
             adManager.showInterstitialAd(requireActivity(), onAdClosed = {
                 analyticsHelper.logShowInterstitial(ScreenName.SONG)
+                dismissAdLoadingDialog()
                 requireContext().openActivity(PlaySongActivity::class.java) {
                     putSerializable(
                         SONGS,
@@ -109,11 +111,13 @@ class SongFragment : BaseFragment<FragmentMusicBinding>() {
                     )  // nếu songs là List<Song>
                     putInt(CURRENT_INDEX, position)
                 }
-            }, onAdFailed = { errorMessage ->
-                {
+            }, onAdFailed = { errorMessage -> {
+                    dismissAdLoadingDialog()
                     analyticsHelper.logShowInterstitialFailed(ScreenName.SONG)
                     requireActivity().showToast(getString(R.string.connect_internet))
                 }
+            }, onAdLoaded = {
+                dismissAdLoadingDialog()
             })
         }
     }
@@ -126,7 +130,7 @@ class SongFragment : BaseFragment<FragmentMusicBinding>() {
             ALog.d("MusicFragment", "favorites: $favorites")
             songs = songs.map { it.copy(isFavorite = favorites.contains(it.filename.trim())) }
             ALog.d("MusicFragment", "songs: $songs")
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             ALog.d("SongFragment", "onResume: ${e.message}")
         }
 

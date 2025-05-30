@@ -14,9 +14,11 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdValue
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.OnPaidEventListener
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.nativead.MediaView
@@ -39,25 +41,29 @@ class AdManager @Inject constructor(
         onAdLoaded: (() -> Unit)? = null,
         onAdFailed: (String) -> Unit = { _ -> }
     ) {
-
         if (interstitialAd != null && activityIsValid(activity)) {
             activity.runOnUiThread {
                 try {
-                    interstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
-                        override fun onAdDismissedFullScreenContent() {
-                            interstitialAd = null
-                            onAdClosed()
-                        }
+                    interstitialAd?.fullScreenContentCallback =
+                        object : FullScreenContentCallback() {
+                            override fun onAdDismissedFullScreenContent() {
+                                interstitialAd = null
+                                onAdClosed()
+                            }
 
-                        override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                            interstitialAd = null
-                            onAdFailed(adError.message)
-                        }
+                            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                                interstitialAd = null
+                                onAdFailed(adError.message)
+                            }
 
-                        override fun onAdShowedFullScreenContent() {
-                            interstitialAd = null
+                            override fun onAdShowedFullScreenContent() {
+                                interstitialAd = null
+                            }
+
+                            override fun onAdImpression() {
+                                super.onAdImpression()
+                            }
                         }
-                    }
 
                     interstitialAd?.show(activity)
                 } catch (e: Exception) {
@@ -94,7 +100,11 @@ class AdManager @Inject constructor(
                     ALog.d("AdManager", "Interstitial ad loaded: $activity")
                     interstitialAd = ad
                     onAdLoaded?.invoke()
-
+                    interstitialAd?.onPaidEventListener = object : OnPaidEventListener {
+                        override fun onPaidEvent(adValue: AdValue) {
+                            ALog.d("AdManager", "Interstitial ad onPaidEvent: ${adValue.valueMicros } ${adValue.currencyCode}")
+                        }
+                    }
                     // Thiết lập callback trước khi show
                     interstitialAd?.fullScreenContentCallback =
                         object : FullScreenContentCallback() {

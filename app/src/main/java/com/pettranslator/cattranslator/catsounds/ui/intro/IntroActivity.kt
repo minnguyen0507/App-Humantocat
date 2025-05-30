@@ -61,7 +61,10 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
                     when (position) {
                         0 -> {
                             analyticsHelper.logScreenView(ScreenName.ONBOARDING_1)
-                            analyticsHelper.logTutorialBegin(System.currentTimeMillis().toString(), false)
+                            analyticsHelper.logTutorialBegin(
+                                System.currentTimeMillis().toString(),
+                                false
+                            )
                         }
 
                         1 -> {
@@ -85,15 +88,21 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
                     btnNext.isEnabled = false
                     sharedPref.setFirstRun(false)
                     analyticsHelper.logTutorialComplete(System.currentTimeMillis().toString(), true)
+                    showAdLoadingDialog()
                     adManager.showInterstitialAd(
                         this@IntroActivity,
                         onAdClosed = {
+                            dismissAdLoadingDialog()
                             openActivityAndClearApp(MainActivity::class.java)
                             analyticsHelper.logShowInterstitial(ScreenName.INTRO)
                         },
                         onAdFailed = { _ ->
+                            dismissAdLoadingDialog()
                             openActivityAndClearApp(MainActivity::class.java)
                             analyticsHelper.logShowInterstitialFailed(ScreenName.INTRO)
+                        },
+                        onAdLoaded = {
+                            dismissAdLoadingDialog()
                         }
                     )
                 }

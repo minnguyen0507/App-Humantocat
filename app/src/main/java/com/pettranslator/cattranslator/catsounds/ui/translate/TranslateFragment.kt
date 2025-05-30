@@ -35,7 +35,7 @@ class TranslateFragment : BaseFragment<FragmentTranslateBinding>() {
 
         analyticsHelper.logScreenView(ScreenName.TRANSLATE)
 
-        adManager.loadNativeClickAd(viewBinding.adContainer,onAdLoaded = {
+        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {
             analyticsHelper.logShowNative(ScreenName.TRANSLATE)
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.TRANSLATE)
@@ -57,19 +57,24 @@ class TranslateFragment : BaseFragment<FragmentTranslateBinding>() {
             requireActivity().showToast(getString(R.string.connect_internet))
             return
         }
+        showAdLoadingDialog()
         adManager.showInterstitialAd(requireActivity(), onAdClosed = {
+            dismissAdLoadingDialog()
             typeTrans = type
             requireContext().openActivity(RecordActivity::class.java)
             analyticsHelper.logShowInterstitial(ScreenName.TRANSLATE)
         }, onAdFailed = { errorMessage ->
             {
+                dismissAdLoadingDialog()
                 analyticsHelper.logShowInterstitialFailed(ScreenName.TRANSLATE)
                 requireActivity().showToast(getString(R.string.connect_internet))
             }
+        }, onAdLoaded = {
+            dismissAdLoadingDialog()
         })
     }
 
-    companion object{
+    companion object {
         var typeTrans = ETypeTranslator.HUMANTOANIMAL
     }
 

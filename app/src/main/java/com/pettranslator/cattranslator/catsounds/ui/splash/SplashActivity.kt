@@ -80,18 +80,22 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     private fun checkFirstRun() {
+
         if (sharedPref.getFirstRun()) {
             adManager.showInterstitialAd(
                 this,
                 onAdClosed = {
+
                     openFirstRunActivity()
                     analyticsHelper.logShowInterstitial(ScreenName.SPLASH)
                 }, onAdFailed = { _ ->
+
                     analyticsHelper.logShowInterstitialFailed(ScreenName.SPLASH)
                     setProgressBarSuccess()
                     openFirstRunActivity()
                 },
                 onAdLoaded = {
+
                     setProgressBarSuccess()
                 })
             return
@@ -99,20 +103,23 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         adManager.showInterstitialAd(
             this,
             onAdClosed = {
+
                 analyticsHelper.logShowInterstitial(ScreenName.SPLASH)
                 Handler(Looper.getMainLooper()).postDelayed({
                     openActivityAndClearApp(MainActivity::class.java)
-                }, 1000)
+                }, 500)
             },
             onAdFailed = { _ ->
+
                 analyticsHelper.logShowInterstitialFailed(ScreenName.SPLASH)
                 setProgressBarSuccess()
                 Handler(Looper.getMainLooper()).postDelayed({
                     openActivityAndClearApp(MainActivity::class.java)
-                }, 1000)
+                }, 500)
 
             },
             onAdLoaded = {
+
                 setProgressBarSuccess()
             })
     }
