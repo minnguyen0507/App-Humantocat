@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
+import com.pettranslator.cattranslator.catsounds.bases.AppContainer
 import com.pettranslator.cattranslator.catsounds.bases.fragment.BaseFragment
 import com.pettranslator.cattranslator.catsounds.databinding.FragmentMusicBinding
 import com.pettranslator.cattranslator.catsounds.model.ETypeSong
@@ -42,6 +44,8 @@ class SongFragment : BaseFragment<FragmentMusicBinding>() {
 
     @Inject
     lateinit var analyticsHelper: AnalyticsHelper
+    @Inject
+    lateinit var appContainer: AppContainer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,41 +88,15 @@ class SongFragment : BaseFragment<FragmentMusicBinding>() {
     }
 
     private fun playSong(position: Int) {
-        val remainingUses = sharedPref.loadRemainingUses()
 
-        if (remainingUses > 0) {
-            requireContext().openActivity(PlaySongActivity::class.java) {
-                putSerializable(
-                    SONGS,
-                    ArrayList(getSongs())
-                )  // nếu songs là List<Song>
-                putInt(CURRENT_INDEX, position)
-            }
-            sharedPref.saveRemainingUses(remainingUses - 1)
-        } else {
-            if (!requireActivity().isInternetConnected()) {
-                requireActivity().showToast(getString(R.string.connect_internet))
-                return
-            }
-            showAdLoadingDialog()
-            adManager.showInterstitialAd(requireActivity(), onAdClosed = {
-                analyticsHelper.logShowInterstitial(ScreenName.SONG)
-                dismissAdLoadingDialog()
-                requireContext().openActivity(PlaySongActivity::class.java) {
-                    putSerializable(
-                        SONGS,
-                        ArrayList(getSongs())
-                    )  // nếu songs là List<Song>
-                    putInt(CURRENT_INDEX, position)
-                }
-            }, onAdFailed = { errorMessage -> {
-                    dismissAdLoadingDialog()
-                    analyticsHelper.logShowInterstitialFailed(ScreenName.SONG)
-                    requireActivity().showToast(getString(R.string.connect_internet))
-                }
-            }, onAdLoaded = {
-                dismissAdLoadingDialog()
-            })
+        if (!requireActivity().isInternetConnected()) {
+            requireActivity().showToast(getString(R.string.connect_internet))
+            return
+        }
+
+        requireContext().openActivity(PlaySongActivity::class.java) {
+            putSerializable(SONGS, ArrayList(getSongs()))  // nếu songs là List<Song>
+            putInt(CURRENT_INDEX, position)
         }
     }
 
@@ -135,6 +113,25 @@ class SongFragment : BaseFragment<FragmentMusicBinding>() {
         }
 
         songAdapter.addData(songs.toMutableList())
+
+        adManager.showInterstitialAdIfEligible(
+            requireActivity(),
+            minIntervalMillis = appContainer.adConfig?.interDelaySongsSec?.times(1000L) ?: 30_000L,
+            adTag = "Song",
+            onAdClosed = {
+                dismissAdLoadingDialog()
+            },
+            onAdSkipped = {
+                dismissAdLoadingDialog()
+            },
+            onAdFailedToShow = {
+                dismissAdLoadingDialog()
+            },
+            onAdStartShowing = {
+                showAdLoadingDialog()
+            }, onAdImpression = {
+                analyticsHelper.logAdImpression("interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID)
+            })
     }
 
     private fun getSongs(): List<Song> {

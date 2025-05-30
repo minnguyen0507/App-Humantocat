@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
+import com.pettranslator.cattranslator.catsounds.bases.AppContainer
 import com.pettranslator.cattranslator.catsounds.bases.fragment.BaseFragment
 import com.pettranslator.cattranslator.catsounds.databinding.FragmentListAnimalBinding
 import com.pettranslator.cattranslator.catsounds.model.Animal
@@ -45,6 +47,9 @@ class AnimalListFragment :
     @Inject
     lateinit var analyticsHelper: AnalyticsHelper
 
+    @Inject
+    lateinit var appContainer: AppContainer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         filterType = arguments?.getInt(ARG_FILTER) ?: 0
@@ -59,29 +64,32 @@ class AnimalListFragment :
         val adapter = AnimalAdapter()
         viewBinding.rcvAnimal.adapter = adapter
         adapter.registerItemClickListener { view, animal, postion ->
-            val remainingUses = sharedPref.loadRemainingUses()
-            if (remainingUses > 0) {
-                playSound(animal, view)
-                sharedPref.saveRemainingUses(remainingUses - 1)
-            } else {
-                if (!requireActivity().isInternetConnected()) {
-                    requireActivity().showToast(getString(R.string.connect_internet))
-                    return@registerItemClickListener
-                }
-                showAdLoadingDialog()
-                adManager.showInterstitialAd(requireActivity(), onAdClosed = {
-                    dismissAdLoadingDialog()
-                    analyticsHelper.logShowInterstitial(ScreenName.HOME)
-                    sharedPref.saveRemainingUses(2)
-                    playSound(animal, view)
-                }, onAdFailed = { _ ->
-                    dismissAdLoadingDialog()
-                    analyticsHelper.logShowInterstitialFailed(ScreenName.HOME)
-                    requireActivity().showToast(getString(R.string.connect_internet))
-                 }, onAdLoaded = {
-                    dismissAdLoadingDialog()
-                })
+
+            if (!requireActivity().isInternetConnected()) {
+                requireActivity().showToast(getString(R.string.connect_internet))
+                return@registerItemClickListener
             }
+            adManager.showInterstitialAdIfEligible(
+                requireActivity(),
+                adTag = "Sound",
+                minIntervalMillis = appContainer.adConfig?.interDelayCatSoundSec?.times(1000L) ?: 25_000L,
+                onAdClosed = {
+                    dismissAdLoadingDialog()
+                    playSound(animal, view)
+                },
+                onAdSkipped = {
+                    dismissAdLoadingDialog()
+                    playSound(animal, view)
+                },
+                onAdFailedToShow = {
+                    dismissAdLoadingDialog()
+                },
+                onAdStartShowing = {
+                    showAdLoadingDialog()
+                }, onAdImpression = {
+                    analyticsHelper.logAdImpression("interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID)
+                })
+
         }
         if (filterType == EAnimal.CAT.id) {
             adapter.addData(dataProvider.getCatSounds().toMutableList())
@@ -127,6 +135,7 @@ class AnimalListFragment :
 
         return path.substringAfterLast("/", path)
     }
+
     companion object {
         private const val ARG_FILTER = "filter"
 

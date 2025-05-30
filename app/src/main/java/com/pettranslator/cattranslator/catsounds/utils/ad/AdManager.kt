@@ -2,6 +2,7 @@ package com.pettranslator.cattranslator.catsounds.utils.ad
 
 import android.app.Activity
 import android.content.Context
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,104 +35,152 @@ class AdManager @Inject constructor(
 ) {
 
     private var interstitialAd: InterstitialAd? = null
+    private val lastAdShownTimeMap: MutableMap<String, Long> = mutableMapOf()
+    private val isFirstAdShownMap: MutableMap<String, Boolean> = mutableMapOf()
 
-    fun showInterstitialAd(
-        activity: Activity,
-        onAdClosed: () -> Unit,
-        onAdLoaded: (() -> Unit)? = null,
-        onAdFailed: (String) -> Unit = { _ -> }
-    ) {
-        if (interstitialAd != null && activityIsValid(activity)) {
-            activity.runOnUiThread {
-                try {
-                    interstitialAd?.fullScreenContentCallback =
-                        object : FullScreenContentCallback() {
-                            override fun onAdDismissedFullScreenContent() {
-                                interstitialAd = null
-                                onAdClosed()
-                            }
+    fun loadInterstitialAdIfNeeded(activity: Activity) {
+        if (interstitialAd != null || !isActivityValid(activity)) return
 
-                            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                                interstitialAd = null
-                                onAdFailed(adError.message)
-                            }
+        InterstitialAd.load(
+            activity,
+            AdUnitIds.INTERSTITIAL,
+            AdRequest.Builder().build(),
+            object : InterstitialAdLoadCallback() {
+                override fun onAdLoaded(ad: InterstitialAd) {
+                    interstitialAd = ad
+                }
 
-                            override fun onAdShowedFullScreenContent() {
-                                interstitialAd = null
-                            }
-
-                            override fun onAdImpression() {
-                                super.onAdImpression()
-                            }
-                        }
-
-                    interstitialAd?.show(activity)
-                } catch (e: Exception) {
-                    onAdFailed("Exception when showing interstitial: ${e.localizedMessage}")
+                override fun onAdFailedToLoad(error: LoadAdError) {
+                    interstitialAd = null
                 }
             }
-        } else {
-            loadInterstitialAd(activity, onAdClosed, onAdLoaded, onAdFailed)
+        )
+    }
+
+    fun showInterstitialAdIfEligible(
+        activity: Activity,
+        adTag: String, // unique key per screen
+        minIntervalMillis: Long,
+        onAdStartShowing: () -> Unit = {},
+        onAdClosed: () -> Unit,
+        onAdSkipped: () -> Unit,
+        onAdImpression: () -> Unit,
+        onAdFailedToShow: (String) -> Unit = {}
+    ) {
+        val now = SystemClock.elapsedRealtime()
+        val lastShown = lastAdShownTimeMap[adTag] ?: 0L
+        val isFirst = isFirstAdShownMap[adTag] != false
+        ALog.d("themd","minIntervalMillis: $minIntervalMillis")
+        val canShow = isFirst || now - lastShown >= minIntervalMillis
+
+        if (!canShow) {
+            onAdSkipped()
+            return
+        }
+
+        showInterstitialAd(
+            activity = activity,
+            onAdStartShowing = onAdStartShowing,
+            onAdClosed = {
+                lastAdShownTimeMap[adTag] = SystemClock.elapsedRealtime()
+                isFirstAdShownMap[adTag] = false
+                loadInterstitialAdIfNeeded(activity)
+                onAdClosed()
+            },
+            onAdFailedToShow = {
+                loadInterstitialAdIfNeeded(activity)
+                onAdFailedToShow(it)
+            },
+            onAdImpression = onAdImpression
+        )
+    }
+
+    private fun showInterstitialAd(
+        activity: Activity,
+        onAdStartShowing: () -> Unit,
+        onAdClosed: () -> Unit,
+        onAdImpression: () -> Unit,
+        onAdFailedToShow: (String) -> Unit,
+    ) {
+        if (!isActivityValid(activity)) {
+            onAdFailedToShow("Activity invalid")
+            return
+        }
+
+        interstitialAd?.let { ad ->
+            onAdStartShowing()
+            ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    interstitialAd = null
+                    onAdClosed()
+                }
+
+                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                    interstitialAd = null
+                    onAdFailedToShow(adError.message)
+                }
+
+                override fun onAdShowedFullScreenContent() {
+                    interstitialAd = null
+                }
+
+                override fun onAdImpression() {
+                    super.onAdImpression()
+                    onAdImpression()
+                }
+            }
+
+            ad.show(activity)
+        } ?: run {
+            loadAndShowInterstitialAd(
+                activity,
+                onAdStartShowing,
+                onAdClosed,
+                onAdFailedToShow,
+                onAdImpression
+            )
         }
     }
 
-    fun activityIsValid(activity: Activity): Boolean {
-        return !activity.isFinishing && !activity.isDestroyed
-    }
-
-
-    private fun loadInterstitialAd(
+    private fun loadAndShowInterstitialAd(
         activity: Activity,
+        onAdStartShowing: () -> Unit,
         onAdClosed: () -> Unit,
-        onAdLoaded: (() -> Unit)? = null,
-        onFailed: ((String) -> Unit)? = null
+        onAdFailedToShow: (String) -> Unit,
+        onAdImpression: () -> Unit,
     ) {
-        val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(
-            activity, AdUnitIds.INTERSTITIAL, adRequest,
+            activity,
+            AdUnitIds.INTERSTITIAL,
+            AdRequest.Builder().build(),
             object : InterstitialAdLoadCallback() {
-                override fun onAdFailedToLoad(adError: LoadAdError) {
-                    interstitialAd = null
-                    ALog.d("AdManager", "Interstitial ad failed to load: ${adError.message}")
-                    onFailed?.invoke(adError.message)
-                }
-
                 override fun onAdLoaded(ad: InterstitialAd) {
-                    ALog.d("AdManager", "Interstitial ad loaded: $activity")
                     interstitialAd = ad
-                    onAdLoaded?.invoke()
-                    interstitialAd?.onPaidEventListener = object : OnPaidEventListener {
-                        override fun onPaidEvent(adValue: AdValue) {
-                            ALog.d("AdManager", "Interstitial ad onPaidEvent: ${adValue.valueMicros } ${adValue.currencyCode}")
-                        }
-                    }
-                    // Thiết lập callback trước khi show
-                    interstitialAd?.fullScreenContentCallback =
-                        object : FullScreenContentCallback() {
-                            override fun onAdDismissedFullScreenContent() {
-                                interstitialAd = null
-                                onAdClosed()
-                            }
-
-                            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
-                                interstitialAd = null
-                            }
-
-                            override fun onAdShowedFullScreenContent() {
-                                interstitialAd = null
-                            }
-                        }
-
-                    interstitialAd?.show(activity)
+                    showInterstitialAd(
+                        activity,
+                        onAdStartShowing,
+                        onAdClosed,
+                        onAdImpression,
+                        onAdFailedToShow
+                    )
                 }
-            })
+
+                override fun onAdFailedToLoad(error: LoadAdError) {
+                    onAdFailedToShow(error.message)
+                }
+            }
+        )
     }
 
+    private fun isActivityValid(activity: Activity?): Boolean {
+        return activity != null && !activity.isFinishing && !activity.isDestroyed
+    }
 
     fun loadNativeClickAd(
         container: ViewGroup, // Container để chứa NativeAdView
         onAdLoaded: (NativeAd) -> Unit,
-        onAdFailed: (String) -> Unit
+        onAdFailed: (String) -> Unit,
+        onAdImpression: () -> Unit
     ) {
         val inflater = LayoutInflater.from(context)
         val view = inflater.inflate(R.layout.native_ad_layout, container, false)
@@ -155,6 +204,11 @@ class AdManager @Inject constructor(
                     ALog.d("AdManager", "Native ad failed to load: ${error.message}")
                     container.addView(view)
                     onAdFailed(error.message)
+                }
+
+                override fun onAdImpression() {
+                    super.onAdImpression()
+                    onAdImpression()
                 }
             })
             .build()
@@ -189,6 +243,7 @@ class AdManager @Inject constructor(
     fun loadBannerAd(
         container: ViewGroup,
         onAdLoaded: (() -> Unit)? = null,
+        onAdImpression: () -> Unit,
         onAdFailed: (String) -> Unit = { errorMessage -> }
     ) {
         container.removeAllViews()
@@ -199,12 +254,17 @@ class AdManager @Inject constructor(
         adView.adListener = object : AdListener() {
             override fun onAdFailedToLoad(error: LoadAdError) {
                 ALog.d("AdManager", "Banner failed to load: ${error.message}")
-                onAdFailed.invoke(error.message)
+                onAdFailed(error.message)
             }
 
             override fun onAdLoaded() {
                 ALog.d("AdManager", "Banner loaded")
                 onAdLoaded?.invoke()
+            }
+
+            override fun onAdImpression() {
+                super.onAdImpression()
+                onAdImpression()
             }
         }
 
@@ -220,3 +280,4 @@ class AdManager @Inject constructor(
         return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context, screenWidthDp)
     }
 }
+

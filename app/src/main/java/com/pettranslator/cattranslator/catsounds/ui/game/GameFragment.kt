@@ -3,13 +3,16 @@ package com.pettranslator.cattranslator.catsounds.ui.game
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatButton
+import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
+import com.pettranslator.cattranslator.catsounds.bases.AppContainer
 import com.pettranslator.cattranslator.catsounds.bases.ViewPagerAdapter
 import com.pettranslator.cattranslator.catsounds.bases.fragment.BaseFragment
 import com.pettranslator.cattranslator.catsounds.databinding.FragmentGameBinding
 import com.pettranslator.cattranslator.catsounds.ui.music.SongFragment
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.ScreenName
+import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -21,6 +24,12 @@ class GameFragment : BaseFragment<FragmentGameBinding>() {
 
     @Inject
     lateinit var analyticsHelper: AnalyticsHelper
+
+    @Inject
+    lateinit var adManager: AdManager
+
+    @Inject
+    lateinit var appContainer: AppContainer
 
     override fun inflateViewBinding(
         inflater: LayoutInflater, container: ViewGroup?
@@ -58,5 +67,28 @@ class GameFragment : BaseFragment<FragmentGameBinding>() {
         view.setBackgroundResource(R.drawable.bg_tab_active)
         viewUnActive.setTextAppearance(R.style.tab_style_inactive)
         viewUnActive.setBackgroundResource(R.drawable.bg_tab_inactive)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adManager.showInterstitialAdIfEligible(
+            requireActivity(),
+            adTag = "Game",
+            minIntervalMillis = appContainer.adConfig?.interDelayGameSec?.times(1000L) ?: 30_000L,
+            onAdClosed = {
+                dismissAdLoadingDialog()
+            },
+            onAdSkipped = {
+                dismissAdLoadingDialog()
+            },
+            onAdFailedToShow = {
+                dismissAdLoadingDialog()
+            },
+            onAdStartShowing = {
+                showAdLoadingDialog()
+            }, onAdImpression = {
+                analyticsHelper.logAdImpression("interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID)
+            }
+        )
     }
 }

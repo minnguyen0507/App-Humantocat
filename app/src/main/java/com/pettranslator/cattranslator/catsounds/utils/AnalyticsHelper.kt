@@ -136,25 +136,15 @@ class AnalyticsHelper(private val firebaseAnalytics: FirebaseAnalytics) {
         }
         logEvent(AnalyticsEvent("show_native_failed_position", params))
     }
-//    fun logAdRevenue(adType: String, adUnitId: String?, screenName: String, adValue: AdValue) {
-//        val revenue = adValue.valueMicros / 1_000_000.0
-//        val params = Bundle().apply {
-//            putString("ad_platform", "AppLovin") // hoặc "ironSource", "UnityAds", etc.
-//            putString("ad_source", "appLovin_network") // tên cụ thể của nguồn quảng cáo
-//            putString("ad_format", "rewarded") // hoặc "interstitial", "banner", etc.
-//            putString("ad_unit_name", "rewarded_video_1") // tên ad unit cụ thể
-//            putDouble("value", 0.01) // doanh thu ước tính từ impression (USD)
-//            putString("currency", "USD")
-//        }
-//        val params = Bundle().apply {
-//            putString("ad_type", adType)
-//            putString("ad_unit_id", adUnitId)
-//            putString("screen_name", screenName)
-//            putDouble("value", revenue)
-//            putString("currency", adValue.currencyCode)
-//        }
-//        FirebaseAnalytics.getInstance(context).logEvent("ad_impression", params)
-//    }
+
+    fun logAdImpression(adType: String, adUnitId: String) {
+        val params = Bundle().apply {
+            putString("ad_type", adType)
+            putString("ad_unit_id", adUnitId)
+        }
+        logEvent(AnalyticsEvent("ad_impression", params))
+    }
+
     // Phương thức chung để ghi nhận bất kỳ sự kiện nào
     fun logCustomEvent(eventName: String, parameters: Bundle) {
         logEvent(AnalyticsEvent(eventName, parameters))

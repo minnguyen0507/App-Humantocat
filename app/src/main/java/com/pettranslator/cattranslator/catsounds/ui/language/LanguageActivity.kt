@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityLanguageBinding
@@ -59,6 +60,8 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
             analyticsHelper.logShowNative(ScreenName.LANGUAGE)
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.LANGUAGE)
+        }, onAdImpression = {
+            analyticsHelper.logAdImpression("native", BuildConfig.NATIVE_AD_UNIT_ID)
         })
         languageAdapter = LanguageAdapter()
         viewBinding.apply {

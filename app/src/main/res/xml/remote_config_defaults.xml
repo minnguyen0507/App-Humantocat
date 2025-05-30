@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>inter_delay_home_sec</key>
+        <value>60</value>
+    </entry>
+    <entry>
+        <key>inter_delay_record_sec</key>
+        <value>90</value>
+    </entry>
+    <entry>
+        <key>inter_delay_playback_sec</key>
+        <value>45</value>
+    </entry>
+    <entry>
+        <key>inter_delay_cat_sound_sec</key>
+        <value>25</value>
+    </entry>
+    <entry>
+        <key>inter_delay_translate_sec</key>
+        <value>30</value>
+    </entry>
+    <entry>
+        <key>inter_delay_game_sec</key>
+        <value>30</value>
+    </entry>
+    <entry>
+        <key>inter_delay_songs_sec</key>
+        <value>30</value>
+    </entry>
+    <entry>
+        <key>banner_enabled</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>rewarded_enabled</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>rewarded_max_per_day</key>
+        <value>5</value>
+    </entry>
+    <!-- Xóa key "parameters" nếu không còn sử dụng JSON lồng nhau -->
+</defaultsMap>

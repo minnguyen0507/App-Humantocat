@@ -39,11 +39,12 @@ object AppOpenAdManager {
                     onAdFailed?.invoke()
                     ALog.d("AppOpenAdManager", "Ad loaded error: ${error.message}")
                 }
+
             }
         )
     }
 
-    fun showAdIfAvailable(activity: Activity, onAdClosed: () -> Unit) {
+    fun showAdIfAvailable(activity: Activity, onAdClosed: () -> Unit, onAdImpression: () -> Unit) {
         appOpenAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
             override fun onAdDismissedFullScreenContent() {
                 isAdShowing = false
@@ -56,6 +57,11 @@ object AppOpenAdManager {
                 ALog.d("AppOpenAdManager", "onAdFailedToShowFullScreenContent: ${adError.message}")
                 isAdShowing = false
                 onAdClosed()
+            }
+
+            override fun onAdImpression() {
+                super.onAdImpression()
+                onAdImpression()
             }
         }
         appOpenAd?.show(activity)

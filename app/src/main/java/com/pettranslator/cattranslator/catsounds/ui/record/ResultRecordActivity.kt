@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityResultRecordBinding
@@ -54,6 +55,8 @@ class ResultRecordActivity : BaseActivity<ActivityResultRecordBinding>() {
             analyticsHelper.logShowNative(ScreenName.TRANSLATION_RESULT)
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.TRANSLATION_RESULT)
+        }, onAdImpression = {
+            analyticsHelper.logAdImpression("native", BuildConfig.NATIVE_AD_UNIT_ID)
         })
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

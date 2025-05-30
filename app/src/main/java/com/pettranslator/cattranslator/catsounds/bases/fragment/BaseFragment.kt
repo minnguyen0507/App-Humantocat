@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.google.gson.Gson
+import com.pettranslator.cattranslator.catsounds.model.AdConfig
 
 /**
  * Created by ThuanPx on 8/5/20.
@@ -49,6 +50,8 @@ abstract class BaseFragment<viewBinding : ViewBinding> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 //        progressDialog = ProgressDialog(requireContext())
         gson = Gson()
+
+
         initialize()
     }
 

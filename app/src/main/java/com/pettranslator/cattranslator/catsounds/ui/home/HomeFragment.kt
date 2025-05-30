@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatButton
 import androidx.viewpager2.widget.ViewPager2
+import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.ViewPagerAdapter
 import com.pettranslator.cattranslator.catsounds.bases.fragment.BaseFragment
@@ -41,6 +42,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             analyticsHelper.logShowNative(ScreenName.HOME)
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.HOME)
+        }, onAdImpression = {
+            analyticsHelper.logAdImpression("native", BuildConfig.NATIVE_AD_UNIT_ID)
         })
 
         viewPage = ViewPagerAdapter(childFragmentManager, lifecycle)

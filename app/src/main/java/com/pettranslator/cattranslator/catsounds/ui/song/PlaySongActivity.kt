@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityPlaySongBinding
@@ -59,6 +60,8 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
             analyticsHelper.logShowNative(ScreenName.SONG_PLAYING)
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.SONG_PLAYING)
+        }, onAdImpression = {
+            analyticsHelper.logAdImpression("native", BuildConfig.NATIVE_AD_UNIT_ID)
         })
         setupUI()
         playCurrentSong()

@@ -9,7 +9,10 @@ import androidx.core.os.LocaleListCompat
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.google.android.gms.ads.MobileAds
+import com.pettranslator.cattranslator.catsounds.bases.AppContainer
 import com.pettranslator.cattranslator.catsounds.ui.main.AdLoadingDialogFragment
+import com.pettranslator.cattranslator.catsounds.utils.ALog
+import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.ad.AppOpenAdManager
 import dagger.hilt.android.HiltAndroidApp
@@ -28,6 +31,12 @@ class CatTranslatorApplication : Application(),
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
 
+    @Inject
+    lateinit var analyticsHelper: AnalyticsHelper
+
+    @Inject
+    lateinit var appContainer: AppContainer
+
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder()
             .setWorkerFactory(workerFactory)
@@ -41,6 +50,13 @@ class CatTranslatorApplication : Application(),
         val locales = LocaleListCompat.forLanguageTags(languageCode)
         AppCompatDelegate.setApplicationLocales(locales)
         registerActivityLifecycleCallbacks(this)
+        appContainer.initializeAdConfig { success ->
+            if (success) {
+                ALog.d("AppContainer", "AdConfig initialized with server data")
+            } else {
+                ALog.d("AppContainer", "AdConfig initialized with defaults due to fetch failure")
+            }
+        }
     }
 
 
@@ -75,9 +91,11 @@ class CatTranslatorApplication : Application(),
                     AdLoadingDialogFragment.dismiss(
                         activity.supportFragmentManager
                     )
-                    AppOpenAdManager.showAdIfAvailable(activity) {
-                        // Ad closed
-                    }
+                    AppOpenAdManager.showAdIfAvailable(activity, onAdImpression = {
+                        analyticsHelper.logAdImpression("OOA", BuildConfig.APP_OPEN_AD_UNIT_ID)
+                    }, onAdClosed = {
+
+                    })
                 },
                 onAdFailed = {
                     // Failed to load

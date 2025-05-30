@@ -6,8 +6,11 @@ import android.os.Build
 import android.view.LayoutInflater
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
+import com.pettranslator.cattranslator.catsounds.bases.AppContainer
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
+import com.pettranslator.cattranslator.catsounds.bases.RemoteConfigRepository
 import com.pettranslator.cattranslator.catsounds.bases.ViewPagerAdapter
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityMainBinding
 import com.pettranslator.cattranslator.catsounds.ui.game.GameFragment
@@ -39,6 +42,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     @Inject
     lateinit var sharedPref: SharedPref
 
+    @Inject
+    lateinit var appContainer: AppContainer
+
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -57,6 +63,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         loadBannerAd()
         checkPermissionNotification()
         checkAndLogAppUpdate()
+        appContainer.adConfig?.let { config ->
+            ALog.d("AppContainer", "Interstitial Delay for Record: $config")
+
+        } ?: run {
+
+        }
     }
 
     private fun checkPermissionNotification() {
@@ -105,12 +117,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             analyticsHelper.logShowBanner(ScreenName.MAIN)
         }, onAdFailed = {
             analyticsHelper.logShowBannerFailed(ScreenName.MAIN)
+        }, onAdImpression = {
+            analyticsHelper.logAdImpression("banner", BuildConfig.BANNER_AD_UNIT_ID)
         })
     }
 
     override fun onResume() {
         super.onResume()
         analyticsHelper.logScreenView(ScreenName.MAIN)
+        adManager.loadInterstitialAdIfNeeded(activity = this)
     }
 
     private fun checkAndLogAppUpdate() {

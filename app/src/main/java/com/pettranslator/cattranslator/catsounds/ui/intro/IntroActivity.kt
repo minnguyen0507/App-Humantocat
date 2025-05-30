@@ -5,6 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityIntroBinding
@@ -49,6 +50,8 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
             analyticsHelper.logShowNative(ScreenName.INTRO)
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.INTRO)
+        }, onAdImpression = {
+            analyticsHelper.logAdImpression("native", BuildConfig.NATIVE_AD_UNIT_ID)
         })
 
         viewBinding.apply {
@@ -88,23 +91,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
                     btnNext.isEnabled = false
                     sharedPref.setFirstRun(false)
                     analyticsHelper.logTutorialComplete(System.currentTimeMillis().toString(), true)
-                    showAdLoadingDialog()
-                    adManager.showInterstitialAd(
-                        this@IntroActivity,
-                        onAdClosed = {
-                            dismissAdLoadingDialog()
-                            openActivityAndClearApp(MainActivity::class.java)
-                            analyticsHelper.logShowInterstitial(ScreenName.INTRO)
-                        },
-                        onAdFailed = { _ ->
-                            dismissAdLoadingDialog()
-                            openActivityAndClearApp(MainActivity::class.java)
-                            analyticsHelper.logShowInterstitialFailed(ScreenName.INTRO)
-                        },
-                        onAdLoaded = {
-                            dismissAdLoadingDialog()
-                        }
-                    )
+                    openActivityAndClearApp(MainActivity::class.java)
                 }
             }
         }

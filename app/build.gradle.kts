@@ -53,10 +53,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    buildFeatures {
-        viewBinding = true
-    }
-
     kotlinOptions {
         jvmTarget = "11"
     }
@@ -138,5 +134,9 @@ dependencies {
     implementation(libs.androidx.work.runtime.ktx)
 
     implementation(libs.firebase.analytics)
+    implementation(platform(libs.firebase.bom))
 
+    // Add the dependencies for the Remote Config and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation(libs.firebase.config)
 }

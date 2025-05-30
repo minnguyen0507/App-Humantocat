@@ -2,7 +2,9 @@ package com.pettranslator.cattranslator.catsounds.ui.translate
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
+import com.pettranslator.cattranslator.catsounds.bases.AppContainer
 import com.pettranslator.cattranslator.catsounds.bases.fragment.BaseFragment
 import com.pettranslator.cattranslator.catsounds.databinding.FragmentTranslateBinding
 import com.pettranslator.cattranslator.catsounds.model.ETypeTranslator
@@ -16,6 +18,7 @@ import com.pettranslator.cattranslator.catsounds.utils.setSafeOnClickListener
 import com.pettranslator.cattranslator.catsounds.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlin.Long
 
 
 @AndroidEntryPoint
@@ -26,7 +29,8 @@ class TranslateFragment : BaseFragment<FragmentTranslateBinding>() {
 
     @Inject
     lateinit var analyticsHelper: AnalyticsHelper
-
+    @Inject
+    lateinit var appContainer: AppContainer
     override fun inflateViewBinding(
         inflater: LayoutInflater, container: ViewGroup?
     ): FragmentTranslateBinding = FragmentTranslateBinding.inflate(inflater)
@@ -39,6 +43,8 @@ class TranslateFragment : BaseFragment<FragmentTranslateBinding>() {
             analyticsHelper.logShowNative(ScreenName.TRANSLATE)
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.TRANSLATE)
+        }, onAdImpression = {
+            analyticsHelper.logAdImpression("native", BuildConfig.NATIVE_AD_UNIT_ID)
         })
 
         viewBinding.apply {
@@ -57,21 +63,32 @@ class TranslateFragment : BaseFragment<FragmentTranslateBinding>() {
             requireActivity().showToast(getString(R.string.connect_internet))
             return
         }
+        typeTrans = type
         showAdLoadingDialog()
-        adManager.showInterstitialAd(requireActivity(), onAdClosed = {
-            dismissAdLoadingDialog()
-            typeTrans = type
-            requireContext().openActivity(RecordActivity::class.java)
-            analyticsHelper.logShowInterstitial(ScreenName.TRANSLATE)
-        }, onAdFailed = { errorMessage ->
-            {
+        requireContext().openActivity(RecordActivity::class.java)
+        analyticsHelper.logShowInterstitial(ScreenName.TRANSLATE)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adManager.showInterstitialAdIfEligible(
+            requireActivity(),
+            minIntervalMillis = appContainer.adConfig?.interDelayTranslateSec?.times(1000L) ?: 30_000L,
+            adTag = "Translate",
+            onAdClosed = {
                 dismissAdLoadingDialog()
-                analyticsHelper.logShowInterstitialFailed(ScreenName.TRANSLATE)
-                requireActivity().showToast(getString(R.string.connect_internet))
-            }
-        }, onAdLoaded = {
-            dismissAdLoadingDialog()
-        })
+            },
+            onAdSkipped = {
+                dismissAdLoadingDialog()
+            },
+            onAdFailedToShow = {
+                dismissAdLoadingDialog()
+            },
+            onAdStartShowing = {
+                showAdLoadingDialog()
+            }, onAdImpression = {
+                analyticsHelper.logAdImpression("interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID)
+            })
     }
 
     companion object {

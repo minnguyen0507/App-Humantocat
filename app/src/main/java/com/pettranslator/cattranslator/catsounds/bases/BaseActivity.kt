@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.viewbinding.ViewBinding
 import com.google.gson.Gson
 import com.pettranslator.cattranslator.catsounds.R
+import com.pettranslator.cattranslator.catsounds.model.AdConfig
 import com.pettranslator.cattranslator.catsounds.ui.main.AdLoadingDialogFragment
 
 abstract class BaseActivity<viewBinding : ViewBinding> :
