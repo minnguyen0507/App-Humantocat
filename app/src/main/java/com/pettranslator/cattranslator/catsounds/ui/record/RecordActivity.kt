@@ -135,6 +135,10 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
         startRecord()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+    }
     companion object {
         const val SECONDS = "seconds"
     }

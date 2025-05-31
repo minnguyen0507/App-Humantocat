@@ -69,26 +69,4 @@ class GameFragment : BaseFragment<FragmentGameBinding>() {
         viewUnActive.setBackgroundResource(R.drawable.bg_tab_inactive)
     }
 
-    override fun onResume() {
-        super.onResume()
-        adManager.showInterstitialAdIfEligible(
-            requireActivity(),
-            adTag = "Game",
-            minIntervalMillis = appContainer.adConfig?.interDelayGameSec?.times(1000L) ?: 30_000L,
-            onAdClosed = {
-                dismissAdLoadingDialog()
-            },
-            onAdSkipped = {
-                dismissAdLoadingDialog()
-            },
-            onAdFailedToShow = {
-                dismissAdLoadingDialog()
-            },
-            onAdStartShowing = {
-                showAdLoadingDialog()
-            }, onAdImpression = {
-                analyticsHelper.logAdImpression("interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID)
-            }
-        )
-    }
 }

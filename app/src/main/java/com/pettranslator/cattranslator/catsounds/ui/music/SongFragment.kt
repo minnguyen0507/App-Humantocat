@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.AppContainer
 import com.pettranslator.cattranslator.catsounds.bases.fragment.BaseFragment
@@ -44,6 +43,7 @@ class SongFragment : BaseFragment<FragmentMusicBinding>() {
 
     @Inject
     lateinit var analyticsHelper: AnalyticsHelper
+
     @Inject
     lateinit var appContainer: AppContainer
 
@@ -113,25 +113,6 @@ class SongFragment : BaseFragment<FragmentMusicBinding>() {
         }
 
         songAdapter.addData(songs.toMutableList())
-
-        adManager.showInterstitialAdIfEligible(
-            requireActivity(),
-            minIntervalMillis = appContainer.adConfig?.interDelaySongsSec?.times(1000L) ?: 30_000L,
-            adTag = "Song",
-            onAdClosed = {
-                dismissAdLoadingDialog()
-            },
-            onAdSkipped = {
-                dismissAdLoadingDialog()
-            },
-            onAdFailedToShow = {
-                dismissAdLoadingDialog()
-            },
-            onAdStartShowing = {
-                showAdLoadingDialog()
-            }, onAdImpression = {
-                analyticsHelper.logAdImpression("interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID)
-            })
     }
 
     private fun getSongs(): List<Song> {

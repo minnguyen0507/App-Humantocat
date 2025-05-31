@@ -103,9 +103,86 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         viewBinding.navView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> viewBinding.viewPager.setCurrentItem(0, true)
-                R.id.navigation_translate -> viewBinding.viewPager.setCurrentItem(1, true)
-                R.id.navigation_game -> viewBinding.viewPager.setCurrentItem(2, true)
-                R.id.navigation_music -> viewBinding.viewPager.setCurrentItem(3, true)
+                R.id.navigation_translate -> {
+
+                    adManager.showInterstitialAdIfEligible(
+                        this,
+                        minIntervalMillis = appContainer.adConfig?.interDelayTranslateSec?.times(1000L)
+                            ?: 30_000L,
+                        adTag = "Translate",
+                        onAdClosed = {
+                            dismissAdLoadingDialog()
+
+                        },
+                        onAdSkipped = {
+                            dismissAdLoadingDialog()
+                        },
+                        onAdFailedToShow = {
+                            dismissAdLoadingDialog()
+                        },
+                        onAdStartShowing = {
+                            ALog.d("themd", "onAdStartShowing")
+                            showAdLoadingDialog()
+                        }, onAdImpression = {
+                            analyticsHelper.logAdImpression(
+                                "interstitial",
+                                BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                            )
+                        })
+                    viewBinding.viewPager.setCurrentItem(1, true)
+
+                }
+                R.id.navigation_game -> {
+                    adManager.showInterstitialAdIfEligible(
+                        this,
+                        adTag = "Game",
+                        minIntervalMillis = appContainer.adConfig?.interDelayGameSec?.times(1000L)
+                            ?: 30_000L,
+                        onAdClosed = {
+                            dismissAdLoadingDialog()
+                        },
+                        onAdSkipped = {
+                            dismissAdLoadingDialog()
+                        },
+                        onAdFailedToShow = {
+                            dismissAdLoadingDialog()
+                        },
+                        onAdStartShowing = {
+                            showAdLoadingDialog()
+                        }, onAdImpression = {
+                            analyticsHelper.logAdImpression(
+                                "interstitial",
+                                BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                            )
+                        }
+                    )
+                    viewBinding.viewPager.setCurrentItem(2, true)
+                }
+                R.id.navigation_music -> {
+                    adManager.showInterstitialAdIfEligible(
+                        this,
+                        minIntervalMillis = appContainer.adConfig?.interDelaySongsSec?.times(1000L)
+                            ?: 30_000L,
+                        adTag = "Song",
+                        onAdClosed = {
+                            dismissAdLoadingDialog()
+                        },
+                        onAdSkipped = {
+                            dismissAdLoadingDialog()
+                        },
+                        onAdFailedToShow = {
+                            dismissAdLoadingDialog()
+                        },
+                        onAdStartShowing = {
+                            showAdLoadingDialog()
+                        }, onAdImpression = {
+                            analyticsHelper.logAdImpression(
+                                "interstitial",
+                                BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                            )
+                        })
+                    viewBinding.viewPager.setCurrentItem(3, true)
+                }
                 R.id.navigation_setting -> viewBinding.viewPager.setCurrentItem(4, true)
             }
             true
@@ -138,4 +215,5 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             analyticsHelper.logAppUpdate(currentVersion)
         }
     }
+
 }

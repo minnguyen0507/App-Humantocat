@@ -149,6 +149,7 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
         handler.removeCallbacks(updateSeekBarRunnable)
     }
 
+
     override fun onResume() {
         super.onResume()
         analyticsHelper.logScreenView(ScreenName.SONG_PLAYING)

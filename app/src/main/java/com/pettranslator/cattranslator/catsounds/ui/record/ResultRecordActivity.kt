@@ -85,15 +85,27 @@ class ResultRecordActivity : BaseActivity<ActivityResultRecordBinding>() {
             }
             imvCat.setOnClickListener {
                 typeAnimal = EAnimal.CAT
-                it.background = ContextCompat.getDrawable(this@ResultRecordActivity, R.drawable.circle_button_border)
+                it.background = ContextCompat.getDrawable(
+                    this@ResultRecordActivity,
+                    R.drawable.circle_button_border
+                )
                 viewBinding.imvDog.background =
-                    ContextCompat.getDrawable(this@ResultRecordActivity, R.drawable.bg_circle_unselected)
+                    ContextCompat.getDrawable(
+                        this@ResultRecordActivity,
+                        R.drawable.bg_circle_unselected
+                    )
             }
             imvDog.setOnClickListener {
                 typeAnimal = EAnimal.DOG
-                it.background = ContextCompat.getDrawable(this@ResultRecordActivity, R.drawable.circle_button_border)
+                it.background = ContextCompat.getDrawable(
+                    this@ResultRecordActivity,
+                    R.drawable.circle_button_border
+                )
                 viewBinding.imvCat.background =
-                    ContextCompat.getDrawable(this@ResultRecordActivity, R.drawable.bg_circle_unselected)
+                    ContextCompat.getDrawable(
+                        this@ResultRecordActivity,
+                        R.drawable.bg_circle_unselected
+                    )
             }
         }
     }

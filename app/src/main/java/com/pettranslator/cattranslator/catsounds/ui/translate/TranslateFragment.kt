@@ -18,7 +18,6 @@ import com.pettranslator.cattranslator.catsounds.utils.setSafeOnClickListener
 import com.pettranslator.cattranslator.catsounds.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlin.Long
 
 
 @AndroidEntryPoint
@@ -64,32 +63,10 @@ class TranslateFragment : BaseFragment<FragmentTranslateBinding>() {
             return
         }
         typeTrans = type
-        showAdLoadingDialog()
         requireContext().openActivity(RecordActivity::class.java)
         analyticsHelper.logShowInterstitial(ScreenName.TRANSLATE)
     }
 
-    override fun onResume() {
-        super.onResume()
-        adManager.showInterstitialAdIfEligible(
-            requireActivity(),
-            minIntervalMillis = appContainer.adConfig?.interDelayTranslateSec?.times(1000L) ?: 30_000L,
-            adTag = "Translate",
-            onAdClosed = {
-                dismissAdLoadingDialog()
-            },
-            onAdSkipped = {
-                dismissAdLoadingDialog()
-            },
-            onAdFailedToShow = {
-                dismissAdLoadingDialog()
-            },
-            onAdStartShowing = {
-                showAdLoadingDialog()
-            }, onAdImpression = {
-                analyticsHelper.logAdImpression("interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID)
-            })
-    }
 
     companion object {
         var typeTrans = ETypeTranslator.HUMANTOANIMAL
