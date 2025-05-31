@@ -59,7 +59,7 @@ object AppModule {
     fun provideFirebaseRemoteConfig(): FirebaseRemoteConfig {
         val config = FirebaseRemoteConfig.getInstance()
         val settings = FirebaseRemoteConfigSettings.Builder()
-            .setMinimumFetchIntervalInSeconds(3600)
+            .setMinimumFetchIntervalInSeconds(6 * 60 * 60)
             .build()
         config.setConfigSettingsAsync(settings)
         config.setDefaultsAsync(R.xml.remote_config_defaults)
