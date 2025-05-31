@@ -67,13 +67,20 @@ class CatTranslatorApplication : Application(),
 
     }
 
+    private var lastAdShownTime: Long = 0
     override fun onActivityStarted(activity: Activity) {
         val wasInBackground = activityReferences == 0
 
         activityReferences++
 
         if (wasInBackground && !isActivityChangingConfigurations && hasAppStartedOnce) {
-            isReturningFromBackground = true
+            val currentTime = System.currentTimeMillis()
+            val minInterval = 30 * 1000
+
+            if (currentTime - lastAdShownTime > minInterval) {
+                isReturningFromBackground = true
+                lastAdShownTime = currentTime
+            }
         }
 
         if (!hasAppStartedOnce) {
@@ -94,11 +101,15 @@ class CatTranslatorApplication : Application(),
                     AppOpenAdManager.showAdIfAvailable(activity, onAdImpression = {
                         analyticsHelper.logAdImpression("OOA", BuildConfig.APP_OPEN_AD_UNIT_ID)
                     }, onAdClosed = {
-
+                        AdLoadingDialogFragment.dismiss(
+                            activity.supportFragmentManager
+                        )
                     })
                 },
                 onAdFailed = {
-                    // Failed to load
+                    AdLoadingDialogFragment.dismiss(
+                        activity.supportFragmentManager
+                    )
                 }
             )
         }

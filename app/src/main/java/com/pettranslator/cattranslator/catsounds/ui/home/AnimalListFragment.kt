@@ -85,7 +85,9 @@ class AnimalListFragment :
                     dismissAdLoadingDialog()
                 },
                 onAdStartShowing = {
-                    showAdLoadingDialog()
+                    showAdLoadingDialog {
+                        requireActivity().showToast(getString(R.string.connect_internet))
+                    }
                 }, onAdImpression = {
                     analyticsHelper.logAdImpression("interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID)
                 })
