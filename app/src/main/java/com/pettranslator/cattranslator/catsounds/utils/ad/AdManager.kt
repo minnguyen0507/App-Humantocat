@@ -217,6 +217,46 @@ class AdManager @Inject constructor(
         adLoader.loadAd(AdRequest.Builder().build())
     }
 
+    fun loadNativeÌntroAd(
+        container: ViewGroup, // Container để chứa NativeAdView
+        onAdLoaded: (NativeAd) -> Unit,
+        onAdFailed: (String) -> Unit,
+        onAdImpression: () -> Unit
+    ) {
+        val inflater = LayoutInflater.from(context)
+        val view = inflater.inflate(R.layout.native_ad_intro, container, false)
+        val adView = view.findViewById<NativeAdView>(R.id.native_ad_view_intro)
+        val shimmerViewContainer =
+            view.findViewById<com.facebook.shimmer.ShimmerFrameLayout>(R.id.shimmer_view_container)
+        val adLoader = AdLoader.Builder(context, AdUnitIds.NATIVE)
+            .forNativeAd { nativeAd ->
+                container.removeAllViews()
+                displayNativeAd(adView, nativeAd, view)
+                shimmerViewContainer.stopShimmer()
+                shimmerViewContainer.visibility = View.GONE
+                adView.visibility = View.VISIBLE
+                adView.setNativeAd(nativeAd)
+
+                container.addView(view)
+                onAdLoaded(nativeAd)
+            }
+            .withAdListener(object : AdListener() {
+                override fun onAdFailedToLoad(error: LoadAdError) {
+                    ALog.d("AdManager", "Native ad failed to load: ${error.message}")
+                    container.addView(view)
+                    onAdFailed(error.message)
+                }
+
+                override fun onAdImpression() {
+                    super.onAdImpression()
+                    onAdImpression()
+                }
+            })
+            .build()
+
+        adLoader.loadAd(AdRequest.Builder().build())
+    }
+
 
     private fun displayNativeAd(nativeAdView: NativeAdView, nativeAd: NativeAd, view: View) {
         // Gán các thành phần quảng cáo vào NativeAdView

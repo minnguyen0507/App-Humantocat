@@ -46,7 +46,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
             insets
         }
 
-        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {
+        adManager.loadNativeÌntroAd(viewBinding.adContainer, onAdLoaded = {
             analyticsHelper.logShowNative(ScreenName.INTRO)
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.INTRO)

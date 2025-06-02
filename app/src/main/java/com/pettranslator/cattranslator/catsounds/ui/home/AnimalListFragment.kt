@@ -83,6 +83,7 @@ class AnimalListFragment :
                 },
                 onAdFailedToShow = {
                     dismissAdLoadingDialog()
+                    playSound(animal, view)
                 },
                 onAdStartShowing = {
                     showAdLoadingDialog {

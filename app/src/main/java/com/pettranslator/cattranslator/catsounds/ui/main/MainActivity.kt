@@ -107,8 +107,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
                     adManager.showInterstitialAdIfEligible(
                         this,
-                        minIntervalMillis = appContainer.adConfig?.interDelayTranslateSec?.times(1000L)
-                            ?: 30_000L,
+                        minIntervalMillis = appContainer.adConfig?.interDelayTranslateSec?.times(1000L) ?: 30_000L,
                         adTag = "Translate",
                         onAdClosed = {
                             dismissAdLoadingDialog()
