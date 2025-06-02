@@ -149,6 +149,7 @@ class AdManager @Inject constructor(
         onAdFailedToShow: (String) -> Unit,
         onAdImpression: () -> Unit,
     ) {
+        onAdStartShowing()
         InterstitialAd.load(
             activity,
             AdUnitIds.INTERSTITIAL,
