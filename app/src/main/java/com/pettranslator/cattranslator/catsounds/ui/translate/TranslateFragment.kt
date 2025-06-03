@@ -64,7 +64,7 @@ class TranslateFragment : BaseFragment<FragmentTranslateBinding>() {
         }
         typeTrans = type
         requireContext().openActivity(RecordActivity::class.java)
-        analyticsHelper.logShowInterstitial(ScreenName.TRANSLATE)
+
     }
 
 

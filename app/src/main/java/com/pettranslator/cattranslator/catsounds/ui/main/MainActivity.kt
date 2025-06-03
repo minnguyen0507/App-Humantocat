@@ -102,7 +102,34 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         viewBinding.navView.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_home -> viewBinding.viewPager.setCurrentItem(0, true)
+                R.id.navigation_home -> {
+                    adManager.showInterstitialAdIfEligible(
+                        this,
+                        minIntervalMillis = appContainer.adConfig?.interDelayHomeSec?.times(1000L) ?: 60_000L,
+                        adTag = "Home",
+                        onAdClosed = {
+                            dismissAdLoadingDialog()
+
+                        },
+                        onAdSkipped = {
+                            dismissAdLoadingDialog()
+                        },
+                        onAdFailedToShow = {
+                            analyticsHelper.logShowInterstitialFailed(ScreenName.HOME)
+                            dismissAdLoadingDialog()
+                        },
+                        onAdStartShowing = {
+                            ALog.d("themd", "onAdStartShowing")
+                            showAdLoadingDialog()
+                        }, onAdImpression = {
+                            analyticsHelper.logShowInterstitial(ScreenName.HOME)
+                            analyticsHelper.logAdImpression(
+                                "interstitial",
+                                BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                            )
+                        })
+                    viewBinding.viewPager.setCurrentItem(0, true)
+                }
                 R.id.navigation_translate -> {
 
                     adManager.showInterstitialAdIfEligible(
@@ -117,12 +144,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                             dismissAdLoadingDialog()
                         },
                         onAdFailedToShow = {
+                            analyticsHelper.logShowInterstitialFailed(ScreenName.TRANSLATE)
                             dismissAdLoadingDialog()
                         },
                         onAdStartShowing = {
                             ALog.d("themd", "onAdStartShowing")
                             showAdLoadingDialog()
                         }, onAdImpression = {
+                            analyticsHelper.logShowInterstitial(ScreenName.TRANSLATE)
                             analyticsHelper.logAdImpression(
                                 "interstitial",
                                 BuildConfig.INTERSTITIAL_AD_UNIT_ID
@@ -144,11 +173,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                             dismissAdLoadingDialog()
                         },
                         onAdFailedToShow = {
+                            analyticsHelper.logShowInterstitialFailed(ScreenName.GAME)
                             dismissAdLoadingDialog()
                         },
                         onAdStartShowing = {
                             showAdLoadingDialog()
                         }, onAdImpression = {
+                            analyticsHelper.logShowInterstitial(ScreenName.GAME)
                             analyticsHelper.logAdImpression(
                                 "interstitial",
                                 BuildConfig.INTERSTITIAL_AD_UNIT_ID
@@ -170,11 +201,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                             dismissAdLoadingDialog()
                         },
                         onAdFailedToShow = {
+                            analyticsHelper.logShowInterstitialFailed(ScreenName.SONG)
                             dismissAdLoadingDialog()
                         },
                         onAdStartShowing = {
                             showAdLoadingDialog()
                         }, onAdImpression = {
+                            analyticsHelper.logShowInterstitial(ScreenName.SONG)
                             analyticsHelper.logAdImpression(
                                 "interstitial",
                                 BuildConfig.INTERSTITIAL_AD_UNIT_ID
@@ -189,6 +222,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     fun loadBannerAd() {
+        if (appContainer.adConfig?.bannerEnabled == false) return
         adManager.loadBannerAd(viewBinding.adView, onAdLoaded = {
             analyticsHelper.logShowBanner(ScreenName.MAIN)
         }, onAdFailed = {

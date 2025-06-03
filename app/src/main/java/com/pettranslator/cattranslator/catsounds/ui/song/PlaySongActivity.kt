@@ -9,10 +9,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
+import com.pettranslator.cattranslator.catsounds.bases.AppContainer
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityPlaySongBinding
 import com.pettranslator.cattranslator.catsounds.model.Song
 import com.pettranslator.cattranslator.catsounds.ui.music.SongFragment
+import com.pettranslator.cattranslator.catsounds.utils.ALog
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.MediaSoundPlayer
 import com.pettranslator.cattranslator.catsounds.utils.ScreenName
@@ -35,6 +37,9 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
 
     @Inject
     lateinit var analyticsHelper: AnalyticsHelper
+
+    @Inject
+    lateinit var appContainer: AppContainer
 
     private val updateSeekBarRunnable = object : Runnable {
         override fun run() {
@@ -73,6 +78,7 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
         currentIndex = intent.getIntExtra(SongFragment.CURRENT_INDEX, 0)
 
         checkButtonNext()
+
         viewBinding.btnPlayPause.setOnClickListener {
             if (soundPlayer.isPlaying()) {
                 soundPlayer.pause()
@@ -85,9 +91,10 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
         }
 
         viewBinding.btnNext.setOnClickListener {
+
             if (currentIndex < songs.size - 1) {
                 currentIndex++
-                playCurrentSong()
+                showInterAd()
             }
         }
 
@@ -96,9 +103,11 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
         }
 
         viewBinding.btnPrevious.setOnClickListener {
+
             if (currentIndex > 0) {
                 currentIndex--
-                playCurrentSong()
+                showInterAd()
+
             }
         }
 
@@ -112,6 +121,37 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
             override fun onStartTrackingTouch(sb: SeekBar?) {}
             override fun onStopTrackingTouch(sb: SeekBar?) {}
         })
+    }
+
+    private fun showInterAd() {
+        adManager.showInterstitialAdIfEligible(
+            this,
+            minIntervalMillis = appContainer.adConfig?.interDelayPlaybackSec?.times(1000L)
+                ?: 45_000L,
+            adTag = "PlayBack",
+            onAdClosed = {
+                playCurrentSong()
+                dismissAdLoadingDialog()
+            },
+            onAdSkipped = {
+                playCurrentSong()
+                dismissAdLoadingDialog()
+            },
+            onAdFailedToShow = {
+                playCurrentSong()
+                analyticsHelper.logShowInterstitialFailed(ScreenName.SONG_PLAYING)
+                dismissAdLoadingDialog()
+            },
+            onAdStartShowing = {
+                ALog.d("themd", "onAdStartShowing")
+                showAdLoadingDialog()
+            }, onAdImpression = {
+                analyticsHelper.logShowInterstitial(ScreenName.SONG_PLAYING)
+                analyticsHelper.logAdImpression(
+                    "interstitial",
+                    BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                )
+            })
     }
 
     private fun checkButtonNext() {

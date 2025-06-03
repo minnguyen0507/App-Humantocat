@@ -11,10 +11,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
+import com.pettranslator.cattranslator.catsounds.bases.AppContainer
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityRecordBinding
 import com.pettranslator.cattranslator.catsounds.model.ETypeTranslator
 import com.pettranslator.cattranslator.catsounds.ui.translate.TranslateFragment
+import com.pettranslator.cattranslator.catsounds.utils.ALog
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.DataProvider
 import com.pettranslator.cattranslator.catsounds.utils.ScreenName
@@ -37,6 +39,9 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
 
     @Inject
     lateinit var analyticsHelper: AnalyticsHelper
+
+    @Inject
+    lateinit var appContainer: AppContainer
 
     private var isRunning = false
     private val RECORD_AUDIO_REQUEST_CODE = 1002
@@ -132,13 +137,41 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
 
     override fun performPermissionTask() {
         super.performPermissionTask()
-        startRecord()
+        adManager.showInterstitialAdIfEligible(
+            this,
+            minIntervalMillis = appContainer.adConfig?.interDelayRecordSec?.times(1000L) ?: 90_000L,
+            adTag = "Record",
+            onAdClosed = {
+                startRecord()
+                dismissAdLoadingDialog()
+            },
+            onAdSkipped = {
+                startRecord()
+                dismissAdLoadingDialog()
+            },
+            onAdFailedToShow = {
+                startRecord()
+                analyticsHelper.logShowInterstitialFailed(ScreenName.RECORD)
+                dismissAdLoadingDialog()
+            },
+            onAdStartShowing = {
+                ALog.d("themd", "onAdStartShowing")
+                showAdLoadingDialog()
+            }, onAdImpression = {
+                analyticsHelper.logShowInterstitial(ScreenName.RECORD)
+                analyticsHelper.logAdImpression(
+                    "interstitial",
+                    BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                )
+            })
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
     }
+
     companion object {
         const val SECONDS = "seconds"
     }
