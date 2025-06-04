@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.AppContainer
 import com.pettranslator.cattranslator.catsounds.bases.RemoteConfigRepository
@@ -62,7 +63,7 @@ object AppModule {
     fun provideFirebaseRemoteConfig(): FirebaseRemoteConfig {
         val config = FirebaseRemoteConfig.getInstance()
         val settings = FirebaseRemoteConfigSettings.Builder()
-            .setMinimumFetchIntervalInSeconds(6 * 60 * 60)
+            .setMinimumFetchIntervalInSeconds(if (BuildConfig.DEBUG) 0 else 2 * 60 * 60)
             .build()
         config.setConfigSettingsAsync(settings)
         config.setDefaultsAsync(R.xml.remote_config_defaults)
