@@ -40,6 +40,7 @@ object AppModule {
     fun provideMediaSoundPlayer(@ApplicationContext context: Context): MediaSoundPlayer {
         return MediaSoundPlayer(context)
     }
+
     @Provides
     fun provideFirebaseAnalytics(@ApplicationContext context: Context): FirebaseAnalytics {
         return FirebaseAnalytics.getInstance(context)
@@ -49,7 +50,9 @@ object AppModule {
     fun provideAnalyticsHelper(firebaseAnalytics: FirebaseAnalytics): AnalyticsHelper {
         return AnalyticsHelper(firebaseAnalytics)
     }
+
     @Provides
+    @Singleton
     fun provideAppContainer(remoteConfigRepository: RemoteConfigRepository): AppContainer {
         return AppContainer(remoteConfigRepository)
     }

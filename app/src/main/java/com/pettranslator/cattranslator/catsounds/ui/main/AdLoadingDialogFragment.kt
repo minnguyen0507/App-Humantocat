@@ -58,7 +58,7 @@ class AdLoadingDialogFragment : DialogFragment() {
                 onTimeout?.invoke()
             }
         }
-        timeoutHandler?.postDelayed(timeoutRunnable!!, 15000) // 15s timeout
+        timeoutHandler?.postDelayed(timeoutRunnable!!, 5000) // 15s timeout
     }
 
     override fun onDestroyView() {
