@@ -75,7 +75,12 @@ fun setImageResource(imageView: ImageView, @DrawableRes resId: Int) {
 
 fun Context.showToast(msg: String) {
     CoroutineScope(Dispatchers.Main).launch {
-        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        val toast = Toast.makeText(applicationContext, msg, Toast.LENGTH_LONG)
+        toast.show()
+        Handler(Looper.getMainLooper()).postDelayed({
+            toast.cancel()
+        }, 2000)
+
     }
 }
 

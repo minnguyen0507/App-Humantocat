@@ -108,6 +108,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         viewBinding.viewPager.setCurrentItem(0, true)
                     } else {
                         viewBinding.viewPager.setCurrentItem(0, true)
+                        ALog.d("themd", "interDelayHome: ${appContainer.adConfig?.interDelayHomeSec}")
                         adManager.showInterstitialAdIfEligible(
                             this,
                             minIntervalMillis = appContainer.adConfig?.interDelayHomeSec?.times(
