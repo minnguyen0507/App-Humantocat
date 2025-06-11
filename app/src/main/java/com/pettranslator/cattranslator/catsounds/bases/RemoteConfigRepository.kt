@@ -17,8 +17,9 @@ class RemoteConfigRepository @Inject constructor(
     private val remoteConfig: FirebaseRemoteConfig,
     @ApplicationContext private val context: Context
 ) {
-    fun fetchAdsConfig(onSuccess: (AdConfig) -> Unit, onFailure: (Exception) -> Unit) {
-        if (!context.isInternetConnected()) {
+    suspend fun fetchAdsConfig(onSuccess: (AdConfig) -> Unit, onFailure: (Exception) -> Unit) {
+
+        if (!isInternetConnected(context)) {
             ALog.d("AppContainer", "No network available, using default values")
             val allValues = remoteConfig.all
             ALog.d("AppContainer", "Default remote config values: $allValues")

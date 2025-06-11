@@ -3,6 +3,7 @@ package com.pettranslator.cattranslator.catsounds.ui.game
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatButton
+import androidx.viewpager2.widget.ViewPager2
 import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.AppContainer
@@ -47,6 +48,19 @@ class GameFragment : BaseFragment<FragmentGameBinding>() {
             adapter = viewPage
             offscreenPageLimit = 1
             isUserInputEnabled = true
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    when (position) {
+                        0 -> {
+                            updateBackgroundButton(viewBinding.btnClickMouse, viewBinding.btnMusic)
+                        }
+                        1 -> {
+                            updateBackgroundButton(viewBinding.btnMusic, viewBinding.btnClickMouse)
+                        }
+                    }
+                }
+            })
         }
 
         viewBinding.apply {

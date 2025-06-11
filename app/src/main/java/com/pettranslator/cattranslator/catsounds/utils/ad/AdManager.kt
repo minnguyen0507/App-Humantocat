@@ -88,7 +88,6 @@ class AdManager @Inject constructor(
                 onAdClosed()
             },
             onAdFailedToShow = {
-                loadInterstitialAdIfNeeded(activity)
                 onAdFailedToShow(it)
             },
             onAdImpression = onAdImpression

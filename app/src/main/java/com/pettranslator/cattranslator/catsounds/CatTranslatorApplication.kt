@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.hilt.work.HiltWorkerFactory
+import androidx.lifecycle.lifecycleScope
 import androidx.work.Configuration
 import com.google.android.gms.ads.MobileAds
 import com.pettranslator.cattranslator.catsounds.bases.AppContainer
@@ -16,17 +17,22 @@ import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.ad.AppOpenAdManager
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltAndroidApp
 class CatTranslatorApplication : Application(),
-    Application.ActivityLifecycleCallbacks , Configuration.Provider{
+    Application.ActivityLifecycleCallbacks, Configuration.Provider {
 
     private var activityReferences = 0
     private var isActivityChangingConfigurations = false
     private var isReturningFromBackground = false
     private var hasAppStartedOnce = false
-    @Inject lateinit var sharedPref: SharedPref
+    @Inject
+    lateinit var sharedPref: SharedPref
 
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
@@ -42,6 +48,7 @@ class CatTranslatorApplication : Application(),
             .setWorkerFactory(workerFactory)
             .build()
 
+    private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun onCreate() {
         super.onCreate()
@@ -50,13 +57,19 @@ class CatTranslatorApplication : Application(),
         val locales = LocaleListCompat.forLanguageTags(languageCode)
         AppCompatDelegate.setApplicationLocales(locales)
         registerActivityLifecycleCallbacks(this)
-        appContainer.initializeAdConfig { success ->
-            if (success) {
-                ALog.d("AppContainer", "AdConfig initialized with server data")
-            } else {
-                ALog.d("AppContainer", "AdConfig initialized with defaults due to fetch failure")
+        appScope.launch {
+            appContainer.initializeAdConfig { success ->
+                if (success) {
+                    ALog.d("AppContainer", "AdConfig initialized with server data")
+                } else {
+                    ALog.d(
+                        "AppContainer",
+                        "AdConfig initialized with defaults due to fetch failure"
+                    )
+                }
             }
         }
+
     }
 
 
@@ -139,7 +152,6 @@ class CatTranslatorApplication : Application(),
     override fun onActivityDestroyed(activity: Activity) {
         //TODO("Not yet implemented")
     }
-
 
 
 }

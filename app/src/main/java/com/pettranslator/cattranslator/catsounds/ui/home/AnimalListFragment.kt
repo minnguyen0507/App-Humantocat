@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.AppContainer
@@ -14,6 +15,7 @@ import com.pettranslator.cattranslator.catsounds.bases.fragment.BaseFragment
 import com.pettranslator.cattranslator.catsounds.databinding.FragmentListAnimalBinding
 import com.pettranslator.cattranslator.catsounds.model.Animal
 import com.pettranslator.cattranslator.catsounds.model.EAnimal
+import com.pettranslator.cattranslator.catsounds.utils.ALog
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.DataProvider
 import com.pettranslator.cattranslator.catsounds.utils.MediaSoundPlayer
@@ -23,6 +25,7 @@ import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
 import com.pettranslator.cattranslator.catsounds.utils.isInternetConnected
 import com.pettranslator.cattranslator.catsounds.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -63,35 +66,43 @@ class AnimalListFragment :
     override fun initialize() {
         val adapter = AnimalAdapter()
         viewBinding.rcvAnimal.adapter = adapter
-        adapter.registerItemClickListener { view, animal, postion ->
+        adapter.registerItemClickListener { view, animal, position ->
+            lifecycleScope.launch {
+                val isOnline = isInternetConnected(requireContext())
+                if (!isOnline) {
+                    requireActivity().showToast(getString(R.string.connect_internet))
+                    return@launch
+                } else {
+                    adManager.showInterstitialAdIfEligible(
+                        requireActivity(),
+                        adTag = "Sound",
+                        minIntervalMillis = appContainer.adConfig?.interDelayCatSoundSec?.times(
+                            1000L
+                        ) ?: 25_000L,
+                        onAdClosed = {
+                            dismissAdLoadingDialog()
+                            playSound(animal, view)
+                        },
+                        onAdSkipped = {
+                            dismissAdLoadingDialog()
+                            playSound(animal, view)
+                        },
+                        onAdFailedToShow = {
 
-            if (!requireActivity().isInternetConnected()) {
-                requireActivity().showToast(getString(R.string.connect_internet))
-                return@registerItemClickListener
+                            dismissAdLoadingDialog()
+                            playSound(animal, view)
+                        },
+                        onAdStartShowing = {
+                            showAdLoadingDialog()
+                        }, onAdImpression = {
+                            analyticsHelper.logAdImpression(
+                                "interstitial",
+                                BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                            )
+                        })
+                }
             }
-            adManager.showInterstitialAdIfEligible(
-                requireActivity(),
-                adTag = "Sound",
-                minIntervalMillis = appContainer.adConfig?.interDelayCatSoundSec?.times(1000L) ?: 25_000L,
-                onAdClosed = {
-                    dismissAdLoadingDialog()
-                    playSound(animal, view)
-                },
-                onAdSkipped = {
-                    dismissAdLoadingDialog()
-                    playSound(animal, view)
-                },
-                onAdFailedToShow = {
-                    dismissAdLoadingDialog()
-                    playSound(animal, view)
-                },
-                onAdStartShowing = {
-                    showAdLoadingDialog {
-                        requireActivity().showToast(getString(R.string.connect_internet))
-                    }
-                }, onAdImpression = {
-                    analyticsHelper.logAdImpression("interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID)
-                })
+
 
         }
         if (filterType == EAnimal.CAT.id) {

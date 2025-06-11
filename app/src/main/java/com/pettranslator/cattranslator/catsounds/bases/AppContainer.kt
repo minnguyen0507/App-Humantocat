@@ -12,7 +12,7 @@ class AppContainer @Inject constructor(
     var adConfig: AdConfig? = null
         private set
 
-    fun initializeAdConfig(onComplete: (Boolean) -> Unit) {
+    suspend fun initializeAdConfig(onComplete: (Boolean) -> Unit) {
         remoteConfigRepository.fetchAdsConfig (
             onSuccess = { config ->
                 adConfig = config

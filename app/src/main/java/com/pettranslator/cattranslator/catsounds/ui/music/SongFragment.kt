@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
+import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.AppContainer
 import com.pettranslator.cattranslator.catsounds.bases.fragment.BaseFragment
 import com.pettranslator.cattranslator.catsounds.databinding.FragmentMusicBinding
 import com.pettranslator.cattranslator.catsounds.model.ETypeSong
 import com.pettranslator.cattranslator.catsounds.model.Song
+import com.pettranslator.cattranslator.catsounds.ui.main.MainActivity
 import com.pettranslator.cattranslator.catsounds.ui.song.PlaySongActivity
 import com.pettranslator.cattranslator.catsounds.utils.ALog
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
@@ -22,6 +25,7 @@ import com.pettranslator.cattranslator.catsounds.utils.isInternetConnected
 import com.pettranslator.cattranslator.catsounds.utils.openActivity
 import com.pettranslator.cattranslator.catsounds.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -88,16 +92,20 @@ class SongFragment : BaseFragment<FragmentMusicBinding>() {
     }
 
     private fun playSong(position: Int) {
-
-        if (!requireActivity().isInternetConnected()) {
-            requireActivity().showToast(getString(R.string.connect_internet))
-            return
+        lifecycleScope.launch {
+            val isOnline = isInternetConnected(requireContext())
+            if (!isOnline) {
+                requireActivity().showToast(getString(R.string.connect_internet))
+                return@launch
+            } else {
+                requireContext().openActivity(PlaySongActivity::class.java) {
+                    putSerializable(SONGS, ArrayList(getSongs()))  // nếu songs là List<Song>
+                    putInt(CURRENT_INDEX, position)
+                }
+            }
         }
 
-        requireContext().openActivity(PlaySongActivity::class.java) {
-            putSerializable(SONGS, ArrayList(getSongs()))  // nếu songs là List<Song>
-            putInt(CURRENT_INDEX, position)
-        }
+
     }
 
     override fun onResume() {

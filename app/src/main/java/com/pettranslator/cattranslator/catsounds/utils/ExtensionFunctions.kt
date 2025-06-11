@@ -14,6 +14,7 @@ import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Build
@@ -49,11 +50,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.BufferedInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
+import java.net.InetSocketAddress
+import java.net.Socket
 import java.net.URL
 import java.net.URLConnection
 import java.util.Locale
@@ -61,11 +65,31 @@ import java.util.Timer
 import java.util.TimerTask
 
 
-fun Context.isInternetConnected(): Boolean {
-    val connectivityManager =
-        getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
-    return activeNetwork?.isConnectedOrConnecting == true
+fun isNetworkConnected(context: Context): Boolean {
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val network = connectivityManager.activeNetwork
+    val capabilities = connectivityManager.getNetworkCapabilities(network)
+    return capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+}
+
+
+suspend fun hasInternetAccess(): Boolean {
+    return withContext(Dispatchers.IO) {
+        try {
+            val socket = Socket()
+            val socketAddress = InetSocketAddress("8.8.8.8", 53) // Google DNS
+            socket.connect(socketAddress, 1500)
+            socket.close()
+            true
+        } catch (e: IOException) {
+            false
+        }
+    }
+}
+
+suspend fun isInternetConnected(context: Context): Boolean {
+    if (!isNetworkConnected(context)) return false
+    return hasInternetAccess()
 }
 
 @BindingAdapter("app:srcRes")

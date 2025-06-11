@@ -2,13 +2,17 @@ package com.pettranslator.cattranslator.catsounds.ui.translate
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.AppContainer
 import com.pettranslator.cattranslator.catsounds.bases.fragment.BaseFragment
 import com.pettranslator.cattranslator.catsounds.databinding.FragmentTranslateBinding
 import com.pettranslator.cattranslator.catsounds.model.ETypeTranslator
+import com.pettranslator.cattranslator.catsounds.ui.music.SongFragment.Companion.CURRENT_INDEX
+import com.pettranslator.cattranslator.catsounds.ui.music.SongFragment.Companion.SONGS
 import com.pettranslator.cattranslator.catsounds.ui.record.RecordActivity
+import com.pettranslator.cattranslator.catsounds.ui.song.PlaySongActivity
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
@@ -17,6 +21,7 @@ import com.pettranslator.cattranslator.catsounds.utils.openActivity
 import com.pettranslator.cattranslator.catsounds.utils.setSafeOnClickListener
 import com.pettranslator.cattranslator.catsounds.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -58,12 +63,19 @@ class TranslateFragment : BaseFragment<FragmentTranslateBinding>() {
     }
 
     private fun goToRecordActivity(type: ETypeTranslator) {
-        if (!requireActivity().isInternetConnected()) {
-            requireActivity().showToast(getString(R.string.connect_internet))
-            return
+        lifecycleScope.launch {
+            val isOnline = isInternetConnected(requireContext())
+            if (!isOnline) {
+                requireActivity().showToast(getString(R.string.connect_internet))
+                return@launch
+            } else {
+                typeTrans = type
+                requireContext().openActivity(RecordActivity::class.java)
+            }
         }
-        typeTrans = type
-        requireContext().openActivity(RecordActivity::class.java)
+
+
+
 
     }
 
