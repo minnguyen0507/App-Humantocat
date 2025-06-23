@@ -31,26 +31,64 @@ android {
 
 
     buildTypes {
-        release  {
+        release {
             isMinifyEnabled = false
             signingConfig = signingConfigs.getByName("release")
-            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/9792653557\"")
-            buildConfigField("String", "INTERSTITIAL_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/6284894630\"")
-            buildConfigField("String", "APP_OPEN_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/7166490211\"")
-            buildConfigField("String", "NATIVE_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/5854468032\"")
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField(
+                "String",
+                "BANNER_AD_UNIT_ID",
+                "\"ca-app-pub-7340251527995818/9792653557\""
+            )
+            buildConfigField(
+                "String",
+                "INTERSTITIAL_AD_UNIT_ID",
+                "\"ca-app-pub-7340251527995818/6284894630\""
+            )
+            buildConfigField(
+                "String",
+                "APP_OPEN_AD_UNIT_ID",
+                "\"ca-app-pub-7340251527995818/7166490211\""
+            )
+            buildConfigField(
+                "String",
+                "NATIVE_AD_UNIT_ID",
+                "\"ca-app-pub-7340251527995818/5854468032\""
+            )
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
 
         }
         debug {
-            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/6300978111\"")
-            buildConfigField("String", "INTERSTITIAL_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/1033173712\"")
-            buildConfigField("String", "APP_OPEN_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/9257395921\"")
-            buildConfigField("String", "NATIVE_AD_UNIT_ID", "\"ca-app-pub-3940256099942544/2247696110\"")
+            buildConfigField(
+                "String",
+                "BANNER_AD_UNIT_ID",
+                "\"ca-app-pub-3940256099942544/6300978111\""
+            )
+            buildConfigField(
+                "String",
+                "INTERSTITIAL_AD_UNIT_ID",
+                "\"ca-app-pub-3940256099942544/1033173712\""
+            )
+            buildConfigField(
+                "String",
+                "APP_OPEN_AD_UNIT_ID",
+                "\"ca-app-pub-3940256099942544/9257395921\""
+            )
+            buildConfigField(
+                "String",
+                "NATIVE_AD_UNIT_ID",
+                "\"ca-app-pub-3940256099942544/2247696110\""
+            )
 //            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/9792653557\"")
 //            buildConfigField("String", "INTERSTITIAL_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/6284894630\"")
 //            buildConfigField("String", "APP_OPEN_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/7166490211\"")
 //            buildConfigField("String", "NATIVE_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/5854468032\"")
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -64,7 +102,7 @@ android {
 
     buildFeatures {
         viewBinding = true
-        buildConfig= true
+        buildConfig = true
     }
 
     dataBinding {
@@ -89,6 +127,7 @@ android {
             val newOutputFileName = when {
                 this is com.android.build.gradle.internal.api.BaseVariantOutputImpl &&
                         outputFileName.endsWith(".aab") -> "$appName-v$versionName-$buildType.aab"
+
                 else -> "$appName-v$versionName-$buildType.apk"
             }
 
@@ -117,9 +156,9 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     // Glide
-    implementation (libs.glide)
+    implementation(libs.glide)
     kapt(libs.compiler)
-    implementation (libs.converter.gson)
+    implementation(libs.converter.gson)
 
     //AdMod
     implementation(libs.play.services.ads)
@@ -136,8 +175,8 @@ dependencies {
     implementation(libs.viewpagerdotsindicator)
 
     // WorkManager
-    implementation (libs.androidx.hilt.work)
-    kapt (libs.androidx.hilt.compiler)
+    implementation(libs.androidx.hilt.work)
+    kapt(libs.androidx.hilt.compiler)
     implementation(libs.androidx.work.runtime.ktx)
 
     implementation(libs.firebase.analytics)
@@ -146,4 +185,11 @@ dependencies {
     // Add the dependencies for the Remote Config and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation(libs.firebase.config)
+
+    implementation("com.google.ads.mediation:inmobi:10.8.3.1")
+    implementation("com.google.ads.mediation:ironsource:8.9.0.0")
+    implementation("com.google.ads.mediation:vungle:7.5.0.0")
+    implementation("com.google.ads.mediation:mintegral:16.9.71.0")
+    implementation("com.google.ads.mediation:pangle:7.2.0.3.0")
+    implementation("com.google.ads.mediation:unity:4.15.0.0")
 }
