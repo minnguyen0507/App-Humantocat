@@ -11,7 +11,6 @@ import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.AppContainer
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
-import com.pettranslator.cattranslator.catsounds.bases.RemoteConfigRepository
 import com.pettranslator.cattranslator.catsounds.bases.ViewPagerAdapter
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityMainBinding
 import com.pettranslator.cattranslator.catsounds.ui.game.GameFragment
@@ -62,6 +61,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         ActivityMainBinding.inflate(inflater)
 
     override fun initialize() {
+        println("initialize MAINACTIVITY")
         setUpViewPage()
         loadBannerAd()
         checkPermissionNotification()
@@ -113,7 +113,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                             return@launch
                         } else {
                             viewBinding.viewPager.setCurrentItem(0, true)
-                            ALog.d("themd", "interDelayHome: ${appContainer.adConfig?.interDelayHomeSec}")
+                            ALog.d(
+                                "themd",
+                                "interDelayHome: ${appContainer.adConfig?.interDelayHomeSec}"
+                            )
                             adManager.showInterstitialAdIfEligible(
                                 this@MainActivity,
                                 minIntervalMillis = appContainer.adConfig?.interDelayHomeSec?.times(

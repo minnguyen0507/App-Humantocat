@@ -41,28 +41,28 @@
 
                     <TextView
                         style="@style/text_normal_white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/widget_size_30"
+                        android:layout_height="@dimen/widget_size_30"
                         android:background="@drawable/bg_ad_text"
                         android:gravity="center"
                         android:text=" Ad " />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
+                        android:layout_height="@dimen/widget_size_30"
                         android:layout_marginStart="@dimen/margin_4dp"
                         android:background="#e0e0e0" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="@dimen/widget_size_55"
                     android:layout_marginTop="8dp"
                     android:background="#e0e0e0" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="36dp"
+                    android:layout_height="@dimen/widget_size_65"
                     android:layout_gravity="end"
                     android:layout_marginTop="8dp"
                     android:background="@color/primaryColor" />

@@ -1,14 +1,11 @@
 package com.pettranslator.cattranslator.catsounds.ui.main
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.postDelayed
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.pettranslator.cattranslator.catsounds.R

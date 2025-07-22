@@ -1,5 +1,6 @@
 package com.pettranslator.cattranslator.catsounds.bases
 
+import com.google.gson.Gson
 import com.pettranslator.cattranslator.catsounds.model.AdConfig
 import com.pettranslator.cattranslator.catsounds.utils.ALog
 import jakarta.inject.Inject
@@ -13,9 +14,10 @@ class AppContainer @Inject constructor(
         private set
 
     suspend fun initializeAdConfig(onComplete: (Boolean) -> Unit) {
-        remoteConfigRepository.fetchAdsConfig (
+        remoteConfigRepository.fetchAdsConfig(
             onSuccess = { config ->
                 adConfig = config
+                ALog.d("TEST", Gson().toJson(adConfig));
                 onComplete(true) // Fetch thành công
             },
             onFailure = { exception ->
