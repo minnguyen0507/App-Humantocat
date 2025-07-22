@@ -72,7 +72,6 @@ class GameFragment : BaseFragment<FragmentGameBinding>() {
                 viewpageGame.setCurrentItem(1, true)
                 updateBackgroundButton(btnMusic, btnClickMouse)
             }
-
         }
     }
 

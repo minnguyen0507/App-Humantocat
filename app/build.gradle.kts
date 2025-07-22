@@ -187,10 +187,11 @@ dependencies {
     implementation(libs.firebase.config)
 
     implementation("com.google.ads.mediation:inmobi:10.8.3.1")
-    implementation("com.google.ads.mediation:ironsource:8.9.0.0")
+//    implementation("com.google.ads.mediation:ironsource:8.9.0.0")
     implementation("com.google.ads.mediation:vungle:7.5.0.0")
     implementation("com.google.ads.mediation:mintegral:16.9.71.0")
     implementation("com.google.ads.mediation:pangle:7.2.0.3.0")
-    implementation("com.google.ads.mediation:unity:4.15.0.0")
+//    implementation("com.google.ads.mediation:unity:4.15.0.0")
     implementation("com.google.android.ump:user-messaging-platform:2.1.0")
+    implementation("com.github.ertugrulkaragoz:SuperBottomBar:0.4")
 }

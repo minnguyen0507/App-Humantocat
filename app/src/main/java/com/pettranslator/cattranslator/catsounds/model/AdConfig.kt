@@ -12,7 +12,8 @@ data class AdConfig(
     val interDelaySongsSec: Int,
     val bannerEnabled: Boolean,
     val rewardedEnabled: Boolean,
-    val rewardedMaxPerDay: Int
+    val rewardedMaxPerDay: Int,
+    val interEnabled: Boolean
 ){
     override fun toString(): String {
         return Gson().toJson(this)

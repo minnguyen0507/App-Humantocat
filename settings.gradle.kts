@@ -7,6 +7,7 @@ pluginManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
+        maven(url = "https://jitpack.io")
         mavenCentral()
         gradlePluginPortal()
     }
@@ -21,6 +22,7 @@ dependencyResolutionManagement {
         maven { url = uri("https://sdk.unityads.unity3d.com/release") } // Unity Ads
         maven { url = uri("https://artifact.bytedance.com/repository/pangle") } // Pangle
         maven { url = uri("https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea") }
+        maven { url = uri("https://jitpack.io")}
     }
 }
 
