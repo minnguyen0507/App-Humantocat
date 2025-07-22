@@ -26,7 +26,7 @@ import com.pettranslator.cattranslator.catsounds.ui.main.AdLoadingDialogFragment
 
 abstract class BaseActivity<viewBinding : ViewBinding> :
     AppCompatActivity() {
-    protected lateinit var viewBinding: viewBinding
+     lateinit var viewBinding: viewBinding
     abstract fun inflateViewBinding(inflater: LayoutInflater): viewBinding
     lateinit var gson: Gson
     val handler = Handler(Looper.myLooper() ?: Looper.getMainLooper())

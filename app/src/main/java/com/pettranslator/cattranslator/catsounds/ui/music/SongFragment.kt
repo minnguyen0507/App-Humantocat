@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.FrameLayout
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.pettranslator.cattranslator.catsounds.BuildConfig
@@ -54,6 +56,7 @@ class SongFragment : BaseFragment<FragmentMusicBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isShowToolbar = arguments?.getBoolean(ARG_TOOLBAR) != false
+
     }
 
     override fun inflateViewBinding(
@@ -70,7 +73,7 @@ class SongFragment : BaseFragment<FragmentMusicBinding>() {
         songAdapter.registerItemClickListener { view, song, position ->
             when (view.id) {
                 R.id.layoutSong -> {
-                    playSong(position)
+                    showConfirm(position)
                 }
 
                 R.id.imvStar -> {
@@ -81,6 +84,51 @@ class SongFragment : BaseFragment<FragmentMusicBinding>() {
         }
 
     }
+
+    private fun showConfirm(position: Int) {
+        val mainActivity = activity as? MainActivity
+        if (mainActivity == null) return
+
+        val includeBinding = mainActivity.viewBinding.dialogConfirm
+        val includeView = includeBinding.root
+        includeView.visibility = View.VISIBLE
+
+        includeView.findViewById<FrameLayout>(R.id.frame)?.setOnClickListener {
+            includeView.visibility = View.GONE
+        }
+        includeView.findViewById<Button>(R.id.btnApply).setOnClickListener{
+            includeView.visibility = View.GONE
+            adManager.showInterstitialAdIfEligible(
+                mainActivity,
+                minIntervalMillis = appContainer.adConfig?.interDelaySongsSec?.times(
+                    1000L
+                )
+                    ?: 30_000L,
+                adTag = "Song",
+                onAdClosed = {
+                    dismissAdLoadingDialog()
+                    playSong(position)
+                },
+                onAdSkipped = {
+                    dismissAdLoadingDialog()
+                    playSong(position)
+                },
+                onAdFailedToShow = {
+                    analyticsHelper.logShowInterstitialFailed(ScreenName.SONG)
+                    dismissAdLoadingDialog()
+                },
+                onAdStartShowing = {
+                    showAdLoadingDialog()
+                }, onAdImpression = {
+                    analyticsHelper.logShowInterstitial(ScreenName.HOME)
+                    analyticsHelper.logAdImpression(
+                        "interstitial",
+                        BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                    )
+                })
+        }
+    }
+
 
     private fun saveFavoriteSong(
         song: Song,

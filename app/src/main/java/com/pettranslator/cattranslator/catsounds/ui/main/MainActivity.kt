@@ -71,17 +71,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         loadBannerAd()
         checkPermissionNotification()
         checkAndLogAppUpdate()
-//        initCustomNav()
         appContainer.adConfig?.let { config ->
             ALog.d("AppContainer", "Interstitial Delay for Record: $config")
-
         } ?: run {
         }
-        loadInterOnStart()
+//        loadInterOnStart()
     }
 
     private fun loadInterOnStart(){
         if(appContainer.adConfig?.interEnabled==true){
+            ALog.d("ASD", "loadInterOnStart")
             adManager.showInterstitialAdIfEligible(
                 this@MainActivity,
                 minIntervalMillis = appContainer.adConfig?.interDelaySongsSec?.times(
@@ -128,8 +127,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
 
         onNavItemSelected(R.id.nav_home)
-
     }
+
     private fun onNavItemSelected(selectedId: Int) {
         navItems.forEach { (layout, viewPair) ->
             val (imageView, textView) = viewPair
@@ -527,10 +526,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             sharedPref.saveVersion(currentVersion)
             analyticsHelper.logAppUpdate(currentVersion)
         }
+        viewBinding.dialogConfirm.frame.setOnClickListener{
+            viewBinding.dialogConfirm.root.visibility = View.GONE
+        }
     }
-
-    private fun showConfirm(){
-
-    }
-
 }
