@@ -16,6 +16,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.viewbinding.ViewBinding
+import com.google.android.ump.ConsentInformation
+import com.google.android.ump.ConsentRequestParameters
+import com.google.android.ump.UserMessagingPlatform
 import com.google.gson.Gson
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.model.AdConfig
@@ -58,6 +61,48 @@ abstract class BaseActivity<viewBinding : ViewBinding> :
             e.printStackTrace()
         }
 
+    }
+
+    private fun requestUMP() {
+        println("REQUEST UMP");
+        val params = ConsentRequestParameters.Builder()
+            .setTagForUnderAgeOfConsent(false)
+            .build()
+
+        val consentInformation = UserMessagingPlatform.getConsentInformation(this)
+        consentInformation.requestConsentInfoUpdate(
+            this,
+            params,
+            {
+                println("consentInformation.isConsentFormAvailable ${consentInformation.isConsentFormAvailable}")
+                if (consentInformation.isConsentFormAvailable) {
+                    loadAndShowForm(consentInformation)
+                }
+            },
+            { formError ->
+                println("Consent info update failed: ${formError.message}");
+            }
+        )
+    }
+
+    private fun loadAndShowForm(consentInformation: ConsentInformation) {
+        UserMessagingPlatform.loadConsentForm(
+            this,
+            { consentForm ->
+                println("consentForm ${consentInformation.consentStatus == ConsentInformation.ConsentStatus.REQUIRED}")
+                if (consentInformation.consentStatus == ConsentInformation.ConsentStatus.REQUIRED) {
+                    consentForm.show(
+                        this
+                    ) {
+                        // Gọi lại load để xử lý thay đổi
+                        loadAndShowForm(consentInformation)
+                    }
+                }
+            },
+            { formError ->
+                println("Load form error: ${formError.message}")
+            }
+        )
     }
 
     fun showAdLoadingDialog(onTimeout: (() -> Unit)? = null) {
@@ -119,6 +164,7 @@ abstract class BaseActivity<viewBinding : ViewBinding> :
         setContentView(viewBinding.root)
         initApp()
         initialize()
+        requestUMP()
     }
 
     private fun initApp() {

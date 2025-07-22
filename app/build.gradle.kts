@@ -192,4 +192,5 @@ dependencies {
     implementation("com.google.ads.mediation:mintegral:16.9.71.0")
     implementation("com.google.ads.mediation:pangle:7.2.0.3.0")
     implementation("com.google.ads.mediation:unity:4.15.0.0")
+    implementation("com.google.android.ump:user-messaging-platform:2.1.0")
 }
