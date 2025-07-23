@@ -21,7 +21,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnCat"
         style="@style/tab_style_active"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/widget_size_140"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_8dp"
         android:layout_marginTop="@dimen/margin_8dp"
@@ -35,7 +35,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnDog"
         style="@style/tab_style_inactive"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/widget_size_140"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_8dp"
         android:layout_marginEnd="@dimen/margin_8dp"

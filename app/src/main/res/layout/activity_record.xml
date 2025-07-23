@@ -35,10 +35,11 @@
 
     <ImageView
         android:id="@+id/imageView9"
-        android:layout_width="190dp"
-        android:layout_height="190dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
         android:layout_gravity="center"
         android:background="@drawable/micro_1"
+        android:layout_marginTop="@dimen/widget_size_90"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
