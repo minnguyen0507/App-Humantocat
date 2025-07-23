@@ -18,7 +18,8 @@ object AdsConfigParser {
             bannerEnabled = allValues["banner_enabled"]?.asString()?.toBooleanStrictOrNull() ?: true,
             rewardedEnabled = allValues["rewarded_enabled"]?.asString()?.toBooleanStrictOrNull() ?: true,
             rewardedMaxPerDay = allValues["rewarded_max_per_day"]?.asString()?.toIntOrNull() ?: 5,
-            interEnabled = allValues["inter_enabled"]?.asString()?.toBooleanStrictOrNull() ?:true
+            interEnabledSplash = allValues["inter_enabled_splash"]?.asString()?.toBooleanStrictOrNull() ?:true,
+            interEnabledHome = allValues["inter_enabled_home"]?.asString()?.toBooleanStrictOrNull() ?:true
         )
     }
 }

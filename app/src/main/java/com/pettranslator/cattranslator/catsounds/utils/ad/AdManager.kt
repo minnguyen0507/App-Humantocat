@@ -8,23 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import com.pettranslator.cattranslator.catsounds.R
-import com.pettranslator.cattranslator.catsounds.utils.ALog
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdValue
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.OnPaidEventListener
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
+import com.pettranslator.cattranslator.catsounds.R
+import com.pettranslator.cattranslator.catsounds.utils.ALog
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -70,9 +68,9 @@ class AdManager @Inject constructor(
         val now = SystemClock.elapsedRealtime()
         val lastShown = lastAdShownTimeMap[adTag] ?: 0L
         val isFirst = isFirstAdShownMap[adTag] != false
-        ALog.d("themd","minIntervalMillis: $minIntervalMillis")
+        ALog.d("themd", "minIntervalMillis: $minIntervalMillis")
         val canShow = isFirst || now - lastShown >= minIntervalMillis
-
+        println("canShow ${canShow} ${isFirst} ${now - lastShown >= minIntervalMillis}")
         if (!canShow) {
             onAdSkipped()
             return

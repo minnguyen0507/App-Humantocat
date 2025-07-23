@@ -13,7 +13,8 @@ data class AdConfig(
     val bannerEnabled: Boolean,
     val rewardedEnabled: Boolean,
     val rewardedMaxPerDay: Int,
-    val interEnabled: Boolean
+    val interEnabledSplash: Boolean,
+    val interEnabledHome: Boolean
 ){
     override fun toString(): String {
         return Gson().toJson(this)

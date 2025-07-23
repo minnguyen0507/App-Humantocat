@@ -82,7 +82,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 }
                 return@launch
             } else {
-                if (appContainer.adConfig?.interEnabled == true) {
+                if (appContainer.adConfig?.interEnabledSplash == true) {
                     adManager.showInterstitialAdIfEligible(
                         this@SplashActivity,
                         minIntervalMillis = appContainer.adConfig?.interDelayTranslateSec?.times(
