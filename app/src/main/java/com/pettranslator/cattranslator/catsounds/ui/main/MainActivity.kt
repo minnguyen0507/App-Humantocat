@@ -111,173 +111,176 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             imageView.setColorFilter(tintColor, android.graphics.PorterDuff.Mode.SRC_IN)
             textView.setTextColor(tintColor)
         }
-
-        when (selectedId) {
-            R.id.nav_home -> {
-                if (!isFirstShow)
-                    lifecycleScope.launch {
-                        val isOnline = isInternetConnected(this@MainActivity)
-                        if (!isOnline) {
-                            viewBinding.viewPager.setCurrentItem(0, true)
-                            return@launch
-                        } else {
-                            viewBinding.viewPager.setCurrentItem(0, true)
-                            ALog.d(
-                                "themd",
-                                "interDelayHome: ${appContainer.adConfig?.interDelayHomeSec}"
-                            )
-                            adManager.showInterstitialAdIfEligible(
-                                this@MainActivity,
-                                minIntervalMillis = appContainer.adConfig?.interDelayHomeSec?.times(
-                                    1000L
-                                ) ?: 25_000L,
-                                adTag = "Home",
-                                onAdClosed = {
-                                    dismissAdLoadingDialog()
-                                },
-                                onAdSkipped = {
-                                    dismissAdLoadingDialog()
-                                },
-                                onAdFailedToShow = {
-                                    analyticsHelper.logShowInterstitialFailed(ScreenName.HOME)
-                                    dismissAdLoadingDialog()
-                                },
-                                onAdStartShowing = {
-                                    ALog.d("themd", "onAdStartShowing")
-                                    showAdLoadingDialog()
-                                }, onAdImpression = {
-                                    analyticsHelper.logShowInterstitial(ScreenName.HOME)
-                                    analyticsHelper.logAdImpression(
-                                        "interstitial",
-                                        BuildConfig.INTERSTITIAL_AD_UNIT_ID
-                                    )
-                                })
-                        }
-                    }
-            }
-
-            R.id.nav_translate -> {
-                if (!isFirstShow)
-                    lifecycleScope.launch {
-                        val isOnline = isInternetConnected(this@MainActivity)
-                        if (!isOnline) {
-                            viewBinding.viewPager.setCurrentItem(1, true)
-                            return@launch
-                        } else {
-                            viewBinding.viewPager.setCurrentItem(1, true)
-                            adManager.showInterstitialAdIfEligible(
-                                this@MainActivity,
-                                minIntervalMillis = appContainer.adConfig?.interDelayTranslateSec?.times(
-                                    1000L
-                                ) ?: 25_000L,
-                                adTag = "Home",
-                                onAdClosed = {
-                                    dismissAdLoadingDialog()
-
-                                },
-                                onAdSkipped = {
-                                    dismissAdLoadingDialog()
-                                },
-                                onAdFailedToShow = {
-                                    analyticsHelper.logShowInterstitialFailed(ScreenName.TRANSLATE)
-                                    dismissAdLoadingDialog()
-                                },
-                                onAdStartShowing = {
-                                    ALog.d("themd", "onAdStartShowing")
-                                    showAdLoadingDialog()
-                                }, onAdImpression = {
-                                    analyticsHelper.logShowInterstitial(ScreenName.TRANSLATE)
-                                    analyticsHelper.logAdImpression(
-                                        "interstitial",
-                                        BuildConfig.INTERSTITIAL_AD_UNIT_ID
-                                    )
-                                })
-                        }
-                    }
-            }
-
-            R.id.nav_game -> {
-                if (!isFirstShow)
-                    lifecycleScope.launch {
-                        val isOnline = isInternetConnected(this@MainActivity)
-                        if (!isOnline) {
-                            viewBinding.viewPager.setCurrentItem(2, true)
-                            return@launch
-                        } else {
-                            viewBinding.viewPager.setCurrentItem(2, true)
-                            adManager.showInterstitialAdIfEligible(
-                                this@MainActivity,
-                                adTag = "Home",
-                                minIntervalMillis = appContainer.adConfig?.interDelayGameSec?.times(
-                                    1000L
+        if (appContainer.adConfig?.interEnabled == true) {
+            when (selectedId) {
+                R.id.nav_home -> {
+                    if (!isFirstShow)
+                        lifecycleScope.launch {
+                            val isOnline = isInternetConnected(this@MainActivity)
+                            if (!isOnline) {
+                                viewBinding.viewPager.setCurrentItem(0, true)
+                                return@launch
+                            } else {
+                                viewBinding.viewPager.setCurrentItem(0, true)
+                                ALog.d(
+                                    "themd",
+                                    "interDelayHome: ${appContainer.adConfig?.interDelayHomeSec}"
                                 )
-                                    ?: 25_000L,
-                                onAdClosed = {
-                                    dismissAdLoadingDialog()
-                                },
-                                onAdSkipped = {
-                                    dismissAdLoadingDialog()
-                                },
-                                onAdFailedToShow = {
-                                    analyticsHelper.logShowInterstitialFailed(ScreenName.GAME)
-                                    dismissAdLoadingDialog()
-                                },
-                                onAdStartShowing = {
-                                    showAdLoadingDialog()
-                                }, onAdImpression = {
-                                    analyticsHelper.logShowInterstitial(ScreenName.GAME)
-                                    analyticsHelper.logAdImpression(
-                                        "interstitial",
-                                        BuildConfig.INTERSTITIAL_AD_UNIT_ID
-                                    )
-                                }
-                            )
+                                adManager.showInterstitialAdIfEligible(
+                                    this@MainActivity,
+                                    minIntervalMillis = appContainer.adConfig?.interDelayHomeSec?.times(
+                                        1000L
+                                    ) ?: 25_000L,
+                                    adTag = "Home",
+                                    onAdClosed = {
+                                        dismissAdLoadingDialog()
+                                    },
+                                    onAdSkipped = {
+                                        dismissAdLoadingDialog()
+                                    },
+                                    onAdFailedToShow = {
+                                        analyticsHelper.logShowInterstitialFailed(ScreenName.HOME)
+                                        dismissAdLoadingDialog()
+                                    },
+                                    onAdStartShowing = {
+                                        ALog.d("themd", "onAdStartShowing")
+                                        showAdLoadingDialog()
+                                    }, onAdImpression = {
+                                        analyticsHelper.logShowInterstitial(ScreenName.HOME)
+                                        analyticsHelper.logAdImpression(
+                                            "interstitial",
+                                            BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                                        )
+                                    })
+                            }
                         }
-                    }
-            }
+                }
 
-            R.id.nav_music -> {
-                if (!isFirstShow)
-                    lifecycleScope.launch {
-                        val isOnline = isInternetConnected(this@MainActivity)
-                        if (!isOnline) {
-                            viewBinding.viewPager.setCurrentItem(3, true)
-                            return@launch
-                        } else {
-                            viewBinding.viewPager.setCurrentItem(3, true)
-                            adManager.showInterstitialAdIfEligible(
-                                this@MainActivity,
-                                minIntervalMillis = appContainer.adConfig?.interDelaySongsSec?.times(
-                                    1000L
+                R.id.nav_translate -> {
+                    if (!isFirstShow)
+                        lifecycleScope.launch {
+                            val isOnline = isInternetConnected(this@MainActivity)
+                            if (!isOnline) {
+                                viewBinding.viewPager.setCurrentItem(1, true)
+                                return@launch
+                            } else {
+                                viewBinding.viewPager.setCurrentItem(1, true)
+                                adManager.showInterstitialAdIfEligible(
+                                    this@MainActivity,
+                                    minIntervalMillis = appContainer.adConfig?.interDelayTranslateSec?.times(
+                                        1000L
+                                    ) ?: 25_000L,
+                                    adTag = "Home",
+                                    onAdClosed = {
+                                        dismissAdLoadingDialog()
+
+                                    },
+                                    onAdSkipped = {
+                                        dismissAdLoadingDialog()
+                                    },
+                                    onAdFailedToShow = {
+                                        analyticsHelper.logShowInterstitialFailed(ScreenName.TRANSLATE)
+                                        dismissAdLoadingDialog()
+                                    },
+                                    onAdStartShowing = {
+                                        ALog.d("themd", "onAdStartShowing")
+                                        showAdLoadingDialog()
+                                    }, onAdImpression = {
+                                        analyticsHelper.logShowInterstitial(ScreenName.TRANSLATE)
+                                        analyticsHelper.logAdImpression(
+                                            "interstitial",
+                                            BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                                        )
+                                    })
+                            }
+                        }
+                }
+
+                R.id.nav_game -> {
+                    if (!isFirstShow)
+                        lifecycleScope.launch {
+                            val isOnline = isInternetConnected(this@MainActivity)
+                            if (!isOnline) {
+                                viewBinding.viewPager.setCurrentItem(2, true)
+                                return@launch
+                            } else {
+                                viewBinding.viewPager.setCurrentItem(2, true)
+                                adManager.showInterstitialAdIfEligible(
+                                    this@MainActivity,
+                                    adTag = "Home",
+                                    minIntervalMillis = appContainer.adConfig?.interDelayGameSec?.times(
+                                        1000L
+                                    )
+                                        ?: 25_000L,
+                                    onAdClosed = {
+                                        dismissAdLoadingDialog()
+                                    },
+                                    onAdSkipped = {
+                                        dismissAdLoadingDialog()
+                                    },
+                                    onAdFailedToShow = {
+                                        analyticsHelper.logShowInterstitialFailed(ScreenName.GAME)
+                                        dismissAdLoadingDialog()
+                                    },
+                                    onAdStartShowing = {
+                                        showAdLoadingDialog()
+                                    }, onAdImpression = {
+                                        analyticsHelper.logShowInterstitial(ScreenName.GAME)
+                                        analyticsHelper.logAdImpression(
+                                            "interstitial",
+                                            BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                                        )
+                                    }
                                 )
-                                    ?: 25_000L,
-                                adTag = "Home",
-                                onAdClosed = {
-                                    dismissAdLoadingDialog()
-                                },
-                                onAdSkipped = {
-                                    dismissAdLoadingDialog()
-                                },
-                                onAdFailedToShow = {
-                                    analyticsHelper.logShowInterstitialFailed(ScreenName.SONG)
-                                    dismissAdLoadingDialog()
-                                },
-                                onAdStartShowing = {
-                                    showAdLoadingDialog()
-                                }, onAdImpression = {
-                                    analyticsHelper.logShowInterstitial(ScreenName.SONG)
-                                    analyticsHelper.logAdImpression(
-                                        "interstitial",
-                                        BuildConfig.INTERSTITIAL_AD_UNIT_ID
-                                    )
-                                })
+                            }
                         }
-                    }
-            }
+                }
 
-            R.id.nav_setting -> {
-                viewBinding.viewPager.setCurrentItem(4, true)
+                R.id.nav_music -> {
+                    if (!isFirstShow)
+                        lifecycleScope.launch {
+                            val isOnline = isInternetConnected(this@MainActivity)
+                            if (!isOnline) {
+                                viewBinding.viewPager.setCurrentItem(3, true)
+                                return@launch
+                            } else {
+                                viewBinding.viewPager.setCurrentItem(3, true)
+                                adManager.showInterstitialAdIfEligible(
+                                    this@MainActivity,
+                                    minIntervalMillis = appContainer.adConfig?.interDelaySongsSec?.times(
+                                        1000L
+                                    )
+                                        ?: 25_000L,
+                                    adTag = "Home",
+                                    onAdClosed = {
+                                        dismissAdLoadingDialog()
+                                    },
+                                    onAdSkipped = {
+                                        dismissAdLoadingDialog()
+                                    },
+                                    onAdFailedToShow = {
+                                        analyticsHelper.logShowInterstitialFailed(ScreenName.SONG)
+                                        dismissAdLoadingDialog()
+                                    },
+                                    onAdStartShowing = {
+                                        showAdLoadingDialog()
+                                    }, onAdImpression = {
+                                        analyticsHelper.logShowInterstitial(ScreenName.SONG)
+                                        analyticsHelper.logAdImpression(
+                                            "interstitial",
+                                            BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                                        )
+                                    })
+                            }
+                        }
+                }
+
+                R.id.nav_setting -> {
+                    viewBinding.viewPager.setCurrentItem(4, true)
+                }
             }
+        } else if (selectedId == R.id.nav_setting) {
+            viewBinding.viewPager.setCurrentItem(4, true)
         }
         isFirstShow = false;
     }

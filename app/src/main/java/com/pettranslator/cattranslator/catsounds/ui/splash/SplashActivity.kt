@@ -82,40 +82,41 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 }
                 return@launch
             } else {
-                adManager.showInterstitialAdIfEligible(
-                    this@SplashActivity,
-                    minIntervalMillis = appContainer.adConfig?.interDelayTranslateSec?.times(
-                        1000L
-                    ) ?: 25_000L,
-                    adTag = "Inter",
-                    onAdClosed = {
-                        dismissAdLoadingDialog()
-                        if (sharedPref.getFirstRun()) {
-                            openFirstRunActivity()
-                        } else openActivityAndClearApp(MainActivity::class.java)
-                    },
-                    onAdSkipped = {
-                        dismissAdLoadingDialog()
-                        if (sharedPref.getFirstRun()) {
-                            openFirstRunActivity()
-                        } else openActivityAndClearApp(MainActivity::class.java)
-                    },
-                    onAdFailedToShow = {
-                        dismissAdLoadingDialog()
-                        if (sharedPref.getFirstRun()) {
-                            openFirstRunActivity()
-                        } else openActivityAndClearApp(MainActivity::class.java)
-                    },
-                    onAdStartShowing = {
-                        showAdLoadingDialog()
-                    },
-                    onAdImpression = {
-//                        analyticsHelper.logShowInterstitial(ScreenName.TRANSLATE)
-//                        analyticsHelper.logAdImpression(
-//                            "interstitial",
-//                            BuildConfig.INTERSTITIAL_AD_UNIT_ID
-//                        )
-                    })
+                if (appContainer.adConfig?.interEnabled == true) {
+                    adManager.showInterstitialAdIfEligible(
+                        this@SplashActivity,
+                        minIntervalMillis = appContainer.adConfig?.interDelayTranslateSec?.times(
+                            1000L
+                        ) ?: 25_000L,
+                        adTag = "Inter",
+                        onAdClosed = {
+                            dismissAdLoadingDialog()
+                            if (sharedPref.getFirstRun()) {
+                                openFirstRunActivity()
+                            } else openActivityAndClearApp(MainActivity::class.java)
+                        },
+                        onAdSkipped = {
+                            dismissAdLoadingDialog()
+                            if (sharedPref.getFirstRun()) {
+                                openFirstRunActivity()
+                            } else openActivityAndClearApp(MainActivity::class.java)
+                        },
+                        onAdFailedToShow = {
+                            dismissAdLoadingDialog()
+                            if (sharedPref.getFirstRun()) {
+                                openFirstRunActivity()
+                            } else openActivityAndClearApp(MainActivity::class.java)
+                        },
+                        onAdStartShowing = {
+                            showAdLoadingDialog()
+                        },
+                        onAdImpression = {
+                        })
+                } else {
+                    if (sharedPref.getFirstRun()) {
+                        openFirstRunActivity()
+                    } else openActivityAndClearApp(MainActivity::class.java)
+                }
             }
         }
     }
