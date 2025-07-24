@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
@@ -15,8 +16,10 @@ import com.pettranslator.cattranslator.catsounds.utils.DataProvider
 import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import com.pettranslator.cattranslator.catsounds.utils.SharedPref
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
+import com.pettranslator.cattranslator.catsounds.utils.isInternetConnected
 import com.pettranslator.cattranslator.catsounds.utils.openActivityAndClearApp
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -89,11 +92,44 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
                 } else {
                     sharedPref.setFirstRun(false)
                     analyticsHelper.logTutorialComplete(System.currentTimeMillis().toString(), true)
-                    openActivityAndClearApp(MainActivity::class.java)
+
+                    lifecycleScope.launch {
+                        val isOnline = isInternetConnected(this@IntroActivity)
+                        if (!isOnline) {
+                            openActivityAndClearApp(MainActivity::class.java)
+                            return@launch
+                        } else {
+                            adManager.showInterstitialAdIfEligible(
+                                this@IntroActivity,
+                                minIntervalMillis = 25_000L,
+                                adTag = "Intro",
+                                onAdClosed = {
+                                    dismissAdLoadingDialog()
+                                    openActivityAndClearApp(MainActivity::class.java)
+                                },
+                                onAdSkipped = {
+                                    dismissAdLoadingDialog()
+                                    openActivityAndClearApp(MainActivity::class.java)
+                                },
+                                onAdFailedToShow = {
+                                    analyticsHelper.logShowInterstitialFailed(ScreenName.SONG)
+                                    dismissAdLoadingDialog()
+                                    openActivityAndClearApp(MainActivity::class.java)
+                                },
+                                onAdStartShowing = {
+                                    showAdLoadingDialog()
+                                },
+                                onAdImpression = {
+                                    analyticsHelper.logShowInterstitial(ScreenName.SONG)
+                                    analyticsHelper.logAdImpression(
+                                        "interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                                    )
+                                })
+                        }
+                    }
                 }
             }
         }
-
     }
 
     override fun onResume() {

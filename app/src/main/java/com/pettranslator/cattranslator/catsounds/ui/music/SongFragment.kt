@@ -96,15 +96,12 @@ class SongFragment : BaseFragment<FragmentMusicBinding>() {
         includeView.findViewById<FrameLayout>(R.id.frame)?.setOnClickListener {
             includeView.visibility = View.GONE
         }
-        includeView.findViewById<Button>(R.id.btnApply).setOnClickListener{
+        includeView.findViewById<Button>(R.id.btnApply).setOnClickListener {
             includeView.visibility = View.GONE
             adManager.showInterstitialAdIfEligible(
                 mainActivity,
-                minIntervalMillis = appContainer.adConfig?.interDelaySongsSec?.times(
-                    1000L
-                )
-                    ?: 30_000L,
-                adTag = "Song",
+                minIntervalMillis = 40_000L,
+                adTag = "PlaySong",
                 onAdClosed = {
                     dismissAdLoadingDialog()
                     playSong(position)
