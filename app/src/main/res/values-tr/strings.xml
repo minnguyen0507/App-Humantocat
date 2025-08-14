@@ -282,6 +282,7 @@
     <string name="r_66">Bütün gün uyuyorum ve bütün gece parti yapıyorum. Kanun bu</string>
     <string name="r_67">Şarj aletini çiğniyorum çünkü sen ona benden daha çok dikkat ediyorsun</string>
     <string name="r_68">Ben bir kediyim. Bu her şeyi açıklıyor</string>
+    <string name="r_69">Ücretsiz çeviri</string>
     <string name="song_playing">Şarkı çalıyor</string>
     <string name="connect_internet">Bu özelliği kullanmak için lütfen internete bağlanın.</string>
     <string name="content_record">Bu özelliği kullanmak için lütfen kayıt izni verin.</string>
@@ -290,4 +291,6 @@
     <string name="n_2">Bugün yeni bir kedi sesi öğrendiniz mi? Şimdi keşfedelim! </string>
     <string name="n_3">Bugünün kedi mücadelesi: Doğru tahmin edebilir misiniz? Şimdi uygulamayı açın!</string>
     <string name="n_4">Kediniz sizi bekliyor! Yeni bir miyav duymak için uygulamayı açın!</string>
+    <string name="n_5">Bu işlem reklam içerebilir</string>
+    <string name="n_6">Başla</string>
 </resources>

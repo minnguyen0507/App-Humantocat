@@ -61,7 +61,7 @@ class PlaySongActivity : BaseActivity<ActivityPlaySongBinding>() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        adManager.loadNativeÌntroAd(viewBinding.adContainer, onAdLoaded = {
+        adManager.loadNativeIntroAd(viewBinding.adContainer, onAdLoaded = {
             analyticsHelper.logShowNative(ScreenName.SONG_PLAYING)
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.SONG_PLAYING)

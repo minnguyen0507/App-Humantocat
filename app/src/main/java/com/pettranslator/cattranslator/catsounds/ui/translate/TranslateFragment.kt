@@ -9,10 +9,7 @@ import com.pettranslator.cattranslator.catsounds.bases.AppContainer
 import com.pettranslator.cattranslator.catsounds.bases.fragment.BaseFragment
 import com.pettranslator.cattranslator.catsounds.databinding.FragmentTranslateBinding
 import com.pettranslator.cattranslator.catsounds.model.ETypeTranslator
-import com.pettranslator.cattranslator.catsounds.ui.music.SongFragment.Companion.CURRENT_INDEX
-import com.pettranslator.cattranslator.catsounds.ui.music.SongFragment.Companion.SONGS
 import com.pettranslator.cattranslator.catsounds.ui.record.RecordActivity
-import com.pettranslator.cattranslator.catsounds.ui.song.PlaySongActivity
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.ScreenName
 import com.pettranslator.cattranslator.catsounds.utils.ad.AdManager
@@ -33,6 +30,7 @@ class TranslateFragment : BaseFragment<FragmentTranslateBinding>() {
 
     @Inject
     lateinit var analyticsHelper: AnalyticsHelper
+
     @Inject
     lateinit var appContainer: AppContainer
     override fun inflateViewBinding(
@@ -73,10 +71,27 @@ class TranslateFragment : BaseFragment<FragmentTranslateBinding>() {
                 requireContext().openActivity(RecordActivity::class.java)
             }
         }
+    }
 
 
-
-
+    fun showReward() {
+        adManager.showRewardAd(
+            activity = requireActivity(),
+            onAdClosed = {
+                println("testShowReward onAdClosed")
+            },
+            onAdSkipped = {
+                println("testShowReward onAdSkipped")
+            },
+            onAdImpression = {
+                println("testShowReward onAdImpression")
+            },
+            onAdStartShowing = {
+                println("testShowReward onAdStartShowing")
+            },
+            onAdFailedToShow = {
+                println("onAdFailedToShow")
+            })
     }
 
 

@@ -282,6 +282,7 @@
     <string name="r_66">一日中寝て、一晩中パーティーをします。それが法律です</string>
     <string name="r_67">あなたは私よりも充電器に注意を払っているので、あなたの充電器を噛んでしまいます</string>
     <string name="r_68">私は猫です。それはすべてを説明します</string>
+    <string name="r_69">無料翻訳</string>
     <string name="song_playing">歌の演奏</string>
     <string name="connect_internet">この機能を使用するには、インターネットに接続してください。</string>
     <string name="content_record">この機能を使用するには録音許可を与えてください。</string>
@@ -290,4 +291,6 @@
     <string name="n_2">今日は新しい猫の鳴き声を学びましたか?今すぐ発見してみましょう！ </string>
     <string name="n_3">今日の猫のチャレンジ: 正しく推測できますか?今すぐアプリを開いてください!</string>
     <string name="n_4">あなたの猫があなたを待っています！アプリを開いて新しいニャーの鳴き声を聞いてください!</string>
+    <string name="n_5">この操作には広告が含まれる場合があります</string>
+    <string name="n_6">はじめる</string>
 </resources>

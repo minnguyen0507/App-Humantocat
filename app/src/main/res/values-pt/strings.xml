@@ -282,6 +282,7 @@
     <string name="r_66">Durmo o dia todo e festejo a noite toda. Essa é a lei</string>
     <string name="r_67">Eu mastigo seu carregador porque você presta mais atenção nele do que eu</string>
     <string name="r_68">Eu sou um gato. Isso explica tudo</string>
+    <string name="r_69">Tradução gratuita</string>
     <string name="song_playing">Tocando música</string>
     <string name="connect_internet">Conecte-se à Internet para usar este recurso.</string>
     <string name="content_record">Conceda permissão de gravação para usar este recurso.</string>
@@ -290,4 +291,6 @@
     <string name="n_2">Você aprendeu um novo som de gato hoje? Vamos descobrir agora! </string>
     <string name="n_3">Desafio do gato de hoje: você consegue adivinhar? Abra o aplicativo agora!</string>
     <string name="n_4">Seu gato está esperando por você! Abra o aplicativo para ouvir um novo miado!</string>
+    <string name="n_5">Esta ação pode conter anúncios</string>
+    <string name="n_6">Começar</string>
 </resources>

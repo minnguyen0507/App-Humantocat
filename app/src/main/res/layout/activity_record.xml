@@ -38,13 +38,24 @@
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_gravity="center"
-        android:background="@drawable/micro_1"
         android:layout_marginTop="@dimen/widget_size_90"
+        android:background="@drawable/micro_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/free_trans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/widget_size_30"
+        android:text="@string/r_69"
+        android:textSize="@dimen/font_size_20"
+        app:layout_constraintBottom_toTopOf="@id/buttonRecord"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/buttonRecord"
@@ -69,5 +80,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
+    <include android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/dialog_confirm"
+        layout="@layout/dialog_noti_contain_ads"
+        android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

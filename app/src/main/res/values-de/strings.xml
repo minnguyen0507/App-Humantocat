@@ -282,6 +282,7 @@
     <string name="r_66">Ich schlafe den ganzen Tag und feiere die ganze Nacht. Das ist das Gesetz</string>
     <string name="r_67">Ich kaue dein Ladegerät, weil du ihm mehr Aufmerksamkeit schenkst als ich</string>
     <string name="r_68">Ich bin eine Katze. Das erklärt alles</string>
+    <string name="r_69">Kostenlose Übersetzung</string> <!-- de - German -->
     <string name="song_playing">Lied wird abgespielt</string>
     <string name="connect_internet">Bitte stellen Sie eine Verbindung zum Internet her, um diese Funktion nutzen zu können.</string>
     <string name="content_record">Bitte erteilen Sie die Aufnahmeberechtigung, um diese Funktion nutzen zu können.</string>
@@ -290,4 +291,6 @@
     <string name="n_2">Hast du heute einen neuen Katzenklang gelernt? Entdecken wir es jetzt! </string>
     <string name="n_3">Die heutige Katzenherausforderung: Können Sie es richtig erraten? Öffnen Sie jetzt die App!</string>
     <string name="n_4">Ihre Katze wartet auf Sie! Öffnen Sie die App, um ein neues Miauen zu hören!</string>
+    <string name="n_5">Diese Aktion kann Werbung enthalten</string>
+    <string name="n_6">Loslegen</string>
 </resources>

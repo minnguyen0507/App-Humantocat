@@ -26,7 +26,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     @Inject
     lateinit var adManager: AdManager
 
-    @Inject lateinit var dataProvider: DataProvider
+    @Inject
+    lateinit var dataProvider: DataProvider
 
     @Inject
     lateinit var analyticsHelper: AnalyticsHelper
@@ -56,7 +57,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
 
         viewBinding.apply {
-            btnCat.setOnClickListener{ it ->
+            btnCat.setOnClickListener { it ->
                 val assetManager = requireContext().assets
                 var folder = ""
                 folder = "dog_sound"
@@ -64,7 +65,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 val fileList = assetManager.list(folder) ?: emptyArray()
                 ALog.d("HomeFragmentSS", "fileList: ${fileList.joinToString(",")}")
                 val listDog = arrayListOf<String>()
-                dataProvider.getDogSounds().forEach {dog->
+                dataProvider.getDogSounds().forEach { dog ->
                     listDog.add(dog.soundResId)
 
                 }
@@ -72,7 +73,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 vpAnimal.setCurrentItem(0, true)
                 updateBackgroundButton(btnCat, btnDog)
             }
-            btnDog.setOnClickListener{
+            btnDog.setOnClickListener {
                 vpAnimal.setCurrentItem(1, true)
                 updateBackgroundButton(btnDog, btnCat)
             }
@@ -83,6 +84,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         0 -> {
                             updateBackgroundButton(btnCat, btnDog)
                         }
+
                         1 -> {
                             updateBackgroundButton(btnDog, btnCat)
                         }
@@ -90,8 +92,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
             })
         }
-
     }
+
 
     fun updateBackgroundButton(view: AppCompatButton, viewUnActive: AppCompatButton) {
         view.setTextAppearance(R.style.tab_style_active)

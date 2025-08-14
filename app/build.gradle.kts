@@ -14,8 +14,8 @@ android {
         applicationId = "com.pettranslator.cattranslator.catsounds"
         minSdk = 24
         targetSdk = 35
-        versionCode = 5
-        versionName = "0.0.5"
+        versionCode = 9
+        versionName = "0.0.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -54,6 +54,11 @@ android {
                 "NATIVE_AD_UNIT_ID",
                 "\"ca-app-pub-7340251527995818/5854468032\""
             )
+            buildConfigField(
+                "String",
+                "REWARD_AD_ID",
+                "\"ca-app-pub-7340251527995818/4971812967\""
+            )
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -81,10 +86,11 @@ android {
                 "NATIVE_AD_UNIT_ID",
                 "\"ca-app-pub-3940256099942544/2247696110\""
             )
-//            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/9792653557\"")
-//            buildConfigField("String", "INTERSTITIAL_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/6284894630\"")
-//            buildConfigField("String", "APP_OPEN_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/7166490211\"")
-//            buildConfigField("String", "NATIVE_AD_UNIT_ID", "\"ca-app-pub-7340251527995818/5854468032\"")
+            buildConfigField(
+                "String",
+                "REWARD_AD_ID",
+                "\"ca-app-pub-3940256099942544/5224354917\""
+            )
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

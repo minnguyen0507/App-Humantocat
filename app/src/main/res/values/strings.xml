@@ -281,6 +281,7 @@
     <string name="r_66">I sleep all day and party all night. That’s the law</string>
     <string name="r_67">I chew your charger because you pay more attention to it than me</string>
     <string name="r_68">I’m a cat. That explains everything</string>
+    <string name="r_69">Free translation</string>
     <string name="song_playing">Song playing</string>
     <string name="connect_internet">Please connect to the internet to use this feature.</string>
     <string name="content_record">Please grant recording permission to use this feature.</string>
@@ -289,4 +290,6 @@
     <string name="n_2">Have you learned a new cat sound today? Let’s discover it now! </string>
     <string name="n_3">Today’s cat challenge: Can you guess it right? Open the app now!</string>
     <string name="n_4">Your cat is waiting for you! Open the app to hear a new meow!</string>
+    <string name="n_5">This action can contain ads</string>
+    <string name="n_6">GET STARTED</string>
 </resources>

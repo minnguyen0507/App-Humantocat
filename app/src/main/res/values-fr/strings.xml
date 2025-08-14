@@ -282,6 +282,7 @@
     <string name="r_66">Je dors toute la journée et je fais la fête toute la nuit. C\'est la loi</string>
     <string name="r_67">Je mâche ton chargeur parce que tu y fais plus attention que moi</string>
     <string name="r_68">Je suis un chat. Cela explique tout</string>
+    <string name="r_69">Traduction gratuite</string> <!-- fr - French -->
     <string name="song_playing">Chanson en cours de lecture</string>
     <string name="connect_internet">Veuillez vous connecter à Internet pour utiliser cette fonctionnalité.</string>
     <string name="content_record">Veuillez accorder l\'autorisation d\'enregistrement pour utiliser cette fonctionnalité.</string>
@@ -290,4 +291,6 @@
     <string name="n_2">Avez-vous appris un nouveau son de chat aujourd\'hui ? Découvrons-le maintenant ! </string>
     <string name="n_3">Le défi du chat du jour : saurez-vous le deviner ? Ouvrez l\'application maintenant !</string>
     <string name="n_4">Votre chat vous attend ! Ouvrez l\'application pour entendre un nouveau miaulement !</string>
+    <string name="n_5">Cette action peut contenir des publicités</string>
+    <string name="n_6">Commencer</string>
 </resources>

@@ -282,6 +282,7 @@
     <string name="r_66">Duermo todo el día y salgo de fiesta toda la noche. Esa es la ley</string>
     <string name="r_67">Mastico tu cargador porque le prestas más atención que yo.</string>
     <string name="r_68">Soy un gato. eso lo explica todo</string>
+    <string name="r_69">Traducción gratuita</string> <!-- es - Spanish -->
     <string name="song_playing">Reproducción de canción</string>
     <string name="connect_internet">Conéctese a Internet para utilizar esta función.</string>
     <string name="content_record">Conceda permiso de grabación para utilizar esta función.</string>
@@ -290,4 +291,6 @@
     <string name="n_2">¿Has aprendido un nuevo sonido de gato hoy? ¡Descubrámoslo ahora! </string>
     <string name="n_3">El desafío del gato de hoy: ¿puedes adivinarlo bien? ¡Abre la aplicación ahora!</string>
     <string name="n_4">¡Tu gato te está esperando! ¡Abre la aplicación para escuchar un nuevo maullido!</string>
+    <string name="n_5">Esta acción puede contener anuncios</string>
+    <string name="n_6">Empezar</string>
 </resources>

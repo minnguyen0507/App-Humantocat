@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -292,11 +293,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                                 onAdStartShowing = {
                                     ALog.d("themd", "onAdStartShowing")
                                     showAdLoadingDialog()
-                                }, onAdImpression = {
+                                },
+                                onAdImpression = {
                                     analyticsHelper.logShowInterstitial(ScreenName.HOME)
                                     analyticsHelper.logAdImpression(
-                                        "interstitial",
-                                        BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                                        "interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID
                                     )
                                 })
                         }
@@ -332,11 +333,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                                 onAdStartShowing = {
                                     ALog.d("themd", "onAdStartShowing")
                                     showAdLoadingDialog()
-                                }, onAdImpression = {
+                                },
+                                onAdImpression = {
                                     analyticsHelper.logShowInterstitial(ScreenName.TRANSLATE)
                                     analyticsHelper.logAdImpression(
-                                        "interstitial",
-                                        BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                                        "interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID
                                     )
                                 })
                         }
@@ -356,8 +357,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                                 adTag = "Game",
                                 minIntervalMillis = appContainer.adConfig?.interDelayGameSec?.times(
                                     1000L
-                                )
-                                    ?: 30_000L,
+                                ) ?: 30_000L,
                                 onAdClosed = {
                                     dismissAdLoadingDialog()
                                 },
@@ -370,14 +370,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                                 },
                                 onAdStartShowing = {
                                     showAdLoadingDialog()
-                                }, onAdImpression = {
+                                },
+                                onAdImpression = {
                                     analyticsHelper.logShowInterstitial(ScreenName.GAME)
                                     analyticsHelper.logAdImpression(
-                                        "interstitial",
-                                        BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                                        "interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID
                                     )
-                                }
-                            )
+                                })
                         }
                     }
                 }
@@ -394,8 +393,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                                 this@MainActivity,
                                 minIntervalMillis = appContainer.adConfig?.interDelaySongsSec?.times(
                                     1000L
-                                )
-                                    ?: 30_000L,
+                                ) ?: 30_000L,
                                 adTag = "Song",
                                 onAdClosed = {
                                     dismissAdLoadingDialog()
@@ -409,11 +407,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                                 },
                                 onAdStartShowing = {
                                     showAdLoadingDialog()
-                                }, onAdImpression = {
+                                },
+                                onAdImpression = {
                                     analyticsHelper.logShowInterstitial(ScreenName.SONG)
                                     analyticsHelper.logAdImpression(
-                                        "interstitial",
-                                        BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                                        "interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID
                                     )
                                 })
                         }
@@ -471,6 +469,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onResume()
         analyticsHelper.logScreenView(ScreenName.MAIN)
         adManager.loadInterstitialAdIfNeeded(activity = this)
+        adManager.loadRewardAdIfNeeded(activity = this);
     }
 
     private fun checkAndLogAppUpdate() {

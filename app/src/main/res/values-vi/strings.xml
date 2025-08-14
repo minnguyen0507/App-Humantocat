@@ -282,6 +282,7 @@
     <string name="r_66">Tôi ngủ cả ngày và tiệc tùng suốt đêm. Đó là luật</string>
     <string name="r_67">Tôi nhai bộ sạc của bạn vì bạn chú ý đến nó nhiều hơn tôi</string>
     <string name="r_68">Tôi là một con mèo. Điều đó giải thích mọi thứ</string>
+    <string name="r_69">Dịch miễn phí</string>
     <string name="song_playing">Bài hát đang phát</string>
     <string name="connect_internet">Vui lòng kết nối internet để sử dụng tính năng này.</string>
     <string name="content_record">Vui lòng cấp quyền ghi âm để sử dụng tính năng này.</string>
@@ -290,4 +291,6 @@
     <string name="n_2">Hôm nay bạn đã học được âm thanh mới của mèo chưa? Hãy cùng khám phá nó ngay bây giờ! </string>
     <string name="n_3">Thử thách mèo hôm nay: Bạn có đoán đúng không? Hãy mở ứng dụng ngay bây giờ!</string>
     <string name="n_4">Con mèo của bạn đang đợi bạn! Mở ứng dụng để nghe tiếng meo meo mới!</string>
+    <string name="n_5">Hành động này có thể chứa quảng cáo</string>
+    <string name="n_6">Bắt Đầu</string>
 </resources>

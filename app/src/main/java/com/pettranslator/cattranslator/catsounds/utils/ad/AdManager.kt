@@ -3,6 +3,7 @@ package com.pettranslator.cattranslator.catsounds.utils.ad
 import android.app.Activity
 import android.content.Context
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,11 +17,14 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.OnUserEarnedRewardListener
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.utils.ALog
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -33,9 +37,10 @@ class AdManager @Inject constructor(
 ) {
 
     private var interstitialAd: InterstitialAd? = null
+    private var rewardedAd: RewardedAd? = null
     private val lastAdShownTimeMap: MutableMap<String, Long> = mutableMapOf()
     private val isFirstAdShownMap: MutableMap<String, Boolean> = mutableMapOf()
-
+    private val TAG: String = "AdManager"
     fun loadInterstitialAdIfNeeded(activity: Activity) {
         if (interstitialAd != null || !isActivityValid(activity)) return
 
@@ -52,6 +57,27 @@ class AdManager @Inject constructor(
                     interstitialAd = null
                 }
             }
+        )
+    }
+
+    fun loadRewardAdIfNeeded(activity: Activity) {
+        if (rewardedAd != null || !isActivityValid(activity)) return
+        Log.d(TAG, "loadRewardAdIfNeeded")
+        RewardedAd.load(
+            activity,
+            AdUnitIds.REWARD,
+            AdRequest.Builder().build(),
+            object : RewardedAdLoadCallback() {
+                override fun onAdLoaded(ad: RewardedAd) {
+                    Log.d(TAG, "onAdLoaded")
+                    rewardedAd = ad
+                }
+
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    Log.d(TAG, " onAdFailedToLoad " + adError.message)
+                    rewardedAd = null
+                }
+            },
         )
     }
 
@@ -91,6 +117,56 @@ class AdManager @Inject constructor(
             onAdImpression = onAdImpression
         )
     }
+
+    fun showRewardAd(
+        activity: Activity,
+        onAdStartShowing: () -> Unit = {},
+        onAdClosed: () -> Unit,
+        onAdSkipped: () -> Unit,
+        onAdImpression: () -> Unit,
+        onAdFailedToShow: (String) -> Unit = {}
+    ) {
+        rewardedAd?.fullScreenContentCallback =
+            object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    // Called when fullscreen content is dismissed.
+                    Log.d(TAG, "Ad was dismissed.")
+                    // Don't forget to set the ad reference to null so you
+                    // don't show the ad a second time.
+                    rewardedAd = null
+                }
+
+                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                    // Called when fullscreen content failed to show.
+                    Log.d(TAG, "Ad failed to show.")
+                    // Don't forget to set the ad reference to null so you
+                    // don't show the ad a second time.
+                    rewardedAd = null
+                }
+
+                override fun onAdShowedFullScreenContent() {
+                    // Called when fullscreen content is shown.
+                    Log.d(TAG, "Ad showed fullscreen content.")
+                }
+
+                override fun onAdImpression() {
+                    // Called when an impression is recorded for an ad.
+                    Log.d(TAG, "Ad recorded an impression.")
+                }
+
+                override fun onAdClicked() {
+                    // Called when an ad is clicked.
+                    Log.d(TAG, "Ad was clicked.")
+                }
+            }
+        rewardedAd?.show(
+            activity,
+            OnUserEarnedRewardListener { rewardItem ->
+                onAdClosed()
+            },
+        )
+    }
+
 
     private fun showInterstitialAd(
         activity: Activity,
@@ -214,7 +290,7 @@ class AdManager @Inject constructor(
         adLoader.loadAd(AdRequest.Builder().build())
     }
 
-    fun loadNativeÌntroAd(
+    fun loadNativeIntroAd(
         container: ViewGroup, // Container để chứa NativeAdView
         onAdLoaded: (NativeAd) -> Unit,
         onAdFailed: (String) -> Unit,

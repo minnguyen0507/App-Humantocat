@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -25,21 +26,39 @@
         android:text="@string/select_language"
         app:layout_constraintStart_toEndOf="@id/btnBack"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
+    <!-- Thay thế AppCompatButton bằng LinearLayout chứa ImageView và TextView -->
+    <LinearLayout
         android:id="@+id/btnApply"
         android:layout_width="@dimen/widget_size_70"
         android:layout_height="@dimen/widget_size_35"
         android:layout_marginEnd="@dimen/margin_8dp"
-        android:text="@string/apply"
-        android:visibility="visible"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
         android:background="@drawable/bg_tab_active"
-        android:backgroundTint="@color/primaryColor"
+        android:backgroundTint="#84D539"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/textView6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView6" />
+        app:layout_constraintTop_toTopOf="@+id/textView6">
+
+        <ImageView
+            android:layout_width="@dimen/widget_size_26"
+            android:layout_height="@dimen/widget_size_26"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_check_24"
+            app:tint="@color/white" />
+
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center_vertical"-->
+        <!--            android:gravity="center"-->
+        <!--            android:paddingStart="4dp"-->
+        <!--            android:paddingEnd="4dp"-->
+        <!--            android:text="@string/apply"-->
+        <!--            android:textAllCaps="false"-->
+        <!--            android:textColor="@color/white" />-->
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvLanguage"
@@ -48,12 +67,13 @@
         android:layout_marginBottom="@dimen/margin_8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/ad_container"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        tools:layout_editor_absoluteX="-72dp" />
 
     <FrameLayout
         android:id="@+id/ad_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/rcvLanguage"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rcvLanguage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,7 +23,7 @@
                 android:layout_marginStart="@dimen/widget_size_20"
                 android:layout_marginTop="@dimen/widget_size_20"
                 android:layout_marginEnd="@dimen/widget_size_20"
-                android:text="This action can contain ads"
+                android:text="@string/n_5"
                 android:textSize="@dimen/font_size_16" />
 
             <Button

@@ -282,6 +282,7 @@
     <string name="r_66">Dormo tutto il giorno e faccio festa tutta la notte. Questa è la legge</string>
     <string name="r_67">Mastico il tuo caricabatterie perché gli presti più attenzione di me</string>
     <string name="r_68">Sono un gatto. Questo spiega tutto</string>
+    <string name="r_69">Traduzione gratuita</string>
     <string name="song_playing">Canzone in riproduzione</string>
     <string name="connect_internet">Connettiti a Internet per utilizzare questa funzione.</string>
     <string name="content_record">Concedere l \'autorizzazione alla registrazione per utilizzare questa funzione.</string>
@@ -290,4 +291,6 @@
     <string name="n_2">Hai imparato un nuovo suono del gatto oggi? Scopriamolo adesso! </string>
     <string name="n_3">La sfida del gatto di oggi: riesci a indovinare? Apri l\'app adesso!</string>
     <string name="n_4">Il tuo gatto ti sta aspettando! Apri l\'app per ascoltare un nuovo miagolio!</string>
+    <string name="n_5">Questa azione può contenere annunci pubblicitari</string>
+    <string name="n_6">Inizia</string>
 </resources>

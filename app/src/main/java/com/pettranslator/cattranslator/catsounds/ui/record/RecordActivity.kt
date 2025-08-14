@@ -6,6 +6,8 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
+import android.widget.FrameLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -16,7 +18,6 @@ import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
 import com.pettranslator.cattranslator.catsounds.databinding.ActivityRecordBinding
 import com.pettranslator.cattranslator.catsounds.model.ETypeTranslator
 import com.pettranslator.cattranslator.catsounds.ui.translate.TranslateFragment
-import com.pettranslator.cattranslator.catsounds.utils.ALog
 import com.pettranslator.cattranslator.catsounds.utils.AnalyticsHelper
 import com.pettranslator.cattranslator.catsounds.utils.DataProvider
 import com.pettranslator.cattranslator.catsounds.utils.ScreenName
@@ -42,7 +43,7 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
 
     @Inject
     lateinit var appContainer: AppContainer
-
+    private var isFirstOpen: Boolean = true
     private var isRunning = false
     private val RECORD_AUDIO_REQUEST_CODE = 1002
     private val timerRunnable = object : Runnable {
@@ -60,8 +61,9 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
 
     override fun initialize() {
         enableEdgeToEdge()
-
-        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {
+        isFirstOpen = true
+        viewBinding.freeTrans.text = "${getString(R.string.r_69)}: 1"
+        adManager.loadNativeIntroAd(viewBinding.adContainer, onAdLoaded = {
             analyticsHelper.logShowNative(ScreenName.RECORD)
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.RECORD)
@@ -85,10 +87,10 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
 
     private fun startRecord() {
         if (!isRunning) {
-            seconds = 0
-            isRunning = true
-            handler.post(timerRunnable)
-            zoomInOutObject(viewBinding.imageView9)
+            if (isFirstOpen) {
+                runRecord()
+                isFirstOpen = false
+            } else showConfirm()
             return
         }
         isRunning = false
@@ -105,6 +107,41 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
 
             }
             dialog.show()
+        }
+    }
+
+    private fun runRecord() {
+        seconds = 0
+        isRunning = true
+        handler.post(timerRunnable)
+        zoomInOutObject(viewBinding.imageView9)
+    }
+
+    private fun showConfirm() {
+        val includeBinding = viewBinding.dialogConfirm
+        val includeView = includeBinding.root
+        includeView.visibility = View.VISIBLE
+        includeView.findViewById<FrameLayout>(R.id.frame)?.setOnClickListener {
+            includeView.visibility = View.GONE
+        }
+        includeView.findViewById<Button>(R.id.btnApply).setOnClickListener {
+            includeView.visibility = View.GONE
+            adManager.showRewardAd(this, onAdClosed = {
+                dismissAdLoadingDialog()
+                runRecord()
+            }, onAdSkipped = {
+                dismissAdLoadingDialog()
+            }, onAdFailedToShow = {
+                analyticsHelper.logShowInterstitialFailed(ScreenName.SONG)
+                dismissAdLoadingDialog()
+            }, onAdStartShowing = {
+                showAdLoadingDialog()
+            }, onAdImpression = {
+                analyticsHelper.logShowInterstitial(ScreenName.HOME)
+                analyticsHelper.logAdImpression(
+                    "interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID
+                )
+            })
         }
     }
 
@@ -137,34 +174,35 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
 
     override fun performPermissionTask() {
         super.performPermissionTask()
-        adManager.showInterstitialAdIfEligible(
-            this,
-            minIntervalMillis = appContainer.adConfig?.interDelayRecordSec?.times(1000L) ?: 90_000L,
-            adTag = "Record",
-            onAdClosed = {
-                startRecord()
-                dismissAdLoadingDialog()
-            },
-            onAdSkipped = {
-                startRecord()
-                dismissAdLoadingDialog()
-            },
-            onAdFailedToShow = {
-                startRecord()
-                analyticsHelper.logShowInterstitialFailed(ScreenName.RECORD)
-                dismissAdLoadingDialog()
-            },
-            onAdStartShowing = {
-                ALog.d("themd", "onAdStartShowing")
-                showAdLoadingDialog()
-            }, onAdImpression = {
-                analyticsHelper.logShowInterstitial(ScreenName.RECORD)
-                analyticsHelper.logAdImpression(
-                    "interstitial",
-                    BuildConfig.INTERSTITIAL_AD_UNIT_ID
-                )
-            })
-
+        viewBinding.freeTrans.text = "${getString(R.string.r_69)}: 0"
+        startRecord()
+//        adManager.showInterstitialAdIfEligible(
+//            this,
+//            minIntervalMillis = appContainer.adConfig?.interDelayRecordSec?.times(1000L) ?: 90_000L,
+//            adTag = "Record",
+//            onAdClosed = {
+//                startRecord()
+//                dismissAdLoadingDialog()
+//            },
+//            onAdSkipped = {
+//                startRecord()
+//                dismissAdLoadingDialog()
+//            },
+//            onAdFailedToShow = {
+//                startRecord()
+//                analyticsHelper.logShowInterstitialFailed(ScreenName.RECORD)
+//                dismissAdLoadingDialog()
+//            },
+//            onAdStartShowing = {
+//                ALog.d("themd", "onAdStartShowing")
+//                showAdLoadingDialog()
+//            },
+//            onAdImpression = {
+//                analyticsHelper.logShowInterstitial(ScreenName.RECORD)
+//                analyticsHelper.logAdImpression(
+//                    "interstitial", BuildConfig.INTERSTITIAL_AD_UNIT_ID
+//                )
+//            })
     }
 
     override fun onDestroy() {

@@ -1,5 +1,6 @@
 package com.pettranslator.cattranslator.catsounds.ui.language
 
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isGone
 import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
@@ -43,20 +45,21 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
     private var listLanguage = mutableListOf<LanguageItem>()
 
     private lateinit var languageAdapter: LanguageAdapter
+    private var timer: CountDownTimer? = null
 
     override fun inflateViewBinding(inflater: LayoutInflater): ActivityLanguageBinding =
         ActivityLanguageBinding.inflate(inflater)
 
     override fun initialize() {
         enableEdgeToEdge()
-
+        viewBinding.btnApply.visibility = View.GONE;
         listLanguage = getLanguages()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {
+        adManager.loadNativeIntroAd(viewBinding.adContainer, onAdLoaded = {
             analyticsHelper.logShowNative(ScreenName.LANGUAGE)
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.LANGUAGE)
@@ -75,7 +78,7 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
                 AppCompatDelegate.setApplicationLocales(locales)
                 sharedPref.saveLanguage(langCode)
                 analyticsHelper.logLanguageSelect(langCode)
-                if (sharedPref.getFirstLanguage()){
+                if (sharedPref.getFirstLanguage()) {
                     openActivityAndClearApp(IntroActivity::class.java)
                     sharedPref.setFirstLanguage(false)
                     return@setSafeOnClickListener
@@ -85,18 +88,28 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
             }
         }
 
-        languageAdapter.registerItemClickListener { view,language, postion ->
+        languageAdapter.registerItemClickListener { view, language, postion ->
             listLanguage.forEach { it.isSelected = false }
-            viewBinding.btnApply.visibility = View.VISIBLE
             language.isSelected = true
-
+            if (viewBinding.btnApply.isGone) delayShowTick()
             langCode = language.localeCode
-
         }
 
         languageAdapter.addData(listLanguage)
     }
 
+    private fun delayShowTick() {
+        timer?.cancel()
+        timer = object : CountDownTimer(1000L, 1000L) {
+            override fun onTick(millisUntilFinished: Long) {
+            }
+
+            override fun onFinish() {
+                println("ON FINISH")
+                viewBinding.btnApply.visibility = View.VISIBLE;
+            }
+        }.start()
+    }
 
     override fun onResume() {
         super.onResume()
