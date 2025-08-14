@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.google.services)
+    id("com.google.firebase.crashlytics")
     kotlin("kapt")
 }
 
@@ -200,4 +201,6 @@ dependencies {
 //    implementation("com.google.ads.mediation:unity:4.15.0.0")
     implementation("com.google.android.ump:user-messaging-platform:2.1.0")
     implementation("com.github.ertugrulkaragoz:SuperBottomBar:0.4")
+    implementation("com.google.firebase:firebase-crashlytics-ndk")
+    implementation("com.google.firebase:firebase-analytics")
 }
