@@ -38,7 +38,7 @@
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/widget_size_90"
+        android:layout_marginTop="@dimen/widget_size_100"
         android:background="@drawable/micro_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

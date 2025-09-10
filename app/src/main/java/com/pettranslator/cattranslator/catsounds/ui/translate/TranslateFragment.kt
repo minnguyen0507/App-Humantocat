@@ -1,7 +1,10 @@
 package com.pettranslator.cattranslator.catsounds.ui.translate
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.core.graphics.toColorInt
 import androidx.lifecycle.lifecycleScope
 import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
@@ -41,11 +44,16 @@ class TranslateFragment : BaseFragment<FragmentTranslateBinding>() {
 
         analyticsHelper.logScreenView(ScreenName.TRANSLATE)
 
-        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {
+        adManager.loadNativeIntroAd(viewBinding.adContainer, onAdLoaded = {
             analyticsHelper.logShowNative(ScreenName.TRANSLATE)
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.TRANSLATE)
         }, onAdImpression = {
+
+            viewBinding.adContainer.findViewById<Button>(R.id.ad_call_to_action)
+                .setBackgroundTintList(ColorStateList.valueOf("#0074c7".toColorInt()));
+            viewBinding.adContainer.findViewById<Button>(R.id.ad_call_to_action)
+                .refreshDrawableState();
             analyticsHelper.logAdImpression("native", BuildConfig.NATIVE_AD_UNIT_ID)
         })
 

@@ -46,7 +46,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
 
     override fun initialize() {
         enableEdgeToEdge()
-        resetShowBtnNext()
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -55,10 +55,13 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
 
         adManager.loadNativeIntroAd(viewBinding.adContainer, onAdLoaded = {
             analyticsHelper.logShowNative(ScreenName.INTRO)
+
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.INTRO)
+            resetShowBtnNext()
         }, onAdImpression = {
             analyticsHelper.logAdImpression("native", BuildConfig.NATIVE_AD_UNIT_ID)
+            resetShowBtnNext()
         })
 
         viewBinding.apply {
@@ -83,11 +86,6 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
                             prNatAd.topToBottom = tabIndicator.id
                             prNatAd.bottomToBottom = ConstraintLayout.LayoutParams.UNSET
 
-//                            val params = btnNext.layoutParams as ConstraintLayout.LayoutParams
-//                            params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
-//                            params.topToBottom = adContainer.id
-//                            params.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
-//                            btnNext.layoutParams = params
                         }
 
                         1 -> {
@@ -102,11 +100,6 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
 
                         2 -> {
                             analyticsHelper.logScreenView(ScreenName.ONBOARDING_3)
-//                            val params = btnNext.layoutParams as ConstraintLayout.LayoutParams
-//                            params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID
-//                            params.topToTop = ConstraintLayout.LayoutParams.PARENT_ID
-//                            params.startToStart = ConstraintLayout.LayoutParams.UNSET
-//                            btnNext.layoutParams = params
 
                             val prNatAd = adContainer.layoutParams as ConstraintLayout.LayoutParams
                             prNatAd.startToStart = ConstraintLayout.LayoutParams.PARENT_ID
@@ -177,6 +170,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
                             openActivityAndClearApp(MainActivity::class.java)
                             return@launch
                         } else {
+                            showAdLoadingDialog()
                             adManager.showInterstitialAdIfEligible(
                                 this@IntroActivity,
                                 minIntervalMillis = 25_000L,
@@ -195,7 +189,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
                                     openActivityAndClearApp(MainActivity::class.java)
                                 },
                                 onAdStartShowing = {
-                                    showAdLoadingDialog()
+//                                    showAdLoadingDialog()
                                 },
                                 onAdImpression = {
                                     analyticsHelper.logShowInterstitial(ScreenName.SONG)
@@ -213,7 +207,7 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
     fun resetShowBtnNext() {
         viewBinding.btnNext.visibility = View.GONE;
         timer?.cancel()
-        timer = object : CountDownTimer(1000L, 1000L) {
+        timer = object : CountDownTimer(1500L, 1500L) {
             override fun onTick(millisUntilFinished: Long) {
             }
 
@@ -225,7 +219,6 @@ class IntroActivity : BaseActivity<ActivityIntroBinding>() {
                 }
             }
         }.start()
-
     }
 
     override fun onResume() {

@@ -4,11 +4,13 @@ import android.Manifest
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
 import androidx.activity.enableEdgeToEdge
+import androidx.core.graphics.toColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.pettranslator.cattranslator.catsounds.BuildConfig
@@ -65,6 +67,12 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
         viewBinding.freeTrans.text = "${getString(R.string.r_69)}: 1"
         adManager.loadNativeIntroAd(viewBinding.adContainer, onAdLoaded = {
             analyticsHelper.logShowNative(ScreenName.RECORD)
+
+            viewBinding.adContainer.findViewById<Button>(R.id.ad_call_to_action)
+                .setBackgroundTintList(ColorStateList.valueOf("#18bbfe".toColorInt()));
+            viewBinding.adContainer.findViewById<Button>(R.id.ad_call_to_action)
+                .refreshDrawableState();
+
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.RECORD)
         }, onAdImpression = {
@@ -146,10 +154,10 @@ class RecordActivity : BaseActivity<ActivityRecordBinding>() {
     }
 
     private fun zoomInOutObject(view: View) {
-        val scaleUpX = ObjectAnimator.ofFloat(view, "scaleX", 1f, 1.2f)
-        val scaleUpY = ObjectAnimator.ofFloat(view, "scaleY", 1f, 1.2f)
-        val scaleDownX = ObjectAnimator.ofFloat(view, "scaleX", 1.2f, 1f)
-        val scaleDownY = ObjectAnimator.ofFloat(view, "scaleY", 1.2f, 1f)
+        val scaleUpX = ObjectAnimator.ofFloat(view, "scaleX", 1f, 1.1f)
+        val scaleUpY = ObjectAnimator.ofFloat(view, "scaleY", 1f, 1.1f)
+        val scaleDownX = ObjectAnimator.ofFloat(view, "scaleX", 1.1f, 1f)
+        val scaleDownY = ObjectAnimator.ofFloat(view, "scaleY", 1.1f, 1f)
 
         val animatorSet = AnimatorSet()
         animatorSet.play(scaleUpX).with(scaleUpY)

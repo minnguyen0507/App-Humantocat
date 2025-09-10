@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isGone
 import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
 import com.pettranslator.cattranslator.catsounds.bases.BaseActivity
@@ -91,7 +90,8 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
         languageAdapter.registerItemClickListener { view, language, postion ->
             listLanguage.forEach { it.isSelected = false }
             language.isSelected = true
-            if (viewBinding.btnApply.isGone) delayShowTick()
+//            if (viewBinding.btnApply.isGone)
+            delayShowTick()
             langCode = language.localeCode
         }
 
@@ -100,7 +100,8 @@ class LanguageActivity : BaseActivity<ActivityLanguageBinding>() {
 
     private fun delayShowTick() {
         timer?.cancel()
-        timer = object : CountDownTimer(1000L, 1000L) {
+        viewBinding.btnApply.visibility = View.GONE;
+        timer = object : CountDownTimer(1500L, 1500L) {
             override fun onTick(millisUntilFinished: Long) {
             }
 

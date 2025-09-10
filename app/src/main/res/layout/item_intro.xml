@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp">
+    android:padding="16dp">
 
     <ImageView
         android:id="@+id/imgSlide"
@@ -18,7 +18,7 @@
         style="@style/text_medium_bold_black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_8dp"
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="22sp"
@@ -31,7 +31,7 @@
         style="@style/text_small_black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_8dp"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -37,6 +37,7 @@
                 android:layout_marginBottom="@dimen/widget_size_10"
                 android:backgroundTint="#84D539"
                 android:text="@string/play"
+                android:textAllCaps="true"
                 android:textColor="@color/white" />
         </LinearLayout>
     </FrameLayout>

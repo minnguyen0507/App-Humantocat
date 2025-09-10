@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,22 +17,26 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnNext1"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/widget_size_35"
+        android:layout_height="@dimen/widget_size_36"
+        android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/widget_size_26"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/bg_tab_active"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:background="@drawable/button_border"
+        android:gravity="center"
         android:text="@string/n_6"
-        android:textAllCaps="false"
+        android:textAllCaps="true"
         android:textColor="@color/white"
+        android:textSize="@dimen/font_size_15"
         android:visibility="gone"
+        app:backgroundTint="#FFB650"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
         android:id="@+id/tabIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         app:dotsColor="@color/black"
         app:dotsSize="10dp"
         app:dotsSpacing="5dp"
@@ -47,22 +50,28 @@
         android:id="@+id/ad_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/widget_size_26"
-        app:layout_constraintTop_toBottomOf="@+id/tabIndicator" />
+        android:layout_marginTop="@dimen/widget_size_10"
+        android:layout_marginBottom="@dimen/margin_8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnNext" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnNext"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/widget_size_35"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_size_42"
+        android:layout_marginStart="@dimen/margin_8dp"
         android:layout_marginTop="@dimen/widget_size_5"
-        android:background="@drawable/bg_tab_active"
+        android:layout_marginEnd="@dimen/margin_8dp"
+        android:layout_marginBottom="@dimen/margin_8dp"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@null"
         android:text="@string/next"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:backgroundTint="#84D539"
+        android:textAllCaps="true"
+        android:textColor="#FFB650"
+        android:textSize="@dimen/font_size_17"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ad_container" />
+        app:layout_constraintStart_toStartOf="parent" />
+    <!--    android:background="@drawable/button_border"-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -79,10 +79,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 if (sharedPref.getFirstRun()) {
                     openFirstRunActivity()
                     return@launch
+                } else {
+                    openActivityAndClearApp(MainActivity::class.java)
+                    return@launch
                 }
-                return@launch
             } else {
                 if (appContainer.adConfig?.interEnabledSplash == true) {
+                    showAdLoadingDialog()
                     adManager.showInterstitialAdIfEligible(
                         this@SplashActivity,
                         minIntervalMillis = appContainer.adConfig?.interDelayTranslateSec?.times(
@@ -108,7 +111,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                             } else openActivityAndClearApp(MainActivity::class.java)
                         },
                         onAdStartShowing = {
-                            showAdLoadingDialog()
+//                            showAdLoadingDialog()
                         },
                         onAdImpression = {
                         })

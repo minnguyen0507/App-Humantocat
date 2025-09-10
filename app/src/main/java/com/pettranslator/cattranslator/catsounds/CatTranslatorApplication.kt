@@ -3,11 +3,11 @@ package com.pettranslator.cattranslator.catsounds
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.hilt.work.HiltWorkerFactory
-import androidx.lifecycle.lifecycleScope
 import androidx.work.Configuration
 import com.google.android.gms.ads.MobileAds
 import com.pettranslator.cattranslator.catsounds.bases.AppContainer
@@ -31,6 +31,7 @@ class CatTranslatorApplication : Application(),
     private var isActivityChangingConfigurations = false
     private var isReturningFromBackground = false
     private var hasAppStartedOnce = false
+
     @Inject
     lateinit var sharedPref: SharedPref
 
@@ -102,29 +103,39 @@ class CatTranslatorApplication : Application(),
 
         if (isReturningFromBackground) {
             isReturningFromBackground = false
-            AdLoadingDialogFragment.show(
-                (activity as AppCompatActivity).supportFragmentManager
-            )
-            AppOpenAdManager.loadAd(
-                context = this,
-                onAdLoaded = {
-                    AdLoadingDialogFragment.dismiss(
-                        activity.supportFragmentManager
-                    )
-                    AppOpenAdManager.showAdIfAvailable(activity, onAdImpression = {
-                        analyticsHelper.logAdImpression("OOA", BuildConfig.APP_OPEN_AD_UNIT_ID)
-                    }, onAdClosed = {
-                        AdLoadingDialogFragment.dismiss(
-                            activity.supportFragmentManager
+
+            val compatActivity = activity as? AppCompatActivity
+            if (compatActivity != null) {
+                AdLoadingDialogFragment.show(compatActivity.supportFragmentManager)
+
+                AppOpenAdManager.loadAd(
+                    context = this,
+                    onAdLoaded = {
+                        AdLoadingDialogFragment.dismiss(compatActivity.supportFragmentManager)
+                        AppOpenAdManager.showAdIfAvailable(
+                            compatActivity,
+                            onAdImpression = {
+                                analyticsHelper.logAdImpression(
+                                    "OOA",
+                                    BuildConfig.APP_OPEN_AD_UNIT_ID
+                                )
+                            },
+                            onAdClosed = {
+                                AdLoadingDialogFragment.dismiss(compatActivity.supportFragmentManager)
+                            }
                         )
-                    })
-                },
-                onAdFailed = {
-                    AdLoadingDialogFragment.dismiss(
-                        activity.supportFragmentManager
-                    )
-                }
-            )
+                    },
+                    onAdFailed = {
+                        AdLoadingDialogFragment.dismiss(compatActivity.supportFragmentManager)
+                    }
+                )
+            } else {
+                Log.w(
+                    "AdFlow",
+                    "Không thể show AdLoadingDialogFragment: activity = ${activity?.javaClass?.name}"
+                )
+            }
+
         }
     }
 

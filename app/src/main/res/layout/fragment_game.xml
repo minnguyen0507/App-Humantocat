@@ -21,7 +21,7 @@
         android:layout_marginEnd="@dimen/margin_8dp"
         android:paddingHorizontal="5dp"
         android:text="@string/clicker"
-        android:textAllCaps="false"
+        android:textAllCaps="true"
         android:textStyle="normal"
         app:layout_constraintEnd_toStartOf="@id/btnMusic"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
         android:paddingHorizontal="5dp"
         android:text="@string/challenge"
         android:textStyle="normal"
-        android:textAllCaps="false"
+        android:textAllCaps="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnClickMouse"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />

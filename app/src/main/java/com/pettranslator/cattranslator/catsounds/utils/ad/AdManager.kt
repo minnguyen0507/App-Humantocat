@@ -311,6 +311,10 @@ class AdManager @Inject constructor(
                 adView.setNativeAd(nativeAd)
 
                 container.addView(view)
+
+                val params = container.layoutParams
+                params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                container.layoutParams = params
                 onAdLoaded(nativeAd)
             }
             .withAdListener(object : AdListener() {

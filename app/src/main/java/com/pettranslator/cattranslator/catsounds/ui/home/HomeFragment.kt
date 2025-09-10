@@ -1,8 +1,11 @@
 package com.pettranslator.cattranslator.catsounds.ui.home
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.graphics.toColorInt
 import androidx.viewpager2.widget.ViewPager2
 import com.pettranslator.cattranslator.catsounds.BuildConfig
 import com.pettranslator.cattranslator.catsounds.R
@@ -37,14 +40,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     ): FragmentHomeBinding = FragmentHomeBinding.inflate(inflater)
 
     override fun initialize() {
-
         analyticsHelper.logScreenView(ScreenName.HOME)
-        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {
+        adManager.loadNativeIntroAd(viewBinding.adContainer, onAdLoaded = {
             analyticsHelper.logShowNative(ScreenName.HOME)
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.HOME)
         }, onAdImpression = {
-            analyticsHelper.logAdImpression("native", BuildConfig.NATIVE_AD_UNIT_ID)
+
+            viewBinding.adContainer.findViewById<Button>(R.id.ad_call_to_action)
+                .setBackgroundTintList(ColorStateList.valueOf("#36b236".toColorInt()));
+            viewBinding.adContainer.findViewById<Button>(R.id.ad_call_to_action)
+                .refreshDrawableState();
+
+            analyticsHelper.logAdImpression(
+                "native",
+                BuildConfig.NATIVE_AD_UNIT_ID
+            )
+
         })
 
         viewPage = ViewPagerAdapter(childFragmentManager, lifecycle)
@@ -93,7 +105,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             })
         }
     }
-
 
     fun updateBackgroundButton(view: AppCompatButton, viewUnActive: AppCompatButton) {
         view.setTextAppearance(R.style.tab_style_active)

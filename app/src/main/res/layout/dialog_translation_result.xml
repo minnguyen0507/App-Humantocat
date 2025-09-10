@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="animal"
             type="com.pettranslator.cattranslator.catsounds.model.Animal" />
@@ -37,8 +38,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="@dimen/margin_16dp"
-                app:srcRes="@{animal.imageResId}"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                app:srcRes="@{animal.imageResId}" />
 
             <TextView
                 android:id="@+id/tvTranslatedText"
@@ -46,8 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_16dp"
-                android:textAlignment="center"
                 android:text="@{animal.resultTranslate}"
+                android:textAlignment="center"
                 tools:text="Bạn có yêu tôi không?" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -60,7 +61,7 @@
                 android:background="@drawable/bg_tab_active"
                 android:backgroundTint="#4CAF50"
                 android:text="@string/close"
-                android:textAllCaps="false"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
 

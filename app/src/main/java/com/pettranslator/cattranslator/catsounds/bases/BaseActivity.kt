@@ -21,12 +21,11 @@ import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
 import com.google.gson.Gson
 import com.pettranslator.cattranslator.catsounds.R
-import com.pettranslator.cattranslator.catsounds.model.AdConfig
 import com.pettranslator.cattranslator.catsounds.ui.main.AdLoadingDialogFragment
 
 abstract class BaseActivity<viewBinding : ViewBinding> :
     AppCompatActivity() {
-     lateinit var viewBinding: viewBinding
+    lateinit var viewBinding: viewBinding
     abstract fun inflateViewBinding(inflater: LayoutInflater): viewBinding
     lateinit var gson: Gson
     val handler = Handler(Looper.myLooper() ?: Looper.getMainLooper())
@@ -94,7 +93,6 @@ abstract class BaseActivity<viewBinding : ViewBinding> :
                     consentForm.show(
                         this
                     ) {
-                        // Gọi lại load để xử lý thay đổi
                         loadAndShowForm(consentInformation)
                     }
                 }

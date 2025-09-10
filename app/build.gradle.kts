@@ -15,8 +15,8 @@ android {
         applicationId = "com.pettranslator.cattranslator.catsounds"
         minSdk = 24
         targetSdk = 35
-        versionCode = 9
-        versionName = "0.0.9"
+        versionCode = 10
+        versionName = "0.0.10"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -203,4 +203,5 @@ dependencies {
     implementation("com.github.ertugrulkaragoz:SuperBottomBar:0.4")
     implementation("com.google.firebase:firebase-crashlytics-ndk")
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.code.gson:gson:2.11.0");
 }

@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_24dp"
                 android:text="@string/send"
-                android:textAllCaps="false"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

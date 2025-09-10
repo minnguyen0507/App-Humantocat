@@ -1,10 +1,13 @@
 package com.pettranslator.cattranslator.catsounds.ui.record
 
+import android.content.res.ColorStateList
 import android.os.CountDownTimer
 import android.view.LayoutInflater
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.pettranslator.cattranslator.catsounds.BuildConfig
@@ -51,12 +54,18 @@ class ResultRecordActivity : BaseActivity<ActivityResultRecordBinding>() {
         seconds = intent.getIntExtra(RecordActivity.SECONDS, 0)
         ALog.d("ResultRecordActivitySSS", "seconds: $seconds")
 
-        adManager.loadNativeClickAd(viewBinding.adContainer, onAdLoaded = {
+        adManager.loadNativeIntroAd(viewBinding.adContainer, onAdLoaded = {
             analyticsHelper.logShowNative(ScreenName.TRANSLATION_RESULT)
         }, onAdFailed = {
             analyticsHelper.logShowNativeFailed(ScreenName.TRANSLATION_RESULT)
         }, onAdImpression = {
             analyticsHelper.logAdImpression("native", BuildConfig.NATIVE_AD_UNIT_ID)
+
+            viewBinding.adContainer.findViewById<Button>(R.id.ad_call_to_action)
+                .setBackgroundTintList(ColorStateList.valueOf("#18bbfe".toColorInt()));
+            viewBinding.adContainer.findViewById<Button>(R.id.ad_call_to_action)
+
+                .refreshDrawableState();
         })
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
