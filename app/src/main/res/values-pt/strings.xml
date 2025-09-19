@@ -293,4 +293,46 @@
     <string name="n_4">Seu gato está esperando por você! Abra o aplicativo para ouvir um novo miado!</string>
     <string name="n_5">Esta ação pode conter anúncios</string>
     <string name="n_6">Começar</string>
+    <string name="n_title_1">😸 Alerta de Miado Chegando</string>
+    <string name="n_title_2">🐾 Detector de Humor Felino</string>
+    <string name="n_title_3">🎤 Fale como um Gato</string>
+    <string name="n_title_4">🐱 Segredos dos Gatos Revelados</string>
+    <string name="n_title_5">😹 Sons de Miado Engraçados</string>
+    <string name="n_title_6">🐈 Tradução Rápida de Miado</string>
+    <string name="n_title_7">🎶 Concerto Pessoal de Gatinho</string>
+    <string name="n_title_8">🤔 O que o Gato Diria?</string>
+    <string name="n_title_9">😺 Modo Chat Felino Ativado</string>
+    <string name="n_title_10">🐾 Pacote de Idioma Felino</string>
+    <string name="n_title_11">🎭 Mestre dos Miados Brincalhões</string>
+    <string name="n_title_12">🔊 Miado de Volta para Você</string>
+    <string name="n_title_13">💤 Clima de Gato Preguiçoso</string>
+    <string name="n_title_14">😼 Alerta de Miado com Fome</string>
+    <string name="n_title_15">🐾 Desafio Divertido de Gato</string>
+    <string name="n_title_16">🎉 Modo Festa do Gato</string>
+    <string name="n_title_17">🐱 Modo Sussurro de Gato</string>
+    <string name="n_title_18">😹 Piada Felina do Dia</string>
+    <string name="n_title_19">🐈‍⬛ Chamada Misteriosa do Gato</string>
+    <string name="n_title_20">🌟 Converse com seu Gato</string>
+
+    <string name="n_des_1">Seu gato “falou” – abra agora e descubra o segredo!</string>
+    <string name="n_des_2">Seu gatinho está com fome ou só quer brincar?</string>
+    <string name="n_des_3">Diga qualquer coisa &amp; ouça em miados engraçados!</string>
+    <string name="n_des_4">Curioso para saber o que seu gato pensa de você?</string>
+    <string name="n_des_5">Desbloqueie novas travessuras &amp; surpreenda seu gato!</string>
+    <string name="n_des_6">Grave seu gato &amp; receba uma tradução divertida na hora.</string>
+    <string name="n_des_7">Toque sons de gato cantando &amp; surpreenda seu bichano!</string>
+    <string name="n_des_8">Decodifique o humor: bravo, feliz ou só maluco!</string>
+    <string name="n_des_9">Ative o modo miado &amp; fale como um gatinho.</string>
+    <string name="n_des_10">Novas frases engraçadas prontas para o seu gato!</string>
+    <string name="n_des_11">Engane seu gato hoje com sons exagerados!</string>
+    <string name="n_des_12">Fale agora &amp; ouça sua voz em estilo felino!</string>
+    <string name="n_des_13">Descubra se seu gato está entediado ou sonolento.</string>
+    <string name="n_des_14">Será que seu amigo peludo está pedindo comida escondido?</string>
+    <string name="n_des_15">Adivinhe o que seu gato “disse” com esse miado!</string>
+    <string name="n_des_16">Mais miados, mais risadas – abra o app!</string>
+    <string name="n_des_17">Transforme sua fala em uma voz felina brincalhona!</string>
+    <string name="n_des_18">A tradução de hoje vai te fazer rir muito!</string>
+    <string name="n_des_19">Um som misterioso espera – brinque com seu gato agora!</string>
+    <string name="n_des_20">Deixe o dia mais divertido com miados engraçados!</string>
+
 </resources>

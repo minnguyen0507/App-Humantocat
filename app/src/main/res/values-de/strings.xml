@@ -293,4 +293,46 @@
     <string name="n_4">Ihre Katze wartet auf Sie! Öffnen Sie die App, um ein neues Miauen zu hören!</string>
     <string name="n_5">Diese Aktion kann Werbung enthalten</string>
     <string name="n_6">Loslegen</string>
+    <string name="n_title_1">😸 Miau-Alarm eingetroffen</string>
+    <string name="n_title_2">🐾 Katzen-Stimmungsdetektor</string>
+    <string name="n_title_3">🎤 Sprich wie eine Katze</string>
+    <string name="n_title_4">🐱 Katzengeheimnisse enthüllt</string>
+    <string name="n_title_5">😹 Lustige Miau-Geräusche</string>
+    <string name="n_title_6">🐈 Übersetze Miau schnell</string>
+    <string name="n_title_7">🎶 Persönliches Schnurrkonzert</string>
+    <string name="n_title_8">🤔 Was sagt die Katze?</string>
+    <string name="n_title_9">😺 Katzen-Chat-Modus AN</string>
+    <string name="n_title_10">🐾 Katzen-Sprachpaket</string>
+    <string name="n_title_11">🎭 Miau-Streichmeister</string>
+    <string name="n_title_12">🔊 Miau zurück an dich</string>
+    <string name="n_title_13">💤 Faule Katzen-Vibes</string>
+    <string name="n_title_14">😼 Hungriger Miau-Alarm</string>
+    <string name="n_title_15">🐾 Katzen-Spaß-Challenge</string>
+    <string name="n_title_16">🎉 Katzenparty-Modus</string>
+    <string name="n_title_17">🐱 Katzenflüsterer-Modus</string>
+    <string name="n_title_18">😹 Täglicher Katzenwitz</string>
+    <string name="n_title_19">🐈‍⬛ Geheime Miau-Rufe</string>
+    <string name="n_title_20">🌟 Chatte mit deiner Katze</string>
+
+    <string name="n_des_1">Deine Katze hat „gesprochen“ – jetzt öffnen und entschlüsseln!</string>
+    <string name="n_des_2">Ist deine Katze heute hungrig oder verspielt?</string>
+    <string name="n_des_3">Sag etwas &amp; höre es in lustigen Miau-Geräuschen!</string>
+    <string name="n_des_4">Neugierig, was deine Katze über dich denkt?</string>
+    <string name="n_des_5">Schalte neue Streiche frei &amp; überrasche deine Katze!</string>
+    <string name="n_des_6">Nimm deine Katze auf &amp; erhalte sofort witzige Übersetzungen.</string>
+    <string name="n_des_7">Spiele singende Katzengeräusche &amp; necke dein Haustier!</string>
+    <string name="n_des_8">Entschlüssele Stimmungen: wütend, glücklich oder einfach verrückt!</string>
+    <string name="n_des_9">Schalte in den Miau-Modus &amp; sprich wie eine Katze.</string>
+    <string name="n_des_10">Neue lustige Sprüche warten auf deine Katze!</string>
+    <string name="n_des_11">Lege deine Katze heute mit übertriebenen Geräuschen herein.</string>
+    <string name="n_des_12">Sprich jetzt &amp; höre deine Worte im Katzenstil!</string>
+    <string name="n_des_13">Finde heraus, ob deine Katze gelangweilt oder müde ist.</string>
+    <string name="n_des_14">Fragt dein Fellfreund heimlich nach Futter?</string>
+    <string name="n_des_15">Errate, was deine Katze mit diesem Miau „meinte“!</string>
+    <string name="n_des_16">Mehr Miaus, mehr Lachen – öffne die App!</string>
+    <string name="n_des_17">Verwandle Menschensprache in verspielte Katzenstimmen!</string>
+    <string name="n_des_18">Die heutige Übersetzung bringt dich zum Lachen!</string>
+    <string name="n_des_19">Neugierige Geräusche warten – necke deine Katze jetzt!</string>
+    <string name="n_des_20">Mach den Tag lustig mit witzigen Miaus!</string>
+
 </resources>

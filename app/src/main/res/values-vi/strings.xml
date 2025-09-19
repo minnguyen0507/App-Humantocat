@@ -293,4 +293,46 @@
     <string name="n_4">Con mèo của bạn đang đợi bạn! Mở ứng dụng để nghe tiếng meo meo mới!</string>
     <string name="n_5">Hành động này có thể chứa quảng cáo</string>
     <string name="n_6">Bắt Đầu</string>
+    <string name="n_title_1">😸 Cảnh Báo Meo Meo Sắp Đến</string>
+    <string name="n_title_2">🐾 Máy Dò Tâm Trạng Mèo</string>
+    <string name="n_title_3">🎤 Nói Chuyện Như Mèo</string>
+    <string name="n_title_4">🐱 Bí Mật Của Mèo Được Hé Lộ</string>
+    <string name="n_title_5">😹 Âm Thanh Meo Meo Hài Hước</string>
+    <string name="n_title_6">🐈 Dịch Meo Nhanh</string>
+    <string name="n_title_7">🎶 Buổi Hòa Nhạc Cá Nhân của Mèo</string>
+    <string name="n_title_8">🤔 Mèo Đang Nói Gì Vậy?</string>
+    <string name="n_title_9">😺 Chế Độ Trò Chuyện Mèo Bật</string>
+    <string name="n_title_10">🐾 Gói Ngôn Ngữ Mèo</string>
+    <string name="n_title_11">🎭 Bậc Thầy Trò Đùa Meo Meo</string>
+    <string name="n_title_12">🔊 Meo Lại Với Bạn</string>
+    <string name="n_title_13">💤 Tâm Trạng Mèo Lười</string>
+    <string name="n_title_14">😼 Cảnh Báo Meo Meo Đói</string>
+    <string name="n_title_15">🐾 Thử Thách Vui Nhộn Cùng Mèo</string>
+    <string name="n_title_16">🎉 Chế Độ Tiệc Tùng Của Mèo</string>
+    <string name="n_title_17">🐱 Chế Độ Thì Thầm Của Mèo</string>
+    <string name="n_title_18">😹 Trò Đùa Mèo Hôm Nay</string>
+    <string name="n_title_19">🐈‍⬛ Cuộc Gọi Meo Meo Bí Ẩn</string>
+    <string name="n_title_20">🌟 Trò Chuyện Cùng Mèo</string>
+
+    <string name="n_des_1">Mèo của bạn vừa “lên tiếng” – mở ngay để giải mã!</string>
+    <string name="n_des_2">Hôm nay mèo đói hay muốn chơi đùa?</string>
+    <string name="n_des_3">Nói bất cứ điều gì &amp; nghe lại bằng tiếng meo hài hước!</string>
+    <string name="n_des_4">Bạn có tò mò mèo nghĩ gì về bạn không?</string>
+    <string name="n_des_5">Mở khóa trò đùa mới &amp; làm mèo bất ngờ!</string>
+    <string name="n_des_6">Ghi âm mèo của bạn &amp; nhận bản dịch vui nhộn ngay lập tức.</string>
+    <string name="n_des_7">Phát tiếng mèo hát &amp; chọc vui thú cưng của bạn!</string>
+    <string name="n_des_8">Giải mã tâm trạng: giận dữ, vui vẻ, hay chỉ đơn giản là kỳ lạ!</string>
+    <string name="n_des_9">Chuyển sang chế độ meo meo &amp; nói chuyện như mèo.</string>
+    <string name="n_des_10">Những câu nói hài hước mới sẵn sàng cho mèo của bạn!</string>
+    <string name="n_des_11">Chọc mèo của bạn hôm nay với âm thanh quá lố!</string>
+    <string name="n_des_12">Hãy nói ngay &amp; nghe lại giọng bạn theo phong cách mèo!</string>
+    <string name="n_des_13">Tìm hiểu xem mèo có đang buồn chán hay buồn ngủ không.</string>
+    <string name="n_des_14">Có phải người bạn lông xù của bạn đang âm thầm đòi ăn?</string>
+    <string name="n_des_15">Đoán xem mèo bạn “muốn nói” gì qua tiếng meo đó!</string>
+    <string name="n_des_16">Nhiều tiếng meo hơn, nhiều tiếng cười hơn – mở app ngay!</string>
+    <string name="n_des_17">Biến lời nói của bạn thành giọng mèo vui nhộn!</string>
+    <string name="n_des_18">Bản dịch hôm nay sẽ khiến bạn cười nghiêng ngả!</string>
+    <string name="n_des_19">Âm thanh bí ẩn đang chờ – chọc mèo bạn ngay nào!</string>
+    <string name="n_des_20">Hãy làm ngày hôm nay thêm vui với tiếng meo hài hước!</string>
+
 </resources>

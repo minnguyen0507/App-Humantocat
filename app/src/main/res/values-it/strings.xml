@@ -293,4 +293,47 @@
     <string name="n_4">Il tuo gatto ti sta aspettando! Apri l\'app per ascoltare un nuovo miagolio!</string>
     <string name="n_5">Questa azione può contenere annunci pubblicitari</string>
     <string name="n_6">Inizia</string>
+
+    <string name="n_title_1">😸 Avviso Miao in Arrivo</string>
+    <string name="n_title_2">🐾 Rilevatore di Umore Felino</string>
+    <string name="n_title_3">🎤 Parla come un Gatto</string>
+    <string name="n_title_4">🐱 Segreti dei Gatti Svelati</string>
+    <string name="n_title_5">😹 Suoni di Miao Divertenti</string>
+    <string name="n_title_6">🐈 Traduci Miao Subito</string>
+    <string name="n_title_7">🎶 Concerto Purr-sonale</string>
+    <string name="n_title_8">🤔 Cosa Sta Dicendo il Gatto?</string>
+    <string name="n_title_9">😺 Modalità Chat Felina ON</string>
+    <string name="n_title_10">🐾 Pacchetto Lingua Felina</string>
+    <string name="n_title_11">🎭 Maestro degli Scherzi Miao</string>
+    <string name="n_title_12">🔊 Miao di Ritorno per Te</string>
+    <string name="n_title_13">💤 Vibrazioni da Gatto Pigro</string>
+    <string name="n_title_14">😼 Avviso di Miao Affamato</string>
+    <string name="n_title_15">🐾 Sfida Divertente Felina</string>
+    <string name="n_title_16">🎉 Modalità Festa Felina</string>
+    <string name="n_title_17">🐱 Modalità Sussurro del Gatto</string>
+    <string name="n_title_18">😹 Barzelletta Felina del Giorno</string>
+    <string name="n_title_19">🐈‍⬛ Chiamata Misteriosa Miao</string>
+    <string name="n_title_20">🌟 Chatta con il Tuo Gatto</string>
+
+    <string name="n_des_1">Il tuo gatto ha “parlato” – apri e decifra subito!</string>
+    <string name="n_des_2">Il tuo felino oggi ha fame o vuole giocare?</string>
+    <string name="n_des_3">Di’ qualcosa &amp; ascoltalo in divertenti miao!</string>
+    <string name="n_des_4">Curioso di sapere cosa pensa il tuo gatto di te?</string>
+    <string name="n_des_5">Sblocca nuovi scherzi &amp; sorprendi il tuo gatto!</string>
+    <string name="n_des_6">Registra il tuo gatto &amp; ottieni traduzioni buffe all’istante.</string>
+    <string name="n_des_7">Riproduci suoni di gatti che cantano &amp; fai uno scherzo al tuo pet!</string>
+    <string name="n_des_8">Decifra gli umori: arrabbiato, felice o semplicemente strano!</string>
+    <string name="n_des_9">Passa alla modalità miao &amp; parla come un felino.</string>
+    <string name="n_des_10">Nuove frasi esilaranti pronte per il tuo gatto!</string>
+    <string name="n_des_11">Inganna il tuo gatto oggi con suoni esagerati.</string>
+    <string name="n_des_12">Parla ora &amp; ascolta le tue parole in stile gatto!</string>
+    <string name="n_des_13">Scopri se il tuo gatto è annoiato o assonnato.</string>
+    <string name="n_des_14">Il tuo amico peloso chiede segretamente del cibo?</string>
+    <string name="n_des_15">Indovina cosa ha “voluto dire” il tuo gatto con quel miao!</string>
+    <string name="n_des_16">Più miao, più risate – apri l’app!</string>
+    <string name="n_des_17">Trasforma il linguaggio umano in voci feline giocose!</string>
+    <string name="n_des_18">La traduzione di oggi ti farà ridere a crepapelle!</string>
+    <string name="n_des_19">Suoni curiosi ti aspettano – fai uno scherzo al tuo gatto ora!</string>
+    <string name="n_des_20">Rendi la giornata divertente con simpatici miao!</string>
+
 </resources>

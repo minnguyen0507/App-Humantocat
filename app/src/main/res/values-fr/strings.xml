@@ -293,4 +293,46 @@
     <string name="n_4">Votre chat vous attend ! Ouvrez l\'application pour entendre un nouveau miaulement !</string>
     <string name="n_5">Cette action peut contenir des publicités</string>
     <string name="n_6">Commencer</string>
+    <string name="n_title_1">😸 Alerte Miau Entrante</string>
+    <string name="n_title_2">🐾 Détecteur d’Humeur Féline</string>
+    <string name="n_title_3">🎤 Parle comme un Chat</string>
+    <string name="n_title_4">🐱 Secrets de Chats Révélés</string>
+    <string name="n_title_5">😹 Sons de Miau Drôles</string>
+    <string name="n_title_6">🐈 Traduire Miau Rapidement</string>
+    <string name="n_title_7">🎶 Concert Purr-sonnel</string>
+    <string name="n_title_8">🤔 Que Dit le Chaton ?</string>
+    <string name="n_title_9">😺 Mode Chaton Activé</string>
+    <string name="n_title_10">🐾 Pack de Langue Féline</string>
+    <string name="n_title_11">🎭 Maître des Farces Miaou</string>
+    <string name="n_title_12">🔊 Miaou en Retour</string>
+    <string name="n_title_13">💤 Ambiance Chat Paresseux</string>
+    <string name="n_title_14">😼 Alerte Miaou Affamé</string>
+    <string name="n_title_15">🐾 Défi Fun Félin</string>
+    <string name="n_title_16">🎉 Mode Fête de Chats</string>
+    <string name="n_title_17">🐱 Mode Chuchoteur de Chats</string>
+    <string name="n_title_18">😹 Blague de Chat du Jour</string>
+    <string name="n_title_19">🐈‍⬛ Appel Mystérieux Miaou</string>
+    <string name="n_title_20">🌟 Discute avec ton Chat</string>
+
+    <string name="n_des_1">Ton chat a « parlé » – ouvre et déchiffre maintenant !</string>
+    <string name="n_des_2">Ton félin a-t-il faim ou veut-il jouer aujourd’hui ?</string>
+    <string name="n_des_3">Dis quelque chose &amp; écoute-le en miaous hilarants !</string>
+    <string name="n_des_4">Curieux de savoir ce que ton chat pense de toi ?</string>
+    <string name="n_des_5">Débloque de nouvelles farces &amp; surprends ton chat !</string>
+    <string name="n_des_6">Enregistre ton chat &amp; obtiens des traductions amusantes instantanément.</string>
+    <string name="n_des_7">Joue des sons de chats chanteurs &amp; fais une blague à ton animal !</string>
+    <string name="n_des_8">Décode les humeurs : en colère, joyeux ou juste bizarre !</string>
+    <string name="n_des_9">Passe en mode miaou &amp; parle comme un félin.</string>
+    <string name="n_des_10">Nouvelles phrases drôles prêtes pour ton chat !</string>
+    <string name="n_des_11">Trompe ton chat avec des sons exagérés aujourd’hui.</string>
+    <string name="n_des_12">Parle maintenant &amp; écoute tes mots en style félin !</string>
+    <string name="n_des_13">Découvre si ton chat s’ennuie ou est fatigué.</string>
+    <string name="n_des_14">Ton ami à fourrure demande-t-il secrètement de la nourriture ?</string>
+    <string name="n_des_15">Devine ce que ton chat a « voulu dire » par ce miaou !</string>
+    <string name="n_des_16">Plus de miaous, plus de rires – ouvre l’appli !</string>
+    <string name="n_des_17">Transforme les paroles humaines en voix de chat ludiques !</string>
+    <string name="n_des_18">La traduction d’aujourd’hui va te faire éclater de rire !</string>
+    <string name="n_des_19">Des sons mystérieux t’attendent – fais une blague à ton chat maintenant !</string>
+    <string name="n_des_20">Rends ta journée drôle avec des miaous amusants !</string>
+
 </resources>

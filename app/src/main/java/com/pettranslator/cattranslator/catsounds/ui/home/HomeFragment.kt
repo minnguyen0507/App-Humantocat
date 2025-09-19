@@ -48,7 +48,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }, onAdImpression = {
 
             viewBinding.adContainer.findViewById<Button>(R.id.ad_call_to_action)
-                .setBackgroundTintList(ColorStateList.valueOf("#36b236".toColorInt()));
+                .setBackgroundTintList(ColorStateList.valueOf("#4086f5".toColorInt()));
             viewBinding.adContainer.findViewById<Button>(R.id.ad_call_to_action)
                 .refreshDrawableState();
 

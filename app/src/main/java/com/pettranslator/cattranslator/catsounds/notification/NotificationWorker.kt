@@ -43,13 +43,6 @@ class NotificationWorker @AssistedInject constructor(
         val notificationType = if (hour in 5..11) "morning" else "evening"
         val analyticsHelper = AnalyticsHelper(FirebaseAnalytics.getInstance(applicationContext))
         analyticsHelper.logNotificationReceive(notificationType)
-
-        val messages = arrayOf(
-            localizedContext.getString(R.string.n_1),
-            localizedContext.getString(R.string.n_2),
-            localizedContext.getString(R.string.n_3),
-            localizedContext.getString(R.string.n_4)
-        )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
@@ -58,6 +51,9 @@ class NotificationWorker @AssistedInject constructor(
             )
             manager.createNotificationChannel(channel)
         }
+        val number = Random.nextInt(1, 21)
+        val keyTitle = "n_title_$number"
+        val keyDes = "n_des_$number"
         val intent = Intent(applicationContext, SplashActivity::class.java).apply {
             putExtra("notification_type", notificationType)
         }
@@ -69,10 +65,15 @@ class NotificationWorker @AssistedInject constructor(
             PendingIntent.FLAG_IMMUTABLE
         )
 
+        val res = applicationContext.resources
+        val packageName = applicationContext.packageName
+        val titleResId = res.getIdentifier(keyTitle, "string", packageName)
+        val messageResId = res.getIdentifier(keyDes, "string", packageName)
+
         val notification = NotificationCompat.Builder(applicationContext, channelId)
             .setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle(localizedContext.getString(R.string.app_name))
-            .setContentText(messages.random())
+            .setContentTitle(res.getString(titleResId))
+            .setContentText(res.getString(messageResId))
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .build()

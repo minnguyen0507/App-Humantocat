@@ -293,4 +293,46 @@
     <string name="n_4">Kediniz sizi bekliyor! Yeni bir miyav duymak için uygulamayı açın!</string>
     <string name="n_5">Bu işlem reklam içerebilir</string>
     <string name="n_6">Başla</string>
+    <string name="n_title_1">😸 Miyav Uyarısı Geliyor</string>
+    <string name="n_title_2">🐾 Kedi Ruh Hali Dedektörü</string>
+    <string name="n_title_3">🎤 Kedi Gibi Konuş</string>
+    <string name="n_title_4">🐱 Kedi Sırları Açığa Çıkıyor</string>
+    <string name="n_title_5">😹 Komik Miyav Sesleri</string>
+    <string name="n_title_6">🐈 Hızlı Miyav Çevirisi</string>
+    <string name="n_title_7">🎶 Mırlama Konseri</string>
+    <string name="n_title_8">🤔 Kediniz Ne Diyor?</string>
+    <string name="n_title_9">😺 Kedi Sohbet Modu Açık</string>
+    <string name="n_title_10">🐾 Kedi Dil Paketi</string>
+    <string name="n_title_11">🎭 Miyav Şaka Ustası</string>
+    <string name="n_title_12">🔊 Sana Miyavla Cevap Veriyor</string>
+    <string name="n_title_13">💤 Tembel Kedi Havası</string>
+    <string name="n_title_14">😼 Aç Miyav Uyarısı</string>
+    <string name="n_title_15">🐾 Kedi Eğlence Yarışması</string>
+    <string name="n_title_16">🎉 Kedi Parti Modu</string>
+    <string name="n_title_17">🐱 Kedi Fısıltısı Modu</string>
+    <string name="n_title_18">😹 Günün Kedi Şakası</string>
+    <string name="n_title_19">🐈‍⬛ Gizemli Miyav Çağrısı</string>
+    <string name="n_title_20">🌟 Kedinizle Sohbet Edin</string>
+
+    <string name="n_des_1">Kediniz “konuştu” – hemen açın ve çözün!</string>
+    <string name="n_des_2">Kedin bugün aç mı yoksa oyun oynamak mı istiyor?</string>
+    <string name="n_des_3">Bir şey söyleyin &amp; komik miyavlarla duyun!</string>
+    <string name="n_des_4">Kedinizin sizin hakkınızda ne düşündüğünü merak ediyor musunuz?</string>
+    <string name="n_des_5">Yeni şakaları açın &amp; kedinizi şaşırtın!</string>
+    <string name="n_des_6">Kedinizi kaydedin &amp; anında komik çeviriler alın.</string>
+    <string name="n_des_7">Şarkı söyleyen kedi sesleri çalın &amp; kedinizi şakalayın!</string>
+    <string name="n_des_8">Duyguları çözün: sinirli, mutlu ya da sadece garip!</string>
+    <string name="n_des_9">Miyav moduna geçin &amp; kedi gibi konuşun.</string>
+    <string name="n_des_10">Kediniz için hazır yeni komik ifadeler!</string>
+    <string name="n_des_11">Bugün kedinizi abartılı seslerle kandırın.</string>
+    <string name="n_des_12">Şimdi konuşun &amp; sözlerinizi kedi stilinde duyun!</string>
+    <string name="n_des_13">Kediniz sıkılmış mı yoksa uykulu mu öğrenin.</string>
+    <string name="n_des_14">Tüylü dostunuz gizlice yemek mi istiyor?</string>
+    <string name="n_des_15">O miyavla kediniz ne “demek istedi”, tahmin edin!</string>
+    <string name="n_des_16">Daha çok miyav, daha çok kahkaha – uygulamayı açın!</string>
+    <string name="n_des_17">İnsan konuşmasını eğlenceli kedi seslerine çevirin!</string>
+    <string name="n_des_18">Bugünün çevirisi sizi kahkahalara boğacak!</string>
+    <string name="n_des_19">Merak uyandıran sesler bekliyor – hemen kedinizi şakalayın!</string>
+    <string name="n_des_20">Bugünü komik miyavlarla daha eğlenceli hale getirin!</string>
+
 </resources>

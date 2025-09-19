@@ -293,4 +293,46 @@
     <string name="n_4">あなたの猫があなたを待っています！アプリを開いて新しいニャーの鳴き声を聞いてください!</string>
     <string name="n_5">この操作には広告が含まれる場合があります</string>
     <string name="n_6">はじめる</string>
+    <string name="n_title_1">😸 ミャウ警報が来たよ</string>
+    <string name="n_title_2">🐾 ネコの気分チェッカー</string>
+    <string name="n_title_3">🎤 ネコみたいに話そう</string>
+    <string name="n_title_4">🐱 ネコの秘密公開</string>
+    <string name="n_title_5">😹 おもしろミャウ音</string>
+    <string name="n_title_6">🐈 ミャウ即翻訳</string>
+    <string name="n_title_7">🎶 パーソナルゴロゴロコンサート</string>
+    <string name="n_title_8">🤔 ネコは何を言ってるの？</string>
+    <string name="n_title_9">😺 ネコチャットモード ON</string>
+    <string name="n_title_10">🐾 ネコ語パック</string>
+    <string name="n_title_11">🎭 ミャウいたずらマスター</string>
+    <string name="n_title_12">🔊 ミャウでお返し</string>
+    <string name="n_title_13">💤 のんびりネコ気分</string>
+    <string name="n_title_14">😼 お腹すいたミャウ警報</string>
+    <string name="n_title_15">🐾 ネコお楽しみチャレンジ</string>
+    <string name="n_title_16">🎉 ネコパーティーモード</string>
+    <string name="n_title_17">🐱 ネコささやきモード</string>
+    <string name="n_title_18">😹 今日のネコジョーク</string>
+    <string name="n_title_19">🐈‍⬛ ミステリーミャウコール</string>
+    <string name="n_title_20">🌟 ネコとチャットしよう</string>
+
+    <string name="n_des_1">あなたのネコが「しゃべった」– 今すぐ開いて解読！</string>
+    <string name="n_des_2">今日はお腹すいてる？それとも遊びたい気分？</string>
+    <string name="n_des_3">何か言ってみて &amp; おもしろいミャウで聞こう！</string>
+    <string name="n_des_4">ネコがあなたのことをどう思ってるか気になる？</string>
+    <string name="n_des_5">新しいいたずらを解放して &amp; ネコをびっくりさせよう！</string>
+    <string name="n_des_6">ネコを録音して &amp; すぐに笑える翻訳をゲット。</string>
+    <string name="n_des_7">歌うネコの音を流して &amp; ペットにドッキリ！</string>
+    <string name="n_des_8">気分を解読：怒ってる？うれしい？それともヘン？</string>
+    <string name="n_des_9">ミャウモードに切り替えて &amp; ネコみたいに話そう。</string>
+    <string name="n_des_10">新しいおもしろフレーズがネコを待ってる！</string>
+    <string name="n_des_11">今日は大げさな音でネコをだましちゃおう。</string>
+    <string name="n_des_12">今しゃべって &amp; ネコ風に聞いてみよう！</string>
+    <string name="n_des_13">ネコが退屈してるか眠いかチェックしよう。</string>
+    <string name="n_des_14">あなたの毛むくじゃらの友達、ひそかにゴハン欲しがってる？</string>
+    <string name="n_des_15">そのミャウでネコが何を「言いたかった」か当ててみて！</string>
+    <string name="n_des_16">もっとミャウ、もっと笑い – アプリを開こう！</string>
+    <string name="n_des_17">人間の言葉を遊び心あるネコボイスに変換！</string>
+    <string name="n_des_18">今日の翻訳は爆笑まちがいなし！</string>
+    <string name="n_des_19">ワクワク音が待ってる – 今すぐネコにいたずら！</string>
+    <string name="n_des_20">おもしろミャウで今日を楽しく！</string>
+
 </resources>

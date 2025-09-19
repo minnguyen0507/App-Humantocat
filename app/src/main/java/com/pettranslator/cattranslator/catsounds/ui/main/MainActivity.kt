@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -292,7 +291,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                                 },
                                 onAdStartShowing = {
                                     ALog.d("themd", "onAdStartShowing")
-                                    showAdLoadingDialog()
                                 },
                                 onAdImpression = {
                                     analyticsHelper.logShowInterstitial(ScreenName.HOME)

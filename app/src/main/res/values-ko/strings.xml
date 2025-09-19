@@ -293,4 +293,46 @@
     <string name="n_4">당신의 고양이가 당신을 기다리고 있습니다! 앱을 열어 새로운 야옹소리를 들어보세요!</string>
     <string name="n_5">이 동작에는 광고가 포함될 수 있습니다</string>
     <string name="n_6">시작하기</string>
+    <string name="n_title_1">😸 야옹 알림 도착</string>
+    <string name="n_title_2">🐾 고양이 기분 탐지기</string>
+    <string name="n_title_3">🎤 고양이처럼 말하기</string>
+    <string name="n_title_4">🐱 고양이 비밀 공개</string>
+    <string name="n_title_5">😹 재미있는 야옹 소리</string>
+    <string name="n_title_6">🐈 빠른 야옹 번역</string>
+    <string name="n_title_7">🎶 퍼스널 고양이 콘서트</string>
+    <string name="n_title_8">🤔 고양이가 뭐라고 할까?</string>
+    <string name="n_title_9">😺 고양이 채팅 모드 ON</string>
+    <string name="n_title_10">🐾 고양이 언어 팩</string>
+    <string name="n_title_11">🎭 장난꾸러기 야옹 마스터</string>
+    <string name="n_title_12">🔊 너에게 돌아온 야옹</string>
+    <string name="n_title_13">💤 게으른 고양이 무드</string>
+    <string name="n_title_14">😼 배고픈 야옹 알림</string>
+    <string name="n_title_15">🐾 고양이 재미 챌린지</string>
+    <string name="n_title_16">🎉 고양이 파티 모드</string>
+    <string name="n_title_17">🐱 고양이 속삭임 모드</string>
+    <string name="n_title_18">😹 오늘의 고양이 농담</string>
+    <string name="n_title_19">🐈‍⬛ 미스터리 야옹 콜</string>
+    <string name="n_title_20">🌟 고양이와 채팅하기</string>
+
+    <string name="n_des_1">네 고양이가 “말했어” – 지금 열고 해독해 보자!</string>
+    <string name="n_des_2">오늘 네 고양이는 배고프니, 아니면 놀고 싶을까?</string>
+    <string name="n_des_3">아무 말이나 해봐 &amp; 웃긴 야옹으로 들어봐!</string>
+    <string name="n_des_4">네 고양이가 널 어떻게 생각하는지 궁금해?</string>
+    <string name="n_des_5">새로운 장난을 열고 &amp; 고양이를 깜짝 놀라게 해봐!</string>
+    <string name="n_des_6">고양이를 녹음하고 &amp; 바로 웃긴 번역을 받아봐.</string>
+    <string name="n_des_7">노래하는 고양이 소리를 재생하고 &amp; 반려동물을 놀라게 해!</string>
+    <string name="n_des_8">기분 해독하기: 화남, 행복, 아니면 그냥 이상함!</string>
+    <string name="n_des_9">야옹 모드로 전환하고 &amp; 고양이처럼 말해봐.</string>
+    <string name="n_des_10">네 고양이를 위한 새로운 웃긴 문구 준비 완료!</string>
+    <string name="n_des_11">오늘은 과장된 소리로 고양이를 속여봐.</string>
+    <string name="n_des_12">지금 말하고 &amp; 네 말을 고양이 스타일로 들어봐!</string>
+    <string name="n_des_13">네 고양이가 지루해하는지, 졸린지 확인해봐.</string>
+    <string name="n_des_14">네 털복숭이 친구가 몰래 밥을 달라고 할까?</string>
+    <string name="n_des_15">그 야옹으로 네 고양이가 뭘 “말했는지” 맞혀봐!</string>
+    <string name="n_des_16">더 많은 야옹, 더 많은 웃음 – 앱을 열어봐!</string>
+    <string name="n_des_17">사람 말을 장난스러운 고양이 목소리로 변환!</string>
+    <string name="n_des_18">오늘의 번역은 너를 빵 터지게 할 거야!</string>
+    <string name="n_des_19">궁금한 소리가 기다리고 있어 – 지금 고양이에게 장난쳐봐!</string>
+    <string name="n_des_20">웃긴 야옹으로 오늘을 즐겁게 만들어봐!</string>
+
 </resources>
